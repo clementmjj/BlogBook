@@ -68,7 +68,7 @@ public class BlogDAOTestCase {
 		assertTrue("Problem rejecting blog", blogDAO.rejectBlog(blog));
 	}
 
-	@Ignore
+	//@Ignore
 	@Test
 	public void listBlogsTest() {
 		List<Blog> blogList = blogDAO.getBlogList();

@@ -24,7 +24,6 @@ public class BlogDAOImpl implements BlogDAO {
 			sessionFactory.getCurrentSession().save(blog);
 			return true;
 		} catch (Exception e) {
-			System.out.println(e);
 			return false;
 		}
 	}
@@ -32,9 +31,10 @@ public class BlogDAOImpl implements BlogDAO {
 	@Override
 	public boolean deleteBlog(Blog blog) {
 		try {
-			sessionFactory.getCurrentSession().delete(blog);
+			sessionFactory.getCurrentSession().remove(blog);
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}

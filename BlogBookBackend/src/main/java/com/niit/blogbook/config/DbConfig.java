@@ -14,6 +14,10 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.niit.blogbook.model.Blog;
+import com.niit.blogbook.model.BlogComment;
+import com.niit.blogbook.model.Forum;
+import com.niit.blogbook.model.ForumComment;
+import com.niit.blogbook.model.Job;
 import com.niit.blogbook.model.UserDetail;
 
 @Configuration
@@ -43,6 +47,10 @@ public class DbConfig {
 
 		factoryBuilder.addAnnotatedClass(Blog.class);
 		factoryBuilder.addAnnotatedClass(UserDetail.class);
+		factoryBuilder.addAnnotatedClass(BlogComment.class);
+		factoryBuilder.addAnnotatedClass(Job.class);
+		factoryBuilder.addAnnotatedClass(Forum.class);
+		factoryBuilder.addAnnotatedClass(ForumComment.class);
 
 		SessionFactory sessionFactory = factoryBuilder.buildSessionFactory();
 		System.out.println("---SessionFactory created---");
