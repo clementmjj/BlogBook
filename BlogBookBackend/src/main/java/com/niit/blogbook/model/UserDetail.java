@@ -9,8 +9,7 @@ import javax.persistence.Table;
 @Table
 public class UserDetail {
 	@Id
-	@GeneratedValue
-	private int userId;
+	private String username;
 	private String firstName;
 	private String lastName;
 	private String email;
@@ -18,12 +17,12 @@ public class UserDetail {
 	private String status;
 	private String isOnline;
 	
-	public int getUserId() {
-		return userId;
+	public String getUserName() {
+		return username;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUserName(String userName) {
+		this.username = userName;
 	}
 
 	public String getFirstName() {

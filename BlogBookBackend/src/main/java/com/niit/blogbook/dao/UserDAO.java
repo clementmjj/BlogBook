@@ -6,5 +6,7 @@ public interface UserDAO {
 	public boolean addUser(UserDetail user);
 	public boolean deleteUser(UserDetail user);
 	public boolean updateUser(UserDetail user);
-	public UserDetail getUser(int userId);
+	public UserDetail getUser(String username);
+	public boolean approveUser(UserDetail user);
+	public boolean rejectUser(UserDetail user);
 }

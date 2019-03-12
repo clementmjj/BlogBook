@@ -47,11 +47,33 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public UserDetail getUser(int userId) {
+	public UserDetail getUser(String username) {
 		Session session = sessionFactory.openSession();
-		UserDetail user = session.get(UserDetail.class, userId);
+		UserDetail user = session.get(UserDetail.class, username);
 		session.close();
 		return user;
+	}
+
+	@Override
+	public boolean approveUser(UserDetail user) {
+		user.setStatus("A");
+		try {
+			sessionFactory.getCurrentSession().update(user);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean rejectUser(UserDetail user) {
+		user.setStatus("NA");
+		try {
+			sessionFactory.getCurrentSession().update(user);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 }

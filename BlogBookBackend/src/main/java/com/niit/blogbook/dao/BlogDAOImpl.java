@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.blogbook.model.Blog;
+import com.niit.blogbook.model.UserDetail;
 
 @Repository("blogDAO")
 @Transactional
@@ -62,7 +63,7 @@ public class BlogDAOImpl implements BlogDAO {
 
 	@Override
 	public boolean rejectBlog(Blog blog) {
-		blog.setStatus("R");
+		blog.setStatus("NA");
 		try {
 			sessionFactory.getCurrentSession().update(blog);
 			return true;
@@ -86,6 +87,51 @@ public class BlogDAOImpl implements BlogDAO {
 		Blog blog = session.get(Blog.class, blogId);
 		session.close();
 		return blog;
+	}
+
+	@Override
+	public boolean incrementLike(Blog blog) {
+		try {
+			
+			blog.setLikes(blog.getLikes() + 1);
+			sessionFactory.getCurrentSession().update(blog);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean incrementDislike(Blog blog) {
+		try {
+			blog.setDislikes(blog.getDislikes() + 1);
+			sessionFactory.getCurrentSession().update(blog);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean decrementLike(Blog blog) {
+		try {
+			blog.setLikes(blog.getLikes() - 1);
+			sessionFactory.getCurrentSession().update(blog);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean decrementDislike(Blog blog) {
+		try {
+			blog.setDislikes(blog.getDislikes() - 1);
+			sessionFactory.getCurrentSession().update(blog);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 }

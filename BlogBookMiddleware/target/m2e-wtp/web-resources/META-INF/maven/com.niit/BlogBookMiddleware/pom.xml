@@ -23,6 +23,11 @@
 			<version>5.1.2.RELEASE</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.niit</groupId>
+			<artifactId>blogbook</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>BlogBookMiddleware</finalName>

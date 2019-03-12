@@ -25,27 +25,42 @@ public class UserDAOTestCase {
 	@Test
 	public void addUserTest() {
 		UserDetail user = new UserDetail();
+		user.setUserName("clements45");
 		user.setFirstName("Clement");
 		user.setLastName("S");
 		user.setEmail("clement@gmail.com");
 		user.setRole("user");
-		user.setIsOnline("True");
-		user.setStatus("Active");
+		user.setIsOnline("False");
+		user.setStatus("NA");
 		assertTrue("Problem adding user", userDAO.addUser(user));
 	}
 
 	@Ignore
 	@Test
 	public void deleteUserTest() {
-		UserDetail user = userDAO.getUser(7);
+		UserDetail user = userDAO.getUser("sss");
 		assertTrue("Problem deleting user", userDAO.deleteUser(user));
 	}
 
 	@Ignore
 	@Test
 	public void updateUserTest() {
-		UserDetail user = userDAO.getUser(6);
+		UserDetail user = userDAO.getUser("sss");
 		user.setRole("Admin");
 		assertTrue("Problem updating user", userDAO.updateUser(user));
+	}
+	
+	@Ignore
+	@Test
+	public void approveUserTest() {
+		UserDetail user = userDAO.getUser("clements");
+		assertTrue("Problem approving user", userDAO.approveUser(user));
+	}
+	
+	@Ignore
+	@Test
+	public void rejectUserTest() {
+		UserDetail user = userDAO.getUser("clements12");
+		assertTrue("Problem rejecting user", userDAO.rejectUser(user));
 	}
 }

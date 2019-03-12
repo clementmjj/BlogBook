@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.niit.blogbook.dao.BlogDAO;
+import com.niit.blogbook.dao.UserDAO;
 import com.niit.blogbook.model.Blog;
 
 import junit.framework.TestCase;
@@ -18,6 +19,7 @@ import junit.framework.TestCase;
 public class BlogDAOTestCase {
 
 	static BlogDAO blogDAO;
+	static UserDAO userDAO;
 
 	@BeforeClass
 	public static void executeFirst() {
@@ -68,7 +70,35 @@ public class BlogDAOTestCase {
 		assertTrue("Problem rejecting blog", blogDAO.rejectBlog(blog));
 	}
 
-	//@Ignore
+	@Ignore
+	@Test
+	public void incrementLikesTest() {
+		Blog blog = blogDAO.getBlog(23);
+		assertTrue("Problem incrementing blog like", blogDAO.incrementLike(blog));
+	}
+
+	@Ignore
+	@Test
+	public void incrementDislikesTest() {
+		Blog blog = blogDAO.getBlog(23);
+		assertTrue("Problem incrementing blog like", blogDAO.incrementDislike(blog));
+	}
+
+	@Ignore
+	@Test
+	public void decrementLikesTest() {
+		Blog blog = blogDAO.getBlog(23);
+		assertTrue("Problem incrementing blog like", blogDAO.decrementLike(blog));
+	}
+
+	@Ignore
+	@Test
+	public void decrementDislikesTest() {
+		Blog blog = blogDAO.getBlog(23);
+		assertTrue("Problem incrementing blog like", blogDAO.decrementDislike(blog));
+	}
+
+	@Ignore
 	@Test
 	public void listBlogsTest() {
 		List<Blog> blogList = blogDAO.getBlogList();
