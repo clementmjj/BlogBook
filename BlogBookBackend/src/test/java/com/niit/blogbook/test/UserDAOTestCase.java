@@ -25,12 +25,13 @@ public class UserDAOTestCase {
 	@Test
 	public void addUserTest() {
 		UserDetail user = new UserDetail();
-		user.setUserName("clements45");
-		user.setFirstName("Clement");
-		user.setLastName("S");
-		user.setEmail("clement@gmail.com");
-		user.setRole("user");
-		user.setIsOnline("False");
+		user.setUsername("user 3");
+		user.setPassword("pass123");
+		user.setFirstName("first name");
+		user.setLastName("last name");
+		user.setEmail("email@gmail.com");
+		user.setRole("student");
+		user.setIsOnline("Off");
 		user.setStatus("NA");
 		assertTrue("Problem adding user", userDAO.addUser(user));
 	}

@@ -1,4 +1,4 @@
-package com.niit.blogbook.dao;
+package com.niit.blogbook.daoImpl;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.niit.blogbook.dao.BlogDAO;
 import com.niit.blogbook.model.Blog;
 import com.niit.blogbook.model.UserDetail;
 
@@ -63,7 +64,7 @@ public class BlogDAOImpl implements BlogDAO {
 
 	@Override
 	public boolean rejectBlog(Blog blog) {
-		blog.setStatus("NA");
+		blog.setStatus("R");
 		try {
 			sessionFactory.getCurrentSession().update(blog);
 			return true;
@@ -92,7 +93,6 @@ public class BlogDAOImpl implements BlogDAO {
 	@Override
 	public boolean incrementLike(Blog blog) {
 		try {
-			
 			blog.setLikes(blog.getLikes() + 1);
 			sessionFactory.getCurrentSession().update(blog);
 			return true;

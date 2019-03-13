@@ -1,4 +1,4 @@
-package com.niit.blogbook.dao;
+package com.niit.blogbook.daoImpl;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.niit.blogbook.dao.UserDAO;
 import com.niit.blogbook.model.Blog;
 import com.niit.blogbook.model.UserDetail;
 
@@ -67,7 +68,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public boolean rejectUser(UserDetail user) {
-		user.setStatus("NA");
+		user.setStatus("R");
 		try {
 			sessionFactory.getCurrentSession().update(user);
 			return true;

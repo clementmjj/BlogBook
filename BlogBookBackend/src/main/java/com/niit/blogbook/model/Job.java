@@ -18,6 +18,7 @@ public class Job {
 	private String jobDesignation;
 	private String qualificationRequired;
 	private String jobStatus;
+	
 	private Date postedDate;
 	
 	

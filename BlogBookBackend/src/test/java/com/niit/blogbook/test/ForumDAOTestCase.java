@@ -31,9 +31,9 @@ public class ForumDAOTestCase {
 	{
 		Forum forum=new Forum();
 		forum.setCreatedDate(new java.util.Date());
-		forum.setForumTitle("Indo-Pak War");
-		forum.setForumContent("Lets talk about the ongoing war between India and Pakistan");
-		forum.setForumStatus("Active");
+		forum.setForumTitle("Forum 3");
+		forum.setForumContent("Content of forum 3");
+		forum.setForumStatus("NA");
 		forum.setUserId(735);
 		assertTrue("Problem adding forum", forumDAO.addForum(forum));
 	}

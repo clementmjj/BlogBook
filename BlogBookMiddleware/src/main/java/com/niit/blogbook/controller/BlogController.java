@@ -19,23 +19,15 @@ public class BlogController {
 	@Autowired
 	BlogDAO blogDAO;
 
-	@GetMapping(value = "/getBlogList")
-	public ResponseEntity<List<Blog>> getBlogList() {
-		List<Blog> blogList = blogDAO.getBlogList();
-		if (blogList.size() > 0) {
-			return new ResponseEntity<List<Blog>>(blogList, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<List<Blog>>(blogList, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
 	@PostMapping(value = "/addBlog")
 	public ResponseEntity<String> addBlog(@RequestBody Blog blog) {
+		// the following line is just for testing. delete it after completing frontend
 		blog.setCreatedDate(new java.util.Date());
+
 		if (blogDAO.addBlog(blog)) {
-			return new ResponseEntity<String>("Successfull", HttpStatus.OK);
+			return new ResponseEntity<String>("Successful", HttpStatus.OK);
 		} else {
-			return new ResponseEntity<String>("Unsuccessfull", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -43,9 +35,19 @@ public class BlogController {
 	public ResponseEntity<String> deleteBlog(@PathVariable("blogId") int blogId) {
 		Blog blog = blogDAO.getBlog(blogId);
 		if (blogDAO.deleteBlog(blog)) {
-			return new ResponseEntity<String>("Successfull", HttpStatus.OK);
+			return new ResponseEntity<String>("Successful", HttpStatus.OK);
 		} else {
-			return new ResponseEntity<String>("Unsuccessfull", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@PostMapping(value = "/updateBlog")
+	public ResponseEntity<String> updateBlog(@RequestBody Blog blog) {
+		blog.setCreatedDate(blogDAO.getBlog(blog.getBlogId()).getCreatedDate());
+		if (blogDAO.updateBlog(blog)) {
+			return new ResponseEntity<String>("Successful", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -53,9 +55,9 @@ public class BlogController {
 	public ResponseEntity<String> approveBlog(@PathVariable("blogId") int blogId) {
 		Blog blog = blogDAO.getBlog(blogId);
 		if (blogDAO.approveBlog(blog)) {
-			return new ResponseEntity<String>("Successfull", HttpStatus.OK);
+			return new ResponseEntity<String>("Successful", HttpStatus.OK);
 		} else {
-			return new ResponseEntity<String>("Unsuccessfull", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -63,29 +65,38 @@ public class BlogController {
 	public ResponseEntity<String> rejectBlog(@PathVariable("blogId") int blogId) {
 		Blog blog = blogDAO.getBlog(blogId);
 		if (blogDAO.rejectBlog(blog)) {
-			return new ResponseEntity<String>("Successfull", HttpStatus.OK);
+			return new ResponseEntity<String>("Successful", HttpStatus.OK);
 		} else {
-			return new ResponseEntity<String>("Unsuccessfull", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@PostMapping(value = "/updateBlog")
-	public ResponseEntity<String> updateBlog(@RequestBody Blog blog) {
-		blog.setCreatedDate(new java.util.Date());
-		if (blogDAO.updateBlog(blog)) {
-			return new ResponseEntity<String>("Successfull", HttpStatus.OK);
+	@GetMapping(value = "/getBlogList")
+	public ResponseEntity<List<Blog>> getBlogList() {
+		List<Blog> blogList = blogDAO.getBlogList();
+		if (blogList != null) {
+			return new ResponseEntity<List<Blog>>(blogList, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<String>("Unsuccessfull", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<List<Blog>>(blogList, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+
+	@GetMapping(value = "/getBlog/{blogId}")
+	public ResponseEntity<Blog> getBlog(@PathVariable("blogId") int blogId) {
+		Blog blog = blogDAO.getBlog(blogId);
+		if (blog != null)
+			return new ResponseEntity<Blog>(blog, HttpStatus.OK);
+		else
+			return new ResponseEntity<Blog>(blog, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@GetMapping(value = "/incrementLike/{blogId}")
 	public ResponseEntity<String> incrementLike(@PathVariable("blogId") int blogId) {
 		Blog blog = blogDAO.getBlog(blogId);
 		if (blogDAO.incrementLike(blog)) {
-			return new ResponseEntity<String>("Successfull", HttpStatus.OK);
+			return new ResponseEntity<String>("Successful", HttpStatus.OK);
 		} else {
-			return new ResponseEntity<String>("Unsuccessfull", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -93,9 +104,9 @@ public class BlogController {
 	public ResponseEntity<String> incrementDislike(@PathVariable("blogId") int blogId) {
 		Blog blog = blogDAO.getBlog(blogId);
 		if (blogDAO.incrementDislike(blog)) {
-			return new ResponseEntity<String>("Successfull", HttpStatus.OK);
+			return new ResponseEntity<String>("Successful", HttpStatus.OK);
 		} else {
-			return new ResponseEntity<String>("Unsuccessfull", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -103,9 +114,9 @@ public class BlogController {
 	public ResponseEntity<String> decrementLike(@PathVariable("blogId") int blogId) {
 		Blog blog = blogDAO.getBlog(blogId);
 		if (blogDAO.decrementLike(blog)) {
-			return new ResponseEntity<String>("Successfull", HttpStatus.OK);
+			return new ResponseEntity<String>("Successful", HttpStatus.OK);
 		} else {
-			return new ResponseEntity<String>("Unsuccessfull", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -113,18 +124,9 @@ public class BlogController {
 	public ResponseEntity<String> decrementDislike(@PathVariable("blogId") int blogId) {
 		Blog blog = blogDAO.getBlog(blogId);
 		if (blogDAO.decrementDislike(blog)) {
-			return new ResponseEntity<String>("Successfull", HttpStatus.OK);
+			return new ResponseEntity<String>("Successful", HttpStatus.OK);
 		} else {
-			return new ResponseEntity<String>("Unsuccessfull", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-	}
-
-	@GetMapping(value = "/getBlog/{blogId}")
-	public ResponseEntity<String> getBlog(@PathVariable("blogId") int blogId) {
-		Blog blog = blogDAO.getBlog(blogId);
-		if (blog != null)
-			return new ResponseEntity<String>("Successfull", HttpStatus.OK);
-		else
-			return new ResponseEntity<String>("Unsuccessfull", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

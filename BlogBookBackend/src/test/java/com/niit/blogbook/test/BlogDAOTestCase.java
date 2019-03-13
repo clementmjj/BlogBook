@@ -33,8 +33,8 @@ public class BlogDAOTestCase {
 	@Test
 	public void addBlogTest() {
 		Blog blog = new Blog();
-		blog.setBlogTitle("Blog 1");
-		blog.setBlogContent("This is the content of blog 1");
+		blog.setBlogTitle("Blog 3");
+		blog.setBlogContent("This is the content of blog 3");
 		blog.setCreatedDate(new Date());
 		blog.setStatus("NA");
 		blog.setUserId(8347);
@@ -48,11 +48,11 @@ public class BlogDAOTestCase {
 		assertTrue("Problem deleting blog", blogDAO.deleteBlog(blog));
 	}
 
-	@Ignore
+	//@Ignore
 	@Test
 	public void updateBlogTest() {
-		Blog blog = blogDAO.getBlog(000);
-		blog.setBlogContent("Content of blog1 updated");
+		Blog blog = blogDAO.getBlog(41);
+		blog.setCreatedDate(new java.util.Date());
 		assertTrue("Problem updating blog", blogDAO.updateBlog(blog));
 	}
 

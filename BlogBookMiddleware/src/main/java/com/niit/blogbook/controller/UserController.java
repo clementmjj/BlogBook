@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.niit.blogbook.dao.UserDAO;
+import com.niit.blogbook.model.Blog;
 import com.niit.blogbook.model.UserDetail;
 
 @RestController
@@ -51,6 +52,27 @@ public class UserController {
 		if (userDAO.rejectUser(user))
 			return new ResponseEntity<String>("Successfull", HttpStatus.OK);
 		else
+			return new ResponseEntity<String>("Unsuccessfull", HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	@PostMapping(value = "/updateUser")
+	public ResponseEntity<String> updateUser(@RequestBody UserDetail user) {
+		if (userDAO.updateUser(user)) {
+			return new ResponseEntity<String>("Successfull", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("Unsuccessfull", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@PostMapping(value = "/checkLogin")
+	public ResponseEntity<String> checkLogin(@RequestBody UserDetail user) {
+		UserDetail tempUser = userDAO.getUser(user.getUsername());
+		if (tempUser != null) {
+			if (tempUser.getPassword().equals(user.getPassword()) && tempUser.getStatus().equals(user.getStatus()))
+				return new ResponseEntity<String>("Successfull", HttpStatus.OK);
+			else
+				return new ResponseEntity<String>("Unsuccessfull", HttpStatus.INTERNAL_SERVER_ERROR);
+		} else
 			return new ResponseEntity<String>("Unsuccessfull", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

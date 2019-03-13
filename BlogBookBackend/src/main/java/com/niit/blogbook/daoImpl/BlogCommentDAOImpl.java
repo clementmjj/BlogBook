@@ -1,4 +1,4 @@
-package com.niit.blogbook.dao;
+package com.niit.blogbook.daoImpl;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.niit.blogbook.dao.BlogCommentDAO;
 import com.niit.blogbook.model.Blog;
 import com.niit.blogbook.model.BlogComment;
 

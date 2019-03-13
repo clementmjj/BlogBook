@@ -27,8 +27,8 @@ public class JobDAOTestCase {
 	@Test
 	public void addJobTest() {
 		Job job = new Job();
-		job.setJobDesignation("IT Professional");
-		job.setJobDescription("Professional IT Engineer with minimum 2 years of experience.");
+		job.setJobDesignation("Job 3");
+		job.setJobDescription("Description of job 3");
 		job.setJobProfile("IT");
 		job.setJobStatus("Open");
 		job.setPostedDate(new java.util.Date());
