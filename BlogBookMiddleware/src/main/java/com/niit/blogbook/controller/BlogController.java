@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
 import com.niit.blogbook.dao.BlogDAO;
 import com.niit.blogbook.model.Blog;
 
@@ -20,14 +21,15 @@ public class BlogController {
 	BlogDAO blogDAO;
 
 	@PostMapping(value = "/addBlog")
-	public ResponseEntity<String> addBlog(@RequestBody Blog blog) {
+	public String addBlog(@RequestBody Blog blog) {
 		// the following line is just for testing. delete it after completing frontend
 		blog.setCreatedDate(new java.util.Date());
 
 		if (blogDAO.addBlog(blog)) {
-			return new ResponseEntity<String>("Successful", HttpStatus.OK);
+			Gson gson = new Gson();
+			return gson.toJson(blog);
 		} else {
-			return new ResponseEntity<String>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
+			return "Error adding blog";
 		}
 	}
 

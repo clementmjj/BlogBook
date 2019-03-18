@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>BlogBook - Homepage</title>
+</head>
+<body ng-app="myApp">
+	<table>
+		<tr>
+			<td><a href="#/">Home</a> |</td>
+			<td ng-show="currentUser==undefined"><a href="#/login">Login</a>
+				|</td>
+			<td ng-show="currentUser==undefined"><a href="#/register">Register</a>
+				|</td>
+			<td><a href="#/aboutus">About Us</a></td>
+			<td ng-hide="currentUser==undefined">| <a
+				ng-controller="UserController" ng-click="logout()" href="">Logout</a></td>
+		</tr>
+	</table>
+
+	<div ng-hide="currentUser==undefined">
+		<p>Welcome {{currentUser.firstName}}</p>
+		<table>
+			<tr>
+				<td><b>Blog Menu: </b></td>
+				<td><a href="#/addBlog">Add Blog</a></td>
+				<td><a ng-controller="BlogController" href="#/blogList")>Blog List</a></td>
+			</tr>
+		</table>
+	</div>
+
+	<div ng-view></div>
+
+	<script type="text/javascript"
+		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.1/angular.min.js"></script>
+	<script type="text/javascript"
+		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.1/angular-route.js"></script>
+	<script type="text/javascript"
+		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.1/angular-cookies.js"></script>
+	<script type="text/javascript" src="RouteConfig.js"></script>
+	<script type="text/javascript" src="Controllers/UserController.js"></script>
+	<script type="text/javascript" src="Controllers/BlogController.js"></script>
+</body>
+</html>

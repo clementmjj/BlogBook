@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
 import com.niit.blogbook.dao.UserDAO;
 import com.niit.blogbook.model.Blog;
 import com.niit.blogbook.model.UserDetail;
@@ -19,11 +20,12 @@ public class UserController {
 	UserDAO userDAO;
 
 	@PostMapping(value = "/registerUser")
-	public ResponseEntity<String> registerUser(@RequestBody UserDetail user) {
-		if (userDAO.addUser(user))
-			return new ResponseEntity<String>("Successfull", HttpStatus.OK);
-		else
-			return new ResponseEntity<String>("Unsuccessfull", HttpStatus.INTERNAL_SERVER_ERROR);
+	public String registerUser(@RequestBody UserDetail user) {
+		if (userDAO.addUser(user)) {
+			Gson gson = new Gson();
+			return gson.toJson(user);
+		} else
+			return "Registration unscccessful";
 
 	}
 
@@ -65,14 +67,24 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/checkLogin")
-	public ResponseEntity<String> checkLogin(@RequestBody UserDetail user) {
+	public String checkLogin(@RequestBody UserDetail user) {
 		UserDetail tempUser = userDAO.getUser(user.getUsername());
 		if (tempUser != null) {
-			if (tempUser.getPassword().equals(user.getPassword()) && tempUser.getStatus().equals(user.getStatus()))
-				return new ResponseEntity<String>("Successfull", HttpStatus.OK);
-			else
-				return new ResponseEntity<String>("Unsuccessfull", HttpStatus.INTERNAL_SERVER_ERROR);
+			if (tempUser.getPassword().equals(user.getPassword())) {
+				Gson gson = new Gson();
+				return gson.toJson(user);
+			}
+			return "Incorrect password";
 		} else
-			return new ResponseEntity<String>("Unsuccessfull", HttpStatus.INTERNAL_SERVER_ERROR);
+			return "Invalid user";
+	}
+
+	@GetMapping(value = "/getUser/{username}")
+	public ResponseEntity<UserDetail> getUser(@PathVariable("username") String username) {
+		UserDetail user = userDAO.getUser(username);
+		if (user != null)
+			return new ResponseEntity<UserDetail>(user, HttpStatus.OK);
+		else
+			return new ResponseEntity<UserDetail>(user, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

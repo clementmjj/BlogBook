@@ -16,7 +16,7 @@ public class Blog {
 	private int blogId;
 	private String blogTitle;
 	private String blogContent;
-	private int userId;
+	private String username;
 	private Date createdDate;
 	private String status;
 	private int likes;
@@ -54,12 +54,12 @@ public class Blog {
 		this.blogContent = blogContent;
 	}
 
-	public int getUserId() {
-		return userId;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public Date getCreatedDate() {

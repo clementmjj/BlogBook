@@ -1,0 +1,9 @@
+<div ng-controller="BlogController">
+
+	<div ng-repeat="blog in blogList">
+		<a href="#/showBlog/{{blog.blogId}}">{{blog.blogTitle}}</a>
+	</div>
+
+	<p ng-show="blogList==undefined">ddd</p>
+</div>
+

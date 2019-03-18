@@ -17,8 +17,7 @@ public class UserDetail {
 	private String role;
 	private String status;
 	private String isOnline;
-	
-	
+
 	public String getUsername() {
 		return username;
 	}

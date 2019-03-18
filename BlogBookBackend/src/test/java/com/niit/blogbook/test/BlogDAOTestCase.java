@@ -37,7 +37,7 @@ public class BlogDAOTestCase {
 		blog.setBlogContent("This is the content of blog 3");
 		blog.setCreatedDate(new Date());
 		blog.setStatus("NA");
-		blog.setUserId(8347);
+		blog.setUsername("sss");
 		assertTrue("Problem adding blog", blogDAO.addBlog(blog));
 	}
 
