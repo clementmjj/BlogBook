@@ -1,5 +1,23 @@
-Show blog
 <div ng-controller="BlogController">
-	<h4>{{blog.blogTitle}}</h4>
-	<p>{{blog.blogContent}}</p>
+	<h4>{{blogDetail.blogTitle}}</h4>
+	<p>{{blogDetail.blogContent}}</p>
+	<input type="button" value="Like {{blogDetail.likes}}"
+		ng-click="incrementLike(blogDetail.blogId)" /> <input type="button"
+		value="Dislike {{blogDetail.dislikes}}"
+		ng-click="incrementDislike(blogDetail.blogId)" />
+	<div>
+		<h4>Comments</h4>
+		<table>
+			<tr>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>{{currentUser.username}}</td>
+				<td><input type="text" name="commentMessage"
+					ng-model="blogComment.commentMessage" /><input type="button"
+					value="Add" ng-click="addComment()" /></td>
+			</tr>
+		</table>
+	</div>
 </div>

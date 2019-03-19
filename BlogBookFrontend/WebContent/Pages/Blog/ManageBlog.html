@@ -1,27 +1,24 @@
 <div ng-controller="BlogController">
-
-	<div ng-repeat="blog in blogList">
-		<a ng-click="showBlog(blog.blogId)" href="">{{blog.blogTitle}}</a>
-	</div>
-
-	<h4>My Blogs</h4>
 	<table>
 		<tr>
 			<th>Blog Id</th>
 			<th>Blog name</th>
 			<th>Created by</th>
 			<th>Created on</th>
-			<th>Delete</th>
+			<th>Approve / Reject</th>
+			<th>Delete blog</th>
 		</tr>
-		<tr ng-repeat="blog in blogList"
-			ng-show="blog.username==currentUser.username">
+		<tr ng-repeat="blog in blogList">
 			<td>{{blog.blogId}}</td>
 			<td>{{blog.blogTitle}}</td>
 			<td>{{blog.username}}</td>
 			<td>{{blog.createdDate}}</td>
+			<td><input type="button" value="Approve"
+				ng-hide="blog.status=='A'" ng-click="approveBlog(blog.blogId)" /> <input
+				type="button" value="Reject" ng-hide="blog.status=='R'"
+				ng-click="rejectBlog(blog.blogId)" /></td>
 			<td><input type="button" value="Detete"
 				ng-click="deleteBlog(blog.blogId)" /></td>
 		</tr>
 	</table>
 </div>
-

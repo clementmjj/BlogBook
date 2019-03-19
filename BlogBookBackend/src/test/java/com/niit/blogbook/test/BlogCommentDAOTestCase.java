@@ -30,7 +30,7 @@ public class BlogCommentDAOTestCase {
 		blogComment.setBlogId(1);
 		blogComment.setCommentDate(new java.util.Date());
 		blogComment.setCommentMessage("My first comment");
-		blogComment.setUserId(345);
+		blogComment.setUsername("sss");
 		assertTrue("Problem adding blog comment", blogCommentDAO.addComment(blogComment));
 	}
 	
@@ -52,7 +52,7 @@ public class BlogCommentDAOTestCase {
 	@Ignore
 	@Test
 	public void listBlogCommentsTest() {
-		List<BlogComment> blogCommentList = blogCommentDAO.getCommentList();
+		List<BlogComment> blogCommentList = blogCommentDAO.getBlogCommentList(74);
 		for(BlogComment bc : blogCommentList)
 		{
 			System.out.print("\n"+bc.getCommentId()+"\t");

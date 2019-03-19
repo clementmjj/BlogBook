@@ -51,9 +51,9 @@ public class BlogCommentDAOImpl implements BlogCommentDAO {
 	}
 
 	@Override
-	public List<BlogComment> getCommentList() {
+	public List<BlogComment> getBlogCommentList(int blogId) {
 		Session session = sessionFactory.openSession();
-		Query query = session.createQuery("from BlogComment");
+		Query query = session.createQuery("from BlogComment WHERE blogId = '" + blogId + "'");
 		List<BlogComment> blogCommentList = query.list();
 		session.close();
 		return blogCommentList;

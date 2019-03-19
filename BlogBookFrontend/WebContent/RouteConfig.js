@@ -10,9 +10,11 @@ myApp.config(function($routeProvider) {
 		templateUrl : "Pages/Blog/AddBlog.html",
 	}).when("/blogList", {
 		templateUrl : "Pages/Blog/BlogList.html"
-	}).when("/showBlog/**", {
+	}).when("/showBlog", {
 		templateUrl : "Pages/Blog/Blog.html"
-	});
+	}).when("/manageBlog", {
+		templateUrl : "Pages/Blog/ManageBlog.html"
+	});;
 });
 
 myApp.run(function($rootScope, $cookieStore) {

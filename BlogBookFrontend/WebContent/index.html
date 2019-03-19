@@ -22,7 +22,11 @@
 			<tr>
 				<td><b>Blog Menu: </b></td>
 				<td><a href="#/addBlog">Add Blog</a></td>
-				<td><a ng-controller="BlogController" href="#/blogList")>Blog List</a></td>
+				<td><a ng-controller="BlogController" href="#/blogList" )>Blog
+						List</a></td>
+				<td><a ng-controller="BlogController"
+					ng-show="currentUser.role=='Admin'" href="#/manageBlog" )>Manage
+						Blog</a></td>
 			</tr>
 		</table>
 	</div>

@@ -17,7 +17,7 @@ myApp.controller("UserController", function($scope, $http, $location,
 		$scope.user.status = 'A';
 		$scope.user.isOnline = 'Off';
 		console.log($scope.user);
-		$http.post('http://localhost:8081/BlogBookMiddleware/registerUser',
+		$http.post('http://localhost:8079/BlogBookMiddleware/registerUser',
 				$scope.user).then(function(response) {
 			console.log('Registered');
 			$location.path('/login');
@@ -26,12 +26,12 @@ myApp.controller("UserController", function($scope, $http, $location,
 
 	$scope.loginCheck = function() {
 		console.log('Logging in user...');
-		$http.post('http://localhost:8081/BlogBookMiddleware/checkLogin',
+		$http.post('http://localhost:8079/BlogBookMiddleware/checkLogin',
 				$scope.user).then(
 				function(response) {
 					console.log('login successfull');
 					$http.get(
-							'http://localhost:8081/BlogBookMiddleware/getUser/'
+							'http://localhost:8079/BlogBookMiddleware/getUser/'
 									+ $scope.user.username).then(
 							function(response) {
 								$rootScope.currentUser = response.data;

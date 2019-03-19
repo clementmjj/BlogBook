@@ -37,7 +37,7 @@ public class BlogDAOTestCase {
 		blog.setBlogContent("This is the content of blog 3");
 		blog.setCreatedDate(new Date());
 		blog.setStatus("NA");
-		blog.setUsername("sss");
+		blog.setUsername("ddd");
 		assertTrue("Problem adding blog", blogDAO.addBlog(blog));
 	}
 
@@ -107,5 +107,13 @@ public class BlogDAOTestCase {
 			System.out.print(blog.getBlogTitle() + "\t");
 			System.out.println(blog.getBlogContent() + "\n");
 		}
+	}
+	
+	//@Ignore
+	@Test
+	public void getBlogTest() {
+		Blog blog=blogDAO.getBlog(72);
+		System.out.println(blog.getBlogId());
+		System.out.println(blog.getCreatedDate().toString());
 	}
 }

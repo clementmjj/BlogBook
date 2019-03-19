@@ -16,7 +16,7 @@ public class BlogComment {
 	private int blogId;
 	private String commentMessage;
 	private Date commentDate;
-	private int userId;
+	private String username;
 
 	public int getCommentId() {
 		return commentId;
@@ -50,12 +50,12 @@ public class BlogComment {
 		this.commentDate = commentDate;
 	}
 
-	public int getUserId() {
-		return userId;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }
