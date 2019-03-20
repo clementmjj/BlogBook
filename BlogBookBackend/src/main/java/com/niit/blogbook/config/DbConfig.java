@@ -50,7 +50,6 @@ public class DbConfig {
 		factoryBuilder.addAnnotatedClass(BlogComment.class);
 		factoryBuilder.addAnnotatedClass(Job.class);
 		factoryBuilder.addAnnotatedClass(Forum.class);
-		factoryBuilder.addAnnotatedClass(ForumComment.class);
 
 		SessionFactory sessionFactory = factoryBuilder.buildSessionFactory();
 		System.out.println("---SessionFactory created---");

@@ -17,21 +17,25 @@ myApp.controller("UserController", function($scope, $http, $location,
 		$scope.user.status = 'A';
 		$scope.user.isOnline = 'Off';
 		console.log($scope.user);
-		$http.post('http://localhost:8079/BlogBookMiddleware/registerUser',
-				$scope.user).then(function(response) {
-			console.log('Registered');
-			$location.path('/login');
-		})
+		$http.post(
+				'http://localhost:' + location.port
+						+ '/BlogBookMiddleware/registerUser', $scope.user)
+				.then(function(response) {
+					console.log('Registered');
+					$location.path('/login');
+				})
 	}
 
 	$scope.loginCheck = function() {
 		console.log('Logging in user...');
-		$http.post('http://localhost:8079/BlogBookMiddleware/checkLogin',
-				$scope.user).then(
+		$http.post(
+				'http://localhost:' + location.port
+						+ '/BlogBookMiddleware/checkLogin', $scope.user).then(
 				function(response) {
 					console.log('login successfull');
 					$http.get(
-							'http://localhost:8079/BlogBookMiddleware/getUser/'
+							'http://localhost:' + location.port
+									+ '/BlogBookMiddleware/getUser/'
 									+ $scope.user.username).then(
 							function(response) {
 								$rootScope.currentUser = response.data;

@@ -34,12 +34,15 @@ public class BlogController {
 	}
 
 	@GetMapping(value = "/deleteBlog/{blogId}")
-	public ResponseEntity<String> deleteBlog(@PathVariable("blogId") int blogId) {
+	public String deleteBlog(@PathVariable("blogId") int blogId) {
 		Blog blog = blogDAO.getBlog(blogId);
 		if (blogDAO.deleteBlog(blog)) {
-			return new ResponseEntity<String>("Successful", HttpStatus.OK);
+			{
+				Gson gson = new Gson();
+				return gson.toJson(blog);
+			}
 		} else {
-			return new ResponseEntity<String>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
+			return "Error deleting blog";
 		}
 	}
 
@@ -54,22 +57,28 @@ public class BlogController {
 	}
 
 	@GetMapping(value = "/approveBlog/{blogId}")
-	public ResponseEntity<String> approveBlog(@PathVariable("blogId") int blogId) {
+	public String approveBlog(@PathVariable("blogId") int blogId) {
 		Blog blog = blogDAO.getBlog(blogId);
 		if (blogDAO.approveBlog(blog)) {
-			return new ResponseEntity<String>("Successful", HttpStatus.OK);
+			{
+				Gson gson = new Gson();
+				return gson.toJson(blog);
+			}
 		} else {
-			return new ResponseEntity<String>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
+			return "Error approving blog";
 		}
 	}
 
 	@GetMapping(value = "/rejectBlog/{blogId}")
-	public ResponseEntity<String> rejectBlog(@PathVariable("blogId") int blogId) {
+	public String rejectBlog(@PathVariable("blogId") int blogId) {
 		Blog blog = blogDAO.getBlog(blogId);
 		if (blogDAO.rejectBlog(blog)) {
-			return new ResponseEntity<String>("Successful", HttpStatus.OK);
+			{
+				Gson gson = new Gson();
+				return gson.toJson(blog);
+			}
 		} else {
-			return new ResponseEntity<String>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
+			return "Error rejecting blog";
 		}
 	}
 

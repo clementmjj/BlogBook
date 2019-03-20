@@ -26,7 +26,6 @@ public class BlogCommentController {
 	public String addBlogComment(@RequestBody BlogComment blogComment) {
 		// the following line is just for testing. delete it after completing frontend
 		blogComment.setCommentDate(new java.util.Date());
-
 		if (blogCommentDAO.addComment(blogComment)) {
 			Gson gson = new Gson();
 			return gson.toJson(blogComment);
@@ -64,13 +63,16 @@ public class BlogCommentController {
 			return new ResponseEntity<BlogComment>(blogComment, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	@GetMapping(value = "/getBlogCommentList")
-	public ResponseEntity<List<BlogComment>> getBlogCommentList(int blogId) {
+	@GetMapping(value = "/getBlogCommentList/{blogId}")
+	public String getBlogCommentList(@PathVariable("blogId") int blogId) {
 		List<BlogComment> blogCommentList = blogCommentDAO.getBlogCommentList(blogId);
 		if (blogCommentList != null) {
-			return new ResponseEntity<List<BlogComment>>(blogCommentList, HttpStatus.OK);
+			{
+				Gson gson = new Gson();
+				return gson.toJson(blogCommentList);
+			}
 		} else {
-			return new ResponseEntity<List<BlogComment>>(blogCommentList, HttpStatus.INTERNAL_SERVER_ERROR);
+			return "Blog comment list is empty or error retrieving the list";
 		}
 	}
 }

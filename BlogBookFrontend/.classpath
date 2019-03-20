@@ -13,7 +13,5 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/BlogBookBackend"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/BlogBookMiddleware"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

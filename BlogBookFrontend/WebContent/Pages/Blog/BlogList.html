@@ -1,25 +1,24 @@
-<div ng-controller="BlogController">
+<div ng-controller="BlogController" ng-init="getBlogList()">
 
-	<div ng-repeat="blog in blogList">
-		<a ng-click="showBlog(blog.blogId)" href="">{{blog.blogTitle}}</a>
-	</div>
-
-	<h4>My Blogs</h4>
+	<ol>
+		<li ng-repeat="blog in blogList"><a
+			ng-click="showBlog(blog.blogId)" href="#/showBlog">{{blog.blogTitle}}</a></li>
+	</ol>
+	<h4></h4>
 	<table>
 		<tr>
-			<th>Blog Id</th>
-			<th>Blog name</th>
-			<th>Created by</th>
+			<th>My Blogs</th>
+		</tr>
+		<tr>
+			<th>Blog Title</th>
 			<th>Created on</th>
 			<th>Delete</th>
 		</tr>
 		<tr ng-repeat="blog in blogList"
 			ng-show="blog.username==currentUser.username">
-			<td>{{blog.blogId}}</td>
-			<td>{{blog.blogTitle}}</td>
-			<td>{{blog.username}}</td>
+			<td><a ng-click="showBlog(blog.blogId)" href="#/showBlog">{{blog.blogTitle}}</a></td>
 			<td>{{blog.createdDate}}</td>
-			<td><input type="button" value="Detete"
+			<td><input type="button" value="Delete"
 				ng-click="deleteBlog(blog.blogId)" /></td>
 		</tr>
 	</table>

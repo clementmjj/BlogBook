@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table
 public class BlogComment {
@@ -15,6 +17,7 @@ public class BlogComment {
 	private int commentId;
 	private int blogId;
 	private String commentMessage;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy  hh:mm:ss a")
 	private Date commentDate;
 	private String username;
 

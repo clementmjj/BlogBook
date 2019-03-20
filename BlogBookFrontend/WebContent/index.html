@@ -3,6 +3,8 @@
 <title>BlogBook - Homepage</title>
 </head>
 <body ng-app="myApp">
+	<p ng-hide="currentUser==undefined">Welcome
+		{{currentUser.firstName}}</p>
 	<table>
 		<tr>
 			<td><a href="#/">Home</a> |</td>
@@ -17,15 +19,14 @@
 	</table>
 
 	<div ng-hide="currentUser==undefined">
-		<p>Welcome {{currentUser.firstName}}</p>
 		<table>
 			<tr>
-				<td><b>Blog Menu: </b></td>
-				<td><a href="#/addBlog">Add Blog</a></td>
-				<td><a ng-controller="BlogController" href="#/blogList" )>Blog
-						List</a></td>
+				<th>Blog Menu </th>
+				<td><a href="#/addBlog">Add Blog | </a></td>
+				<td><a ng-controller="BlogController" href="#/blogList" href="">Blog
+						List | </a></td>
 				<td><a ng-controller="BlogController"
-					ng-show="currentUser.role=='Admin'" href="#/manageBlog" )>Manage
+					ng-show="currentUser.role=='admin'" href="#/manageBlog">Manage
 						Blog</a></td>
 			</tr>
 		</table>
@@ -42,5 +43,6 @@
 	<script type="text/javascript" src="RouteConfig.js"></script>
 	<script type="text/javascript" src="Controllers/UserController.js"></script>
 	<script type="text/javascript" src="Controllers/BlogController.js"></script>
+	<script type="text/javascript" src="Controllers/BlogCommentController.js"></script>
 </body>
 </html>

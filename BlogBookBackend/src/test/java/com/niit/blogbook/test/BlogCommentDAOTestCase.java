@@ -52,7 +52,7 @@ public class BlogCommentDAOTestCase {
 	@Ignore
 	@Test
 	public void listBlogCommentsTest() {
-		List<BlogComment> blogCommentList = blogCommentDAO.getBlogCommentList(74);
+		List<BlogComment> blogCommentList = blogCommentDAO.getBlogCommentList(95);
 		for(BlogComment bc : blogCommentList)
 		{
 			System.out.print("\n"+bc.getCommentId()+"\t");

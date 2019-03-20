@@ -14,7 +14,8 @@ myApp.config(function($routeProvider) {
 		templateUrl : "Pages/Blog/Blog.html"
 	}).when("/manageBlog", {
 		templateUrl : "Pages/Blog/ManageBlog.html"
-	});;
+	});
+	
 });
 
 myApp.run(function($rootScope, $cookieStore) {
