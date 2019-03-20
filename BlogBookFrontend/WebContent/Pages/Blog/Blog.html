@@ -20,11 +20,17 @@ Show Blog page
 		</tr>
 		<tr ng-repeat="blogComment in blogCommentList">
 			<td>{{blogComment.username}}</td>
-			<td>{{blogComment.commentMessage}}</td>
+			<td id="commentCell{{blogComment.commentId}}"><p id="blogComment{{blogComment.commentId}}">{{blogComment.commentMessage}}</p></td>
+			<td ng-show="currentUser.username==blogComment.username"><input
+				id="editCommentBtn{{blogComment.commentId}}" type="button" value="Edit"
+				ng-click="editBlogComment(blogComment.commentId)" /></td>
+			<td ng-show="currentUser.username==blogComment.username"><input
+				type="button" value="Delete"
+				ng-click="deleteBlogComment(blogComment.commentId)" /></td>
 		</tr>
 		<tr>
-			<td>{{currentUser.username}}</td>
-			<td><textarea type="text" name="commentMessage"
+			<td></td>
+			<td><textarea name="commentMessage"
 					ng-model="blogComment.commentMessage"></textarea><input
 				type="button" value="Add" ng-click="addBlogComment()" /></td>
 		</tr>

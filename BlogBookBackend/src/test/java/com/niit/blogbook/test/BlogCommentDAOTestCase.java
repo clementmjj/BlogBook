@@ -44,7 +44,7 @@ public class BlogCommentDAOTestCase {
 	@Ignore
 	@Test
 	public void editBlogCommentTest() {
-		BlogComment blogComment = blogCommentDAO.getBlogComment(3);
+		BlogComment blogComment = blogCommentDAO.getBlogComment(80);
 		blogComment.setCommentMessage("Edited comment");
 		assertTrue("Problem editing blog comment", blogCommentDAO.editComment(blogComment));
 	}

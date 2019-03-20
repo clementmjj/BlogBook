@@ -35,22 +35,26 @@ public class BlogCommentController {
 	}
 
 	@GetMapping(value = "/deleteBlogComment/{blogCommentId}")
-	public ResponseEntity<String> deleteBlogComment(@PathVariable("blogCommentId") int blogCommentId) {
+	public String deleteBlogComment(@PathVariable("blogCommentId") int blogCommentId) {
 		BlogComment blogComment = blogCommentDAO.getBlogComment(blogCommentId);
 		if (blogCommentDAO.deleteComment(blogComment)) {
-			return new ResponseEntity<String>("Successful", HttpStatus.OK);
+			Gson gson = new Gson();
+			return gson.toJson(blogComment);
 		} else {
-			return new ResponseEntity<String>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
+			return "Error deleting blog comment";
 		}
 	}
 
-	@PostMapping(value = "/updateBlogComment")
-	public ResponseEntity<String> updateBlogComment(@RequestBody BlogComment blogComment) {
+	@PostMapping(value = "/editBlogComment")
+	public String editBlogComment(@RequestBody BlogComment blogComment) {
 		blogComment.setCommentDate(blogCommentDAO.getBlogComment(blogComment.getCommentId()).getCommentDate());
 		if (blogCommentDAO.editComment(blogComment)) {
-			return new ResponseEntity<String>("Successful", HttpStatus.OK);
+			{
+				Gson gson = new Gson();
+				return gson.toJson(blogComment);
+			}
 		} else {
-			return new ResponseEntity<String>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
+			return "Error in editing blog comment";
 		}
 	}
 
