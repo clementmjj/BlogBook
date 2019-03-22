@@ -53,6 +53,41 @@ public class ForumController {
 		} else
 			return "Error updating forum";
 	}
+	
+	@GetMapping(value = "/approveForum/{forumId}")
+	public String approveForum(@PathVariable("forumId") int forumId) {
+		Forum forum = forumDAO.getForum(forumId);
+		if (forumDAO.approveForum(forum)) {
+			{
+				Gson gson = new Gson();
+				return gson.toJson(forum);
+			}
+		} else {
+			return "Error approving forum";
+		}
+	}
+
+	@GetMapping(value = "/rejectForum/{forumId}")
+	public String rejectForum(@PathVariable("forumId") int forumId) {
+		Forum forum = forumDAO.getForum(forumId);
+		if (forumDAO.rejectForum(forum)) {
+			{
+				Gson gson = new Gson();
+				return gson.toJson(forum);
+			}
+		} else {
+			return "Error rejecting forum";
+		}
+	}
+	
+	@GetMapping(value = "/getForumList")
+	public ResponseEntity<List<Forum>> getForumList() {
+		List<Forum> forumList = forumDAO.getForumList();
+		if (forumList != null)
+			return new ResponseEntity<List<Forum>>(forumList, HttpStatus.OK);
+		else
+			return new ResponseEntity<List<Forum>>(forumList, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 
 	@GetMapping(value = "/getForum/{forumId}")
 	public String getForum(@PathVariable("forumId") int forumId) {
@@ -62,14 +97,5 @@ public class ForumController {
 			return gson.toJson(forum);
 		} else
 			return "Error retrieving forum";
-	}
-
-	@GetMapping(value = "/getForumList")
-	public ResponseEntity<List<Forum>> getForumList() {
-		List<Forum> forumList = forumDAO.getForumList();
-		if (forumList != null)
-			return new ResponseEntity<List<Forum>>(forumList, HttpStatus.OK);
-		else
-			return new ResponseEntity<List<Forum>>(forumList, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

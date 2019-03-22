@@ -66,4 +66,26 @@ public class ForumDAOImpl implements ForumDAO {
 		return forumList;
 	}
 
+	@Override
+	public boolean approveForum(Forum forum) {
+		forum.setStatus("A");
+		try {
+			sessionFactory.getCurrentSession().update(forum);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean rejectForum(Forum forum) {
+		forum.setStatus("R");
+		try {
+			sessionFactory.getCurrentSession().update(forum);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
 }

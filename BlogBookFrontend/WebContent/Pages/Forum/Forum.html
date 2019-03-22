@@ -1,14 +1,10 @@
-<div ng-controller="BlogController" ng-init="showBlog()">
-	<h4>{{blogDetail.blogTitle}}</h4>
-	<p>{{blogDetail.blogContent}}</p>
-	<input type="button" value="Like {{blogDetail.likes}}"
-		ng-click="incrementLike(blogDetail.blogId)" /> <input type="button"
-		value="Dislike {{blogDetail.dislikes}}"
-		ng-click="incrementDislike(blogDetail.blogId)" />
+<div ng-controller="ForumController" ng-init="showForum()">
+	<h4>{{forumDetail.forumTitle}}</h4>
+	<p>{{forumDetail.forumContent}}</p>
 </div>
 
-<div ng-controller="BlogCommentController"
-	ng-init="getBlogCommentList(blogId)">
+<div ng-controller="ForumCommentController"
+	ng-init="getForumCommentList(forumId)">
 	<table>
 		<tr>
 			<th>Comments</th>
@@ -17,22 +13,22 @@
 			<td>Username</td>
 			<td>Comment</td>
 		</tr>
-		<tr ng-repeat="blogComment in blogCommentList">
-			<td>{{blogComment.username}}</td>
-			<td id="commentCell{{blogComment.commentId}}"><p
-					id="blogComment{{blogComment.commentId}}">{{blogComment.commentMessage}}</p></td>
-			<td ng-show="currentUser.username==blogComment.username"><input
-				id="editCommentBtn{{blogComment.commentId}}" type="button"
-				value="Edit" ng-click="editBlogComment(blogComment.commentId)" /></td>
-			<td ng-show="currentUser.username==blogComment.username"><input
+		<tr ng-repeat="forumComment in forumCommentList">
+			<td>{{forumComment.username}}</td>
+			<td id="commentCell{{forumComment.commentId}}"><p
+					id="forumComment{{forumComment.commentId}}">{{forumComment.commentMessage}}</p></td>
+			<td ng-show="currentUser.username==forumComment.username"><input
+				id="editCommentBtn{{forumComment.commentId}}" type="button"
+				value="Edit" ng-click="editForumComment(forumComment.commentId)" /></td>
+			<td ng-show="currentUser.username==forumComment.username"><input
 				type="button" value="Delete"
-				ng-click="deleteBlogComment(blogComment.commentId)" /></td>
+				ng-click="deleteForumComment(forumComment.commentId)" /></td>
 		</tr>
 		<tr>
 			<td></td>
 			<td><textarea name="commentMessage"
-					ng-model="blogComment.commentMessage"></textarea><input
-				type="button" value="Add" ng-click="addBlogComment()" /></td>
+					ng-model="forumComment.commentMessage"></textarea><input
+				type="button" value="Add" ng-click="addForumComment()" /></td>
 
 		</tr>
 	</table>

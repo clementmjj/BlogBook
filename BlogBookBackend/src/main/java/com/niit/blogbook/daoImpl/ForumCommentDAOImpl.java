@@ -50,9 +50,9 @@ public class ForumCommentDAOImpl implements ForumCommentDAO {
 	}
 
 	@Override
-	public List<ForumComment> getForumCommentList() {
+	public List<ForumComment> getForumCommentList(int forumId) {
 		Session session = sessionFactory.openSession();
-		Query query = session.createQuery("from ForumComment");
+		Query query = session.createQuery("from ForumComment WHERE forumId = '" + forumId + "'");
 		List<ForumComment> forumCommentList = query.list();
 		session.close();
 		return forumCommentList;

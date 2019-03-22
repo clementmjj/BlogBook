@@ -22,7 +22,7 @@ public class BlogLikeDislikeController {
 
 	@PostMapping("/addBlogLike")
 	public String addBlogLike(@RequestBody BlogLike blogLike) {
-		if (blogLikeDislikeDAO.addLike(blogLike)) {
+		if (blogLikeDislikeDAO.addBlogLike(blogLike)) {
 			Gson gson = new Gson();
 			return gson.toJson(blogLike);
 		} else
@@ -31,8 +31,8 @@ public class BlogLikeDislikeController {
 
 	@GetMapping("/deleteBlogLike/{blogLikeId}")
 	public String deleteBlogLike(@PathVariable("blogLikeId") int blogLikeId) {
-		BlogLike blogLike = blogLikeDislikeDAO.getLikeById(blogLikeId);
-		if (blogLikeDislikeDAO.removeLike(blogLike)) {
+		BlogLike blogLike = blogLikeDislikeDAO.getBlogLikeById(blogLikeId);
+		if (blogLikeDislikeDAO.removeBlogLike(blogLike)) {
 			Gson gson = new Gson();
 			return gson.toJson(blogLike);
 		} else
@@ -41,7 +41,7 @@ public class BlogLikeDislikeController {
 
 	@PostMapping("/addBlogDislike")
 	public String addBlogDislike(@RequestBody BlogDislike blogDislike) {
-		if (blogLikeDislikeDAO.addDislike(blogDislike)) {
+		if (blogLikeDislikeDAO.addBlogDislike(blogDislike)) {
 			Gson gson = new Gson();
 			return gson.toJson(blogDislike);
 		} else
@@ -50,8 +50,8 @@ public class BlogLikeDislikeController {
 
 	@GetMapping("/deleteBlogDislike/{blogDislikeId}")
 	public String deleteBlogDislike(@PathVariable("blogDislikeId") int blogDislikeId) {
-		BlogDislike blogDislike = blogLikeDislikeDAO.getDislikeById(blogDislikeId);
-		if (blogLikeDislikeDAO.removeDislike(blogDislike)) {
+		BlogDislike blogDislike = blogLikeDislikeDAO.getBlogDislikeById(blogDislikeId);
+		if (blogLikeDislikeDAO.removeBlogDislike(blogDislike)) {
 			Gson gson = new Gson();
 			return gson.toJson(blogDislike);
 		} else
@@ -59,7 +59,7 @@ public class BlogLikeDislikeController {
 	}
 
 	public String getBlogLikeById(int likeId) {
-		BlogLike blogLike = blogLikeDislikeDAO.getLikeById(likeId);
+		BlogLike blogLike = blogLikeDislikeDAO.getBlogLikeById(likeId);
 		if (blogLike != null) {
 			Gson gson = new Gson();
 			return gson.toJson(blogLike);
@@ -68,7 +68,7 @@ public class BlogLikeDislikeController {
 	}
 
 	public String getBlogDislikeById(int dislikeId) {
-		BlogDislike blogDislike = blogLikeDislikeDAO.getDislikeById(dislikeId);
+		BlogDislike blogDislike = blogLikeDislikeDAO.getBlogDislikeById(dislikeId);
 		if (blogDislike != null) {
 			Gson gson = new Gson();
 			return gson.toJson(blogDislike);

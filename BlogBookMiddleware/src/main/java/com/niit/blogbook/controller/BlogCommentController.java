@@ -26,7 +26,7 @@ public class BlogCommentController {
 	public String addBlogComment(@RequestBody BlogComment blogComment) {
 		// the following line is just for testing. delete it after completing frontend
 		blogComment.setCommentDate(new java.util.Date());
-		if (blogCommentDAO.addComment(blogComment)) {
+		if (blogCommentDAO.addBlogComment(blogComment)) {
 			Gson gson = new Gson();
 			return gson.toJson(blogComment);
 		} else {
@@ -37,7 +37,7 @@ public class BlogCommentController {
 	@GetMapping(value = "/deleteBlogComment/{blogCommentId}")
 	public String deleteBlogComment(@PathVariable("blogCommentId") int blogCommentId) {
 		BlogComment blogComment = blogCommentDAO.getBlogComment(blogCommentId);
-		if (blogCommentDAO.deleteComment(blogComment)) {
+		if (blogCommentDAO.deleteBlogComment(blogComment)) {
 			Gson gson = new Gson();
 			return gson.toJson(blogComment);
 		} else {
@@ -48,7 +48,7 @@ public class BlogCommentController {
 	@PostMapping(value = "/editBlogComment")
 	public String editBlogComment(@RequestBody BlogComment blogComment) {
 		blogComment.setCommentDate(blogCommentDAO.getBlogComment(blogComment.getCommentId()).getCommentDate());
-		if (blogCommentDAO.editComment(blogComment)) {
+		if (blogCommentDAO.editBlogComment(blogComment)) {
 			{
 				Gson gson = new Gson();
 				return gson.toJson(blogComment);

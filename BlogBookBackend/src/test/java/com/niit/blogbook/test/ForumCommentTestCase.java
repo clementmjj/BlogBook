@@ -30,7 +30,7 @@ public class ForumCommentTestCase {
 		forumComment.setCommentDate(new java.util.Date());
 		forumComment.setCommentMessage("This is the worst war between 2 neighbouring countries.");
 		forumComment.setForumId(34);
-		forumComment.setUserName("sss");
+		forumComment.setUsername("sss");
 		assertTrue("Problem adding forum comment", forumCommentDAO.addForumComment(forumComment));
 	}
 
@@ -52,7 +52,7 @@ public class ForumCommentTestCase {
 	// @Ignore
 	@Test
 	public void listForumCommentsTest() {
-		List<ForumComment> forumCommentList = forumCommentDAO.getForumCommentList();
+		List<ForumComment> forumCommentList = forumCommentDAO.getForumCommentList(000);
 		for (ForumComment fc : forumCommentList) {
 			System.out.print("\n" + fc.getCommentId() + "\t");
 			System.out.println(fc.getCommentMessage());

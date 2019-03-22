@@ -34,7 +34,7 @@ public class ForumDAOTestCase {
 		forum.setForumTitle("Forum 3");
 		forum.setForumContent("Content of forum 3");
 		forum.setStatus("NA");
-		forum.setUserName("sss");
+		forum.setUsername("sss");
 		assertTrue("Problem adding forum", forumDAO.addForum(forum));
 	}
 	

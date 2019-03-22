@@ -1,24 +1,24 @@
-<div ng-controller="BlogController"  ng-init="getBlogList()">
+<div ng-controller="ForumController" ng-init="getForumList()">
 	<table>
 		<tr>
-			<th>Blog Id</th>
-			<th>Blog name</th>
+			<th>Forum Id</th>
+			<th>Forum name</th>
 			<th>Created by</th>
 			<th>Created on</th>
 			<th>Approve / Reject</th>
-			<th>Delete blog</th>
+			<th>Delete forum</th>
 		</tr>
-		<tr ng-repeat="blog in blogList">
-			<td>{{blog.blogId}}</td>
-			<td>{{blog.blogTitle}}</td>
-			<td>{{blog.username}}</td>
-			<td>{{blog.createdDate}}</td>
+		<tr ng-repeat="forum in forumList">
+			<td>{{forum.forumId}}</td>
+			<td>{{forum.forumTitle}}</td>
+			<td>{{forum.username}}</td>
+			<td>{{forum.createdDate}}</td>
 			<td><input type="button" value="Approve"
-				ng-hide="blog.status=='A'" ng-click="approveBlog(blog.blogId)" /> <input
-				type="button" value="Reject" ng-hide="blog.status=='R'"
-				ng-click="rejectBlog(blog.blogId)" /></td>
+				ng-hide="forum.status=='A'" ng-click="approveForum(forum.forumId)" />
+				<input type="button" value="Reject" ng-hide="forum.status=='R'"
+				ng-click="rejectForum(forum.forumId)" /></td>
 			<td><input type="button" value="Detete"
-				ng-click="deleteBlog(blog.blogId)" /></td>
+				ng-click="deleteForum(forum.forumId)" /></td>
 		</tr>
 	</table>
 </div>

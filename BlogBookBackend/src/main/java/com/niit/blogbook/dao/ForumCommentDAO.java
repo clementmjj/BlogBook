@@ -11,7 +11,7 @@ public interface ForumCommentDAO {
 
 	public boolean editForumComment(ForumComment forumComment);
 
-	public List<ForumComment> getForumCommentList();
+	public List<ForumComment> getForumCommentList(int forumId);
 	
 	public ForumComment getForumComment(int commentId);
 }

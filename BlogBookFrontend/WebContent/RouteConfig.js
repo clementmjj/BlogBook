@@ -24,6 +24,8 @@ myApp.config(function($routeProvider) {
 		templateUrl : "Pages/Forum/ManageForum.html",
 	}).when("/editForum", {
 		templateUrl : "Pages/Forum/EditForum.html"
+	}).when("/showForum", {
+		templateUrl : "Pages/Forum/Forum.html"
 	});
 
 });
