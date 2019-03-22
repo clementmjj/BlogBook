@@ -95,6 +95,7 @@ public class BlogDAOImpl implements BlogDAO {
 		try {
 			blog.setLikes(blog.getLikes() + 1);
 			sessionFactory.getCurrentSession().update(blog);
+			System.out.println("impl: like incremented. likes count = " + blog.getLikes());
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -106,6 +107,7 @@ public class BlogDAOImpl implements BlogDAO {
 		try {
 			blog.setDislikes(blog.getDislikes() + 1);
 			sessionFactory.getCurrentSession().update(blog);
+			System.out.println("impl: dislike incremented. dislikes count = " + blog.getDislikes());
 			return true;
 		} catch (Exception e) {
 			return false;

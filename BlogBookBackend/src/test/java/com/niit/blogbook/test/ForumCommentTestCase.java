@@ -30,26 +30,26 @@ public class ForumCommentTestCase {
 		forumComment.setCommentDate(new java.util.Date());
 		forumComment.setCommentMessage("This is the worst war between 2 neighbouring countries.");
 		forumComment.setForumId(34);
-		forumComment.setUserId(244);
-		assertTrue("Problem adding forum comment", forumCommentDAO.addComment(forumComment));
+		forumComment.setUserName("sss");
+		assertTrue("Problem adding forum comment", forumCommentDAO.addForumComment(forumComment));
 	}
 
 	@Ignore
 	@Test
 	public void deleteForumCommentTest() {
-		ForumComment forumComment = forumCommentDAO.getComment(9);
-		assertTrue("Problem deleting forum comment", forumCommentDAO.deleteComment(forumComment));
+		ForumComment forumComment = forumCommentDAO.getForumComment(9);
+		assertTrue("Problem deleting forum comment", forumCommentDAO.deleteForumComment(forumComment));
 	}
 
 	@Ignore
 	@Test
 	public void editForumCommentTest() {
-		ForumComment forumComment = forumCommentDAO.getComment(10);
+		ForumComment forumComment = forumCommentDAO.getForumComment(10);
 		forumComment.setCommentMessage("Edited comment");
-		assertTrue("Problem editing forum comment", forumCommentDAO.editComment(forumComment));
+		assertTrue("Problem editing forum comment", forumCommentDAO.editForumComment(forumComment));
 	}
 
-	//@Ignore
+	// @Ignore
 	@Test
 	public void listForumCommentsTest() {
 		List<ForumComment> forumCommentList = forumCommentDAO.getForumCommentList();

@@ -9,13 +9,23 @@ myApp.config(function($routeProvider) {
 	}).when("/addBlog", {
 		templateUrl : "Pages/Blog/AddBlog.html",
 	}).when("/blogList", {
-		templateUrl : "Pages/Blog/BlogList.html"
+		templateUrl : "Pages/Blog/BlogList.html",
 	}).when("/showBlog", {
-		templateUrl : "Pages/Blog/Blog.html"
+		templateUrl : "Pages/Blog/Blog.html",
 	}).when("/manageBlog", {
-		templateUrl : "Pages/Blog/ManageBlog.html"
+		templateUrl : "Pages/Blog/ManageBlog.html",
+	}).when("/editBlog", {
+		templateUrl : "Pages/Blog/EditBlog.html",
+	}).when("/addForum", {
+		templateUrl : "Pages/Forum/AddForum.html",
+	}).when("/forumList", {
+		templateUrl : "Pages/Forum/ForumList.html",
+	}).when("/manageForum", {
+		templateUrl : "Pages/Forum/ManageForum.html",
+	}).when("/editForum", {
+		templateUrl : "Pages/Forum/EditForum.html"
 	});
-	
+
 });
 
 myApp.run(function($rootScope, $cookieStore) {

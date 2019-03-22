@@ -1,0 +1,9 @@
+<div ng-controller="BlogController" ng-init="showEditBlog()">
+	{{editBlogId}}
+	<h4>Edit Blog</h4>
+	<p>Blog Title:</p>
+	<input type="text" ng-model="editBlogInfo.blogTitle" />
+	<p>Blog Content:</p>
+	<textarea ng-model="editBlogInfo.blogContent"></textarea>
+	<input type="button" value="Update" ng-click="updateBlog()" />
+</div>

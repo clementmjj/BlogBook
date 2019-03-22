@@ -18,7 +18,7 @@ public class Blog {
 	private String blogTitle;
 	private String blogContent;
 	private String username;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy  hh:mm:ss a")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss a")
 	private Date createdDate;
 	private String status;
 	private int likes;

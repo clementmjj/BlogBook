@@ -1,18 +1,18 @@
 myApp
 		.controller(
 				"BlogCommentController",
-				function($scope, $http, $location, $rootScope, $cookieStore) {
+				function($scope, $http, $location, $rootScope, $cookieStore,
+						$compile) {
 
 					$scope.blogId = $cookieStore.get("showBlogId");
+
 					$scope.blogComment = {
 						'blogId' : $scope.blogId,
 						'commentMessage' : '',
 						'username' : ''
 					};
-
-					$scope.newBlogComment = {
+					$scope.blogCommentEdit = {
 						'blogId' : $scope.blogId,
-						'commentId' : '',
 						'commentMessage' : '',
 						'username' : $rootScope.currentUser.username
 					};
@@ -56,35 +56,92 @@ myApp
 					}
 
 					$scope.editBlogComment = function(blogCommentId) {
-						var btn = document.getElementById("editCommentBtn"
+						var commentCell = document.getElementById("commentCell"
 								+ blogCommentId);
-						if (btn.getAttribute("value") == "Save") {
-							$scope.newBlogComment.commentId = blogCommentId;
+						var existingComment = document
+								.getElementById("blogComment" + blogCommentId);
+						var btn_editSaveComment = document
+								.getElementById("editCommentBtn"
+										+ blogCommentId);
+						var btn_closeEdit = document
+								.getElementById("btn_closeEditComment"
+										+ blogCommentId);
+						if (btn_editSaveComment.getAttribute("value") == "Save") {
+							$scope.blogCommentEdit.commentId = blogCommentId;
 							$http
 									.post(
 											'http://localhost:'
 													+ location.port
 													+ '/BlogBookMiddleware/editBlogComment',
-											$scope.newBlogComment).then(
+											$scope.blogCommentEdit)
+									.then(
 											function(response) {
 												console.log(response.data);
+												var p_comment = document
+														.createElement("p");
+												p_comment.innerHTML = (response.data).commentMessage;
+												commentCell.replaceChild(
+														p_comment,
+														existingComment);
+												p_comment
+														.setAttribute(
+																"id",
+																"blogComment"
+																		+ blogCommentId);
+												btn_editSaveComment
+														.setAttribute("value",
+																"Edit");
+												commentCell
+														.removeChild(btn_closeEdit);
 											});
 						} else {
-							var editBox = document.createElement("textarea");
-							editBox.setAttribute("name", "editCommentMessage");
-							editBox.setAttribute("ng-model",
-									"newBlogComment.username");
-							var parent = document.getElementById("commentCell"
-									+ blogCommentId);
-							var existingComment = document
-									.getElementById("blogComment"
-											+ blogCommentId);
-							editBox.innerHTML = existingComment.innerHTML;
-							parent.replaceChild(editBox, existingComment);
-							editBox.setAttribute("id", "blogComment"
-									+ blogCommentId);
+							var editCommentBoxElements = document
+									.querySelectorAll("textarea[ng-model^='blogCommentEdit.commentMessage']");
+							var closeEditBoxButtons = document
+									.querySelectorAll("button[id^='btn_closeEditComment']");
+							closeEditBoxButtons.forEach(function(item) {
+								item.click();
+							});
+							var txtArea_editComment = document
+									.createElement("textarea");
+							txtArea_editComment.setAttribute("name",
+									"editCommentMessage");
+							txtArea_editComment.setAttribute("ng-model",
+									"blogCommentEdit.commentMessage");
 
-							btn.setAttribute("value", "Save");
+							commentCell.replaceChild(txtArea_editComment,
+									existingComment);
+							txtArea_editComment.setAttribute("id",
+									"blogComment" + blogCommentId);
+							btn_closeEdit = document.createElement("button");
+							btn_closeEdit.setAttribute("id",
+									"btn_closeEditComment" + blogCommentId);
+							btn_closeEdit.innerHTML = "x";
+							btn_closeEdit
+									.addEventListener(
+											"click",
+											function() {
+												var p_comment = document
+														.createElement("p");
+												p_comment.innerHTML = existingComment.innerHTML;
+												commentCell.replaceChild(
+														p_comment,
+														txtArea_editComment);
+												p_comment
+														.setAttribute(
+																"id",
+																"blogComment"
+																		+ blogCommentId);
+												btn_editSaveComment
+														.setAttribute("value",
+																"Edit");
+												commentCell
+														.removeChild(btn_closeEdit);
+											});
+							commentCell.appendChild(btn_closeEdit);
+							btn_editSaveComment.setAttribute("value", "Save");
+							$compile(txtArea_editComment)($scope);
+							$scope.blogCommentEdit.commentMessage = existingComment.innerHTML;
 						}
 
 					}

@@ -5,13 +5,13 @@ import java.util.List;
 import com.niit.blogbook.model.ForumComment;
 
 public interface ForumCommentDAO {
-	public boolean addComment(ForumComment comment);
+	public boolean addForumComment(ForumComment forumComment);
 
-	public boolean deleteComment(ForumComment comment);
+	public boolean deleteForumComment(ForumComment forumComment);
 
-	public boolean editComment(ForumComment comment);
+	public boolean editForumComment(ForumComment forumComment);
 
 	public List<ForumComment> getForumCommentList();
 	
-	public ForumComment getComment(int commentId);
+	public ForumComment getForumComment(int commentId);
 }

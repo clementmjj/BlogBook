@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.niit.blogbook.model.Blog;
 import com.niit.blogbook.model.BlogComment;
+import com.niit.blogbook.model.BlogDislike;
+import com.niit.blogbook.model.BlogLike;
 import com.niit.blogbook.model.Forum;
 import com.niit.blogbook.model.ForumComment;
 import com.niit.blogbook.model.Job;
@@ -50,6 +52,9 @@ public class DbConfig {
 		factoryBuilder.addAnnotatedClass(BlogComment.class);
 		factoryBuilder.addAnnotatedClass(Job.class);
 		factoryBuilder.addAnnotatedClass(Forum.class);
+		factoryBuilder.addAnnotatedClass(ForumComment.class);
+		factoryBuilder.addAnnotatedClass(BlogLike.class);
+		factoryBuilder.addAnnotatedClass(BlogDislike.class);
 
 		SessionFactory sessionFactory = factoryBuilder.buildSessionFactory();
 		System.out.println("---SessionFactory created---");

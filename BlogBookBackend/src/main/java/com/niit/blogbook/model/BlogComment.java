@@ -17,7 +17,7 @@ public class BlogComment {
 	private int commentId;
 	private int blogId;
 	private String commentMessage;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy  hh:mm:ss a")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss a")
 	private Date commentDate;
 	private String username;
 

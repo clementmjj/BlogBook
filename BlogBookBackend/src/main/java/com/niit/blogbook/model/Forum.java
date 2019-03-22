@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table
 public class Forum {
@@ -15,9 +17,10 @@ public class Forum {
 	private int forumId;
 	private String forumTitle;
 	private String forumContent;
-	private int userId;
+	private String username;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss a")
 	private Date createdDate;
-	private String forumStatus;
+	private String status;
 
 	public int getForumId() {
 		return forumId;
@@ -43,12 +46,12 @@ public class Forum {
 		this.forumContent = forumContent;
 	}
 
-	public int getUserId() {
-		return userId;
+	public String getUserName() {
+		return username;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUserName(String username) {
+		this.username = username;
 	}
 
 	public Date getCreatedDate() {
@@ -59,12 +62,12 @@ public class Forum {
 		this.createdDate = createdDate;
 	}
 
-	public String getForumStatus() {
-		return forumStatus;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setForumStatus(String forumStatus) {
-		this.forumStatus = forumStatus;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

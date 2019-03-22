@@ -20,9 +20,9 @@ public class ForumCommentDAOImpl implements ForumCommentDAO {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public boolean addComment(ForumComment comment) {
+	public boolean addForumComment(ForumComment forumComment) {
 		try {
-			sessionFactory.getCurrentSession().save(comment);
+			sessionFactory.getCurrentSession().save(forumComment);
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -30,9 +30,9 @@ public class ForumCommentDAOImpl implements ForumCommentDAO {
 	}
 
 	@Override
-	public boolean deleteComment(ForumComment comment) {
+	public boolean deleteForumComment(ForumComment forumComment) {
 		try {
-			sessionFactory.getCurrentSession().delete(comment);
+			sessionFactory.getCurrentSession().delete(forumComment);
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -40,9 +40,9 @@ public class ForumCommentDAOImpl implements ForumCommentDAO {
 	}
 
 	@Override
-	public boolean editComment(ForumComment comment) {
+	public boolean editForumComment(ForumComment forumComment) {
 		try {
-			sessionFactory.getCurrentSession().update(comment);
+			sessionFactory.getCurrentSession().update(forumComment);
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -59,7 +59,7 @@ public class ForumCommentDAOImpl implements ForumCommentDAO {
 	}
 
 	@Override
-	public ForumComment getComment(int commentId) {
+	public ForumComment getForumComment(int commentId) {
 		Session session = sessionFactory.openSession();
 		ForumComment forumComment = session.get(ForumComment.class, commentId);
 		session.close();

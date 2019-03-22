@@ -29,6 +29,15 @@
 					ng-show="currentUser.role=='admin'" href="#/manageBlog">Manage
 						Blog</a></td>
 			</tr>
+			<tr>
+				<th>Forum Menu </th>
+				<td><a href="#/addForum">Add Forum | </a></td>
+				<td><a ng-controller="ForumController" href="#/forumList" href="">Forum
+						List | </a></td>
+				<td><a ng-controller="ForumController"
+					ng-show="currentUser.role=='admin'" href="#/manageForum">Manage
+						Forum</a></td>
+			</tr>
 		</table>
 	</div>
 
@@ -44,5 +53,7 @@
 	<script type="text/javascript" src="Controllers/UserController.js"></script>
 	<script type="text/javascript" src="Controllers/BlogController.js"></script>
 	<script type="text/javascript" src="Controllers/BlogCommentController.js"></script>
+	<script type="text/javascript" src="Controllers/ForumController.js"></script>
+	<script type="text/javascript" src="Controllers/ForumCommentController.js"></script>
 </body>
 </html>

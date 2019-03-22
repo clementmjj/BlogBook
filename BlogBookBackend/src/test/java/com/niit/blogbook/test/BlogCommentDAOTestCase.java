@@ -31,14 +31,14 @@ public class BlogCommentDAOTestCase {
 		blogComment.setCommentDate(new java.util.Date());
 		blogComment.setCommentMessage("My first comment");
 		blogComment.setUsername("sss");
-		assertTrue("Problem adding blog comment", blogCommentDAO.addComment(blogComment));
+		assertTrue("Problem adding blog comment", blogCommentDAO.addBlogComment(blogComment));
 	}
 	
 	@Ignore
 	@Test
 	public void deleteBlogCommentTest() {
 		BlogComment blogComment = blogCommentDAO.getBlogComment(2);
-		assertTrue("Problem deleting blog comment", blogCommentDAO.deleteComment(blogComment));
+		assertTrue("Problem deleting blog comment", blogCommentDAO.deleteBlogComment(blogComment));
 	}
 	
 	@Ignore
@@ -46,7 +46,7 @@ public class BlogCommentDAOTestCase {
 	public void editBlogCommentTest() {
 		BlogComment blogComment = blogCommentDAO.getBlogComment(80);
 		blogComment.setCommentMessage("Edited comment");
-		assertTrue("Problem editing blog comment", blogCommentDAO.editComment(blogComment));
+		assertTrue("Problem editing blog comment", blogCommentDAO.editBlogComment(blogComment));
 	}
 	
 	@Ignore

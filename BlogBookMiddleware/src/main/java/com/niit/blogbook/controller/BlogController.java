@@ -13,12 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.niit.blogbook.dao.BlogDAO;
+import com.niit.blogbook.dao.BlogLikeDislikeDAO;
 import com.niit.blogbook.model.Blog;
+import com.niit.blogbook.model.BlogDislike;
+import com.niit.blogbook.model.BlogLike;
 
 @RestController
 public class BlogController {
 	@Autowired
 	BlogDAO blogDAO;
+	@Autowired
+	BlogLikeDislikeDAO blogLikeDislikeDAO;
 
 	@PostMapping(value = "/addBlog")
 	public String addBlog(@RequestBody Blog blog) {
@@ -47,12 +52,13 @@ public class BlogController {
 	}
 
 	@PostMapping(value = "/updateBlog")
-	public ResponseEntity<String> updateBlog(@RequestBody Blog blog) {
+	public String updateBlog(@RequestBody Blog blog) {
 		blog.setCreatedDate(blogDAO.getBlog(blog.getBlogId()).getCreatedDate());
 		if (blogDAO.updateBlog(blog)) {
-			return new ResponseEntity<String>("Successful", HttpStatus.OK);
+			Gson gson = new Gson();
+			return gson.toJson(blog);
 		} else {
-			return new ResponseEntity<String>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
+			return "Error updating blog";
 		}
 	}
 
@@ -93,51 +99,57 @@ public class BlogController {
 	}
 
 	@GetMapping(value = "/getBlog/{blogId}")
-	public ResponseEntity<Blog> getBlog(@PathVariable("blogId") int blogId) {
+	public String getBlog(@PathVariable("blogId") int blogId) {
 		Blog blog = blogDAO.getBlog(blogId);
-		if (blog != null)
-			return new ResponseEntity<Blog>(blog, HttpStatus.OK);
-		else
-			return new ResponseEntity<Blog>(blog, HttpStatus.INTERNAL_SERVER_ERROR);
+		if (blog != null) {
+			Gson gson = new Gson();
+			return gson.toJson(blog);
+		} else
+			return "Error retrieving blog";
 	}
 
 	@GetMapping(value = "/incrementLike/{blogId}")
-	public ResponseEntity<String> incrementLike(@PathVariable("blogId") int blogId) {
+	public String incrementLike(@PathVariable("blogId") int blogId) {
 		Blog blog = blogDAO.getBlog(blogId);
 		if (blogDAO.incrementLike(blog)) {
-			return new ResponseEntity<String>("Successful", HttpStatus.OK);
+			Gson gson = new Gson();
+			return gson.toJson(blog);
 		} else {
-			return new ResponseEntity<String>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
+			return "Error incrementing like";
 		}
 	}
 
 	@GetMapping(value = "/incrementDislike/{blogId}")
-	public ResponseEntity<String> incrementDislike(@PathVariable("blogId") int blogId) {
+	public String incrementDislike(@PathVariable("blogId") int blogId) {
 		Blog blog = blogDAO.getBlog(blogId);
 		if (blogDAO.incrementDislike(blog)) {
-			return new ResponseEntity<String>("Successful", HttpStatus.OK);
+			Gson gson = new Gson();
+			return gson.toJson(blog);
 		} else {
-			return new ResponseEntity<String>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
+			return "Error incrementing dislike";
 		}
 	}
 
 	@GetMapping(value = "/decrementLike/{blogId}")
-	public ResponseEntity<String> decrementLike(@PathVariable("blogId") int blogId) {
+	public String decrementLike(@PathVariable("blogId") int blogId) {
 		Blog blog = blogDAO.getBlog(blogId);
 		if (blogDAO.decrementLike(blog)) {
-			return new ResponseEntity<String>("Successful", HttpStatus.OK);
+			Gson gson = new Gson();
+			return gson.toJson(blog);
 		} else {
-			return new ResponseEntity<String>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
+			return "Error decrement like";
 		}
 	}
 
 	@GetMapping(value = "/decrementDislike/{blogId}")
-	public ResponseEntity<String> decrementDislike(@PathVariable("blogId") int blogId) {
+	public String decrementDislike(@PathVariable("blogId") int blogId) {
 		Blog blog = blogDAO.getBlog(blogId);
 		if (blogDAO.decrementDislike(blog)) {
-			return new ResponseEntity<String>("Successful", HttpStatus.OK);
+			Gson gson = new Gson();
+			return gson.toJson(blog);
 		} else {
-			return new ResponseEntity<String>("Unsuccessful", HttpStatus.INTERNAL_SERVER_ERROR);
+			return "Error decrement dislike";
 		}
 	}
+
 }

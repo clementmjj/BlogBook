@@ -33,8 +33,8 @@ public class ForumDAOTestCase {
 		forum.setCreatedDate(new java.util.Date());
 		forum.setForumTitle("Forum 3");
 		forum.setForumContent("Content of forum 3");
-		forum.setForumStatus("NA");
-		forum.setUserId(735);
+		forum.setStatus("NA");
+		forum.setUserName("sss");
 		assertTrue("Problem adding forum", forumDAO.addForum(forum));
 	}
 	
@@ -64,7 +64,7 @@ public class ForumDAOTestCase {
 		{
 			System.out.print("\n"+forum.getForumId()+"\t");
 			System.out.print(forum.getForumTitle()+"\t");
-			System.out.println(forum.getForumStatus());
+			System.out.println(forum.getStatus());
 		}
 	}
 }

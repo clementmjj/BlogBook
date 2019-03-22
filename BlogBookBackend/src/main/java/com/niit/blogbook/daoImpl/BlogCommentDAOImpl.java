@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.blogbook.dao.BlogCommentDAO;
-import com.niit.blogbook.model.Blog;
 import com.niit.blogbook.model.BlogComment;
 
 @Repository("blogCommentDAO")
@@ -21,7 +20,7 @@ public class BlogCommentDAOImpl implements BlogCommentDAO {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public boolean addComment(BlogComment blogComment) {
+	public boolean addBlogComment(BlogComment blogComment) {
 		try {
 			sessionFactory.getCurrentSession().save(blogComment);
 			return true;
@@ -31,7 +30,7 @@ public class BlogCommentDAOImpl implements BlogCommentDAO {
 	}
 
 	@Override
-	public boolean editComment(BlogComment blogComment) {
+	public boolean editBlogComment(BlogComment blogComment) {
 		try {
 			sessionFactory.getCurrentSession().update(blogComment);
 			return true;
@@ -41,7 +40,7 @@ public class BlogCommentDAOImpl implements BlogCommentDAO {
 	}
 
 	@Override
-	public boolean deleteComment(BlogComment blogComment) {
+	public boolean deleteBlogComment(BlogComment blogComment) {
 		try {
 			sessionFactory.getCurrentSession().delete(blogComment);
 			return true;
