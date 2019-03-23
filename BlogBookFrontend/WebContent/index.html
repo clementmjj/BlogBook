@@ -3,8 +3,10 @@
 <title>BlogBook - Homepage</title>
 </head>
 <body ng-app="myApp">
-	<p ng-hide="currentUser==undefined">Welcome
-		{{currentUser.firstName}}</p>
+	<p>
+		Welcome <a ng-hide="currentUser==undefined" ng-click=""
+			href="#/showUser">{{currentUser.firstName}}</a>
+	</p>
 	<table>
 		<tr>
 			<td><a href="#/">Home</a> |</td>
@@ -21,7 +23,7 @@
 	<div ng-hide="currentUser==undefined">
 		<table>
 			<tr>
-				<th>Blog Menu </th>
+				<th>Blog Menu</th>
 				<td><a href="#/addBlog">Add Blog | </a></td>
 				<td><a ng-controller="BlogController" href="#/blogList" href="">Blog
 						List | </a></td>
@@ -30,10 +32,10 @@
 						Blog</a></td>
 			</tr>
 			<tr>
-				<th>Forum Menu </th>
+				<th>Forum Menu</th>
 				<td><a href="#/addForum">Add Forum | </a></td>
-				<td><a ng-controller="ForumController" href="#/forumList" href="">Forum
-						List | </a></td>
+				<td><a ng-controller="ForumController" href="#/forumList"
+					href="">Forum List | </a></td>
 				<td><a ng-controller="ForumController"
 					ng-show="currentUser.role=='admin'" href="#/manageForum">Manage
 						Forum</a></td>
@@ -52,8 +54,10 @@
 	<script type="text/javascript" src="RouteConfig.js"></script>
 	<script type="text/javascript" src="Controllers/UserController.js"></script>
 	<script type="text/javascript" src="Controllers/BlogController.js"></script>
-	<script type="text/javascript" src="Controllers/BlogCommentController.js"></script>
+	<script type="text/javascript"
+		src="Controllers/BlogCommentController.js"></script>
 	<script type="text/javascript" src="Controllers/ForumController.js"></script>
-	<script type="text/javascript" src="Controllers/ForumCommentController.js"></script>
+	<script type="text/javascript"
+		src="Controllers/ForumCommentController.js"></script>
 </body>
 </html>

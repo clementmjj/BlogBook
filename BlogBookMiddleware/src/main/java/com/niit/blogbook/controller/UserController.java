@@ -1,5 +1,7 @@
 package com.niit.blogbook.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,10 +69,11 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/checkLogin")
-	public String checkLogin(@RequestBody UserDetail user) {
+	public String checkLogin(@RequestBody UserDetail user, HttpSession session) {
 		UserDetail tempUser = userDAO.getUser(user.getUsername());
 		if (tempUser != null) {
 			if (tempUser.getPassword().equals(user.getPassword())) {
+				session.setAttribute("userDetail", user);
 				Gson gson = new Gson();
 				return gson.toJson(user);
 			}

@@ -26,7 +26,11 @@ myApp.config(function($routeProvider) {
 		templateUrl : "Pages/Forum/EditForum.html"
 	}).when("/showForum", {
 		templateUrl : "Pages/Forum/Forum.html"
-	});
+	}).when("/profilePic", {
+		templateUrl : "Pages/User/ProfilePic.html"
+	}).when("/showUser", {
+		templateUrl : "Pages/User/User.html"
+	});;;;
 
 });
 
