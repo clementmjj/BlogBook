@@ -30,7 +30,9 @@ myApp.config(function($routeProvider) {
 		templateUrl : "Pages/User/ProfilePic.html"
 	}).when("/showUser", {
 		templateUrl : "Pages/User/User.html"
-	});;;;
+	}).when("/notifications", {
+		templateUrl : "Pages/User/Notifications.html"
+	});
 
 });
 

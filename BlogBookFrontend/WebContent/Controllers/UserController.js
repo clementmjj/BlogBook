@@ -1,8 +1,6 @@
 myApp.controller("UserController", function($scope, $http, $location,
 		$rootScope, $cookieStore) {
 	
-	$scope.profilePic;
-	
 	$scope.user = {
 		'username' : '',
 		'password' : '',
@@ -57,15 +55,4 @@ myApp.controller("UserController", function($scope, $http, $location,
 		$location.path('/');
 	}
 
-	$scope.getProfilePic = function() {
-		/*$http.get(
-				'http://localhost:' + location.port
-						+ '/BlogBookMiddleware/getProfilePic/'
-						+ $rootScope.currentUser.username).then(
-				function(response) {
-					profilePic = response.data;
-					if(profilePic)
-						alert("ddd");
-				});*/
-	};
 });
