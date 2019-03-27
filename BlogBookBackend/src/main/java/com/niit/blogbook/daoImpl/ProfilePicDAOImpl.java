@@ -44,4 +44,14 @@ public class ProfilePicDAOImpl implements ProfilePicDAO {
 		}
 	}
 
+	@Override
+	public boolean updateProfilePic(ProfilePic profilePic) {
+		try {
+			sessionFactory.getCurrentSession().update(profilePic);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
 }

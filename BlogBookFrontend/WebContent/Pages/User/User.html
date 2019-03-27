@@ -1,9 +1,7 @@
 <div ng-controller="UserController">
 	<div>
-<img src="http://localhost:8079/BlogBookMiddleware/getProfilePic/{{currentUser.username}}"/>
-
-		<a href="#/profilePic">Add Pic</a> <a href="">Change Pic</a> <a
-			href="">Remove Pic</a> <img src=""></img>
+		<img ng-hide="profilePic==undefined" src="{{prifilePicUrl}}" /> <a ng-show="profilePic==undefined" href="#/profilePic">Add Profile Picture</a> <a ng-hide="profilePic==undefined"
+			href="#/profilePic">Update</a> <a ng-hide="profilePic==undefined" href="">Remove Pic</a> <img src=""></img>
 	</div>
 	<p>FIrst Name: {{currentUser.firstName}}</p>
 	<p>Last Name: {{currentUser.lastName}}</p>

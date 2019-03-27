@@ -33,7 +33,6 @@ myApp.config(function($routeProvider) {
 	}).when("/notifications", {
 		templateUrl : "Pages/User/Notifications.html"
 	});
-
 });
 
 myApp.run(function($rootScope, $cookieStore) {

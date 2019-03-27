@@ -22,7 +22,7 @@ public class ProfilePicController {
 	@Autowired
 	ProfilePicDAO profilePicDao;
 
-	@RequestMapping(value = "/addProfilePic", method = RequestMethod.POST)
+	@RequestMapping(value = "/addUpdateProfilePic", method = RequestMethod.POST)
 	public ResponseEntity<?> addProfilePic(@RequestParam(value = "profilePic") CommonsMultipartFile file,
 			HttpSession session) {
 		UserDetail userDetail = (UserDetail) session.getAttribute("userDetail");
@@ -38,8 +38,12 @@ public class ProfilePicController {
 					return new ResponseEntity<>("Profile pic added", HttpStatus.OK);
 				} else
 					return new ResponseEntity<String>("no file selected", HttpStatus.NOT_FOUND);
-			} else
-				return new ResponseEntity<String>("profile pic already exists", HttpStatus.CONFLICT);
+			} else {
+				ProfilePic profilePic = profilePicDao.getProfilePic(userDetail.getUsername());
+				profilePic.setImage(file.getBytes());
+				profilePicDao.updateProfilePic(profilePic);
+				return new ResponseEntity<>("Profile pic updated", HttpStatus.OK);
+			}
 		}
 	}
 
