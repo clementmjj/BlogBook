@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.google.gson.Gson;
 import com.niit.blogbook.dao.ProfilePicDAO;
 import com.niit.blogbook.model.ProfilePic;
 import com.niit.blogbook.model.UserDetail;
@@ -47,8 +49,8 @@ public class ProfilePicController {
 		}
 	}
 
-	@RequestMapping(value = "/getProfilePic/{username}", method = RequestMethod.GET)
-	public @ResponseBody byte[] getProfilePic(@PathVariable("username") String username) {
+	@RequestMapping(value = "/showProfilePic/{username}", method = RequestMethod.GET)
+	public @ResponseBody byte[] showProfilePic(@PathVariable("username") String username) {
 		ProfilePic profilePic = profilePicDao.getProfilePic(username);
 		if (profilePic != null)
 			return profilePic.getImage();
@@ -56,11 +58,21 @@ public class ProfilePicController {
 			return null;
 	}
 
+	@GetMapping(value = "/getProfilePic/{username}")
+	public String getProfilePic(@PathVariable("username") String username) {
+		ProfilePic profilePic = profilePicDao.getProfilePic(username);
+		if (profilePic != null) {
+			Gson gson = new Gson();
+			return gson.toJson(profilePic);
+		} else
+			return "Error getting profile picture";
+	}
+
 	@RequestMapping(value = "/deleteProfilePic/{username}", method = RequestMethod.GET)
 	public ResponseEntity<?> deleteProfilePic(@PathVariable("username") String username) {
 		ProfilePic profilePic = profilePicDao.getProfilePic(username);
 		if (profilePicDao.deleteProfilePic(username))
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>("Profile picture removed", HttpStatus.OK);
 		else
 			return new ResponseEntity<>("Error deleting profile pic", HttpStatus.OK);
 	}

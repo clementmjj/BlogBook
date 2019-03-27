@@ -15,8 +15,6 @@ import com.google.gson.Gson;
 import com.niit.blogbook.dao.BlogDAO;
 import com.niit.blogbook.dao.BlogLikeDislikeDAO;
 import com.niit.blogbook.model.Blog;
-import com.niit.blogbook.model.BlogDislike;
-import com.niit.blogbook.model.BlogLike;
 
 @RestController
 public class BlogController {

@@ -2,13 +2,22 @@
 	<img ng-hide="profilePic==undefined" src="{{prifilePicUrl}}" />
 	<table>
 		<tr>
-			<td><p ng-show="profilePic==undefined">Add</p><p ng-hide="profilePic==undefined">Update</p></td>
+			<td><p ng-show="profilePic==undefined">Add</p>
+				<p ng-hide="profilePic==undefined">Update</p></td>
 			<td><form method="post"
 					action="/BlogBookMiddleware/addUpdateProfilePic"
 					enctype="multipart/form-data">
 					<input type="file" name="profilePic" /> <input type="submit"
 						value="Upload" />
 				</form></td>
+		</tr>
+		<tr>
+			<td ng-hide="profilePic==undefined">
+				<form method="get"
+					ngSubmit="/BlogBookMiddleware/deleteProfilePic/{{currentUser.username}}">
+					<button type="submit">Remove</button>
+				</form>
+			</td>
 		</tr>
 	</table>
 

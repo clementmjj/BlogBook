@@ -5,7 +5,7 @@ myApp.controller("UserController", function($scope, $http, $location,
 	
 	if ($rootScope.currentUser) {
 		$scope.prifilePicUrl = "http://localhost:" + location.port
-				+ "/BlogBookMiddleware/getProfilePic/"
+				+ "/BlogBookMiddleware/showProfilePic/"
 				+ $rootScope.currentUser.username;
 
 		$http.get(
@@ -13,7 +13,7 @@ myApp.controller("UserController", function($scope, $http, $location,
 						+ '/BlogBookMiddleware/getProfilePic/'
 						+ $rootScope.currentUser.username).then(
 				function(response) {
-					profilePic = response.data;
+					$scope.profilePic = response.data;
 				});
 	}
 
