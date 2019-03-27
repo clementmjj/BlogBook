@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.niit.blogbook.dao.FriendDAO;
+import com.niit.blogbook.dao.UserDAO;
+import com.niit.blogbook.daoImpl.UserDAOImpl;
 import com.niit.blogbook.model.Friend;
 import com.niit.blogbook.model.UserDetail;
 
@@ -29,8 +31,8 @@ public class FriendDAOTestCase {
 	@Test
 	public void sendFriendRequestTest() {
 		Friend friend = new Friend();
-		friend.setUsername("f3");
-		friend.setFriendUsername("f5");
+		friend.setUsername("f1");
+		friend.setFriendUsername("f2");
 		assertTrue("Problem adding friend req", friendDAO.sendFriendReq(friend));
 	}
 
@@ -70,16 +72,15 @@ public class FriendDAOTestCase {
 		}
 	}
 
-	//@Ignore
+	@Ignore
 	@Test
 	public void getSuggestedFriendListTest() {
 		String username = "f1";
-		List<UserDetail> suggestedFriendList = friendDAO.getSuggestedFriends(username);
-		System.out.println("Suggested friends: ");
+		List<UserDetail> suggestedFriendList = friendDAO.getSuggestedFriends(username);		
+		assertTrue("Problem getting suggested friend list", suggestedFriendList != null);
+		System.out.println("Suggested friends: "+suggestedFriendList.size());
 		for(UserDetail user:suggestedFriendList)
 			System.out.println(user.getUsername());
-		assertTrue("Problem getting suggested friend list", suggestedFriendList != null);
-		
 	}
 
 	@Ignore

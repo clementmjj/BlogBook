@@ -1,8 +1,8 @@
 myApp.controller("UserController", function($scope, $http, $location,
 		$rootScope, $cookieStore) {
-	
+
 	$scope.profilePic;
-	
+	$scope.prifilePicUrl;
 	if ($rootScope.currentUser) {
 		$scope.prifilePicUrl = "http://localhost:" + location.port
 				+ "/BlogBookMiddleware/showProfilePic/"
@@ -16,6 +16,7 @@ myApp.controller("UserController", function($scope, $http, $location,
 					$scope.profilePic = response.data;
 				});
 	}
+	;
 
 	$scope.user = {
 		'username' : '',
@@ -26,7 +27,7 @@ myApp.controller("UserController", function($scope, $http, $location,
 		'role' : '',
 		'status' : '',
 		'isOnline' : ''
-	}
+	};
 
 	$scope.register = function() {
 		console.log('Registering user...');
@@ -41,7 +42,7 @@ myApp.controller("UserController", function($scope, $http, $location,
 					console.log('Registered');
 					$location.path('/login');
 				})
-	}
+	};
 
 	$scope.loginCheck = function() {
 		console.log('Logging in user...');
@@ -63,12 +64,17 @@ myApp.controller("UserController", function($scope, $http, $location,
 							});
 
 				});
-	}
+	};
 
 	$scope.logout = function() {
 		delete $rootScope.currentUser;
 		$cookieStore.remove('userDetails');
 		$location.path('/');
-	}
+	};
 
+	$scope.removeProfilePic = function() {
+		$http.get('http://localhost:' + location.port
+				+ '/BlogBookMiddleware/deleteProfilePic/'
+				+ $rootScope.currentUser.username);
+	};
 });

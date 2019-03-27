@@ -13,10 +13,7 @@
 		</tr>
 		<tr>
 			<td ng-hide="profilePic==undefined">
-				<form method="get"
-					ngSubmit="/BlogBookMiddleware/deleteProfilePic/{{currentUser.username}}">
-					<button type="submit">Remove</button>
-				</form>
+				<button ng-click="removeProfilePic()">Remove</button>
 			</td>
 		</tr>
 	</table>

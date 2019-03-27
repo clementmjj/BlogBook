@@ -25,9 +25,11 @@ public class ProfilePicController {
 	ProfilePicDAO profilePicDao;
 
 	@RequestMapping(value = "/addUpdateProfilePic", method = RequestMethod.POST)
-	public ResponseEntity<?> addProfilePic(@RequestParam(value = "profilePic") CommonsMultipartFile file,
+	public ResponseEntity<?> addUpdateProfilePic(@RequestParam(value = "profilePic") CommonsMultipartFile file,
 			HttpSession session) {
+		System.out.println("ffff");
 		UserDetail userDetail = (UserDetail) session.getAttribute("userDetail");
+		System.out.println("dddd"+userDetail.getUsername()=="");
 		if (userDetail == null)
 			return new ResponseEntity<String>("Unauthorized user", HttpStatus.NOT_FOUND);
 		else {
@@ -68,12 +70,13 @@ public class ProfilePicController {
 			return "Error getting profile picture";
 	}
 
-	@RequestMapping(value = "/deleteProfilePic/{username}", method = RequestMethod.GET)
-	public ResponseEntity<?> deleteProfilePic(@PathVariable("username") String username) {
+	@GetMapping(value = "/deleteProfilePic/{username}")
+	public String deleteProfilePic(@PathVariable("username") String username) {
 		ProfilePic profilePic = profilePicDao.getProfilePic(username);
-		if (profilePicDao.deleteProfilePic(username))
-			return new ResponseEntity<>("Profile picture removed", HttpStatus.OK);
-		else
-			return new ResponseEntity<>("Error deleting profile pic", HttpStatus.OK);
+		if (profilePicDao.deleteProfilePic(username)) {
+			Gson gson = new Gson();
+			return gson.toJson("Profile picture removed");
+		} else
+			return "Error removing provile picture";
 	}
 }

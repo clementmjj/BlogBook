@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,7 @@ public class FriendDAOImpl implements FriendDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
+	static UserDAO userDAO;
 
 	@Override
 	public boolean sendFriendReq(Friend friend) {
@@ -91,37 +93,31 @@ public class FriendDAOImpl implements FriendDAO {
 
 	@Override
 	public List<UserDetail> getSuggestedFriends(String username) {
-		UserDAO userDAO = new UserDAOImpl();
-		List<UserDetail> suggestedFriendList = new ArrayList<UserDetail>();
 
+		List<UserDetail> suggestedFriendList = new ArrayList<UserDetail>();
 		List<Friend> friendList = getFriendList(username);
 
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+		context.scan("com.niit");
+		context.refresh();
+		userDAO = (UserDAO) context.getBean("userDAO");
 		for (Friend friend : friendList) {
-
 			String user = "";
 			if (friend.getUsername().equals(username))
 				user = friend.getFriendUsername();
 			else
 				user = friend.getUsername();
-
-			System.out.println(username + " " + user);
 			List<Friend> friendsFriendList = getFriendList(user);
-
 			for (Friend f : friendsFriendList) {
 				if (f.getUsername().equals(username) || f.getFriendUsername().equals(username))
 					continue;
-				System.out.println("\t" + f.getUsername() + " " + f.getFriendUsername());
 				if (f.getUsername().equals(user)) {
 					if (!checkIfFriends(username, f.getFriendUsername())) {
-						
 						suggestedFriendList.add(userDAO.getUser(f.getFriendUsername()));
-						System.out.println("added " + f.getFriendUsername());
 					}
 				} else if (!checkIfFriends(username, f.getUsername())) {
-					System.out.println("adding " + f.getUsername());
 					suggestedFriendList.add(userDAO.getUser(f.getUsername()));
 				}
-
 			}
 		}
 		return suggestedFriendList;

@@ -50,18 +50,26 @@ public class UserDAOTestCase {
 		user.setRole("Admin");
 		assertTrue("Problem updating user", userDAO.updateUser(user));
 	}
-	
+
 	@Ignore
 	@Test
 	public void approveUserTest() {
 		UserDetail user = userDAO.getUser("clements");
 		assertTrue("Problem approving user", userDAO.approveUser(user));
 	}
-	
+
 	@Ignore
 	@Test
 	public void rejectUserTest() {
 		UserDetail user = userDAO.getUser("clements12");
 		assertTrue("Problem rejecting user", userDAO.rejectUser(user));
+	}
+
+	//@Ignore
+	@Test
+	public void getUserTest() {
+		UserDetail user = userDAO.getUser("f4");
+		assertTrue("Problem retrieving user", userDAO.rejectUser(user));
+		System.out.println(user.getFirstName() + "," + user.getEmail());
 	}
 }
