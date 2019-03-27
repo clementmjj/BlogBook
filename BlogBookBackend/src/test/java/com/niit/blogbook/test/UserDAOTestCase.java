@@ -25,7 +25,7 @@ public class UserDAOTestCase {
 	@Test
 	public void addUserTest() {
 		UserDetail user = new UserDetail();
-		user.setUsername("user 3");
+		user.setUsername("f5");
 		user.setPassword("pass123");
 		user.setFirstName("first name");
 		user.setLastName("last name");
