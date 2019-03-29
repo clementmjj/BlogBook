@@ -1,6 +1,7 @@
 <div ng-controller="BlogController" ng-init="showBlog()">
 	<h4>{{blogDetail.blogTitle}}</h4>
 	<p>{{blogDetail.blogContent}}</p>
+	<p>Created by {{blogDetail.username}} on {{blogDetail.createdDate}}</p>
 	<input type="button" value="Like {{blogDetail.likes}}"
 		ng-click="likeClick()" /> <input type="button"
 		value="Dislike {{blogDetail.dislikes}}"

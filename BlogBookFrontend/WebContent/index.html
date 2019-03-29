@@ -4,8 +4,7 @@
 </head>
 <body ng-app="myApp">
 	<p ng-hide="currentUser==undefined">
-		Welcome <a ng-click=""
-			href="#/showUser">{{currentUser.firstName}}</a>
+		Welcome <a ng-click="" href="#/showUser">{{currentUser.firstName}}</a>
 	</p>
 	<table>
 		<tr>
@@ -15,8 +14,10 @@
 			<td ng-show="currentUser==undefined"><a href="#/register">Register</a>
 				|</td>
 			<td><a href="#/aboutus">About Us</a></td>
-			<td ng-hide="currentUser==undefined">| <a
-				 ng-click="" href="#/notifications">Notifications</a></td>
+			<td ng-hide="currentUser==undefined">| <a ng-click=""
+				href="#/friends">Friends</a></td>
+			<td ng-hide="currentUser==undefined">| <a ng-click=""
+				href="#/notifications">Notifications</a></td>
 			<td ng-hide="currentUser==undefined">| <a
 				ng-controller="UserController" ng-click="logout()" href="">Logout</a></td>
 		</tr>
@@ -61,5 +62,7 @@
 	<script type="text/javascript" src="Controllers/ForumController.js"></script>
 	<script type="text/javascript"
 		src="Controllers/ForumCommentController.js"></script>
+		<script type="text/javascript"
+		src="Controllers/FriendController.js"></script>
 </body>
 </html>

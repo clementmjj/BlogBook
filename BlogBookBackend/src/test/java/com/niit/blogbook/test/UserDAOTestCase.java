@@ -21,11 +21,11 @@ public class UserDAOTestCase {
 		userDAO = (UserDAO) context.getBean("userDAO");
 	}
 
-	@Ignore
+	//@Ignore
 	@Test
 	public void addUserTest() {
 		UserDetail user = new UserDetail();
-		user.setUsername("f5");
+		user.setUsername("f6");
 		user.setPassword("pass123");
 		user.setFirstName("first name");
 		user.setLastName("last name");

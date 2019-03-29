@@ -40,7 +40,7 @@ public class FriendController {
 		}
 	}
 
-	@GetMapping(value = "/deleteFriendReq/{friendReqId}")
+	@GetMapping(value = "/rejectFriendReq/{friendReqId}")
 	public String deleteFriendReq(@PathVariable("friendReqId") int friendId) {
 		if (friendDAO.deleteFriendReq(friendId)) {
 			Gson gson = new Gson();
@@ -52,7 +52,7 @@ public class FriendController {
 
 	@GetMapping(value = "/listFriends/{username}")
 	public String getFriendList(@PathVariable("username") String username) {
-		List<Friend> friendList = friendDAO.getFriendList(username);
+		List<UserDetail> friendList = friendDAO.getFriendList(username);
 		if (friendList != null) {
 			Gson gson = new Gson();
 			return gson.toJson(friendList);
@@ -78,8 +78,7 @@ public class FriendController {
 		if (suggestedFriendList != null) {
 			Gson gson = new Gson();
 			return gson.toJson(suggestedFriendList);
-		} else {
+		} else
 			return "Error getting suggested friends";
-		}
 	}
 }

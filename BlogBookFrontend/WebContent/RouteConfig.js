@@ -32,6 +32,8 @@ myApp.config(function($routeProvider) {
 		templateUrl : "Pages/User/User.html"
 	}).when("/notifications", {
 		templateUrl : "Pages/User/Notifications.html"
+	}).when("/friends", {
+		templateUrl : "Pages/Friend/Friend.html"
 	});
 });
 

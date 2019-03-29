@@ -27,11 +27,11 @@ public class FriendDAOTestCase {
 		friendDAO = (FriendDAO) context.getBean("friendDAO");
 	}
 
-	@Ignore
+	//@Ignore
 	@Test
 	public void sendFriendRequestTest() {
 		Friend friend = new Friend();
-		friend.setUsername("f1");
+		friend.setUsername("f6");
 		friend.setFriendUsername("f2");
 		assertTrue("Problem adding friend req", friendDAO.sendFriendReq(friend));
 	}
@@ -52,11 +52,11 @@ public class FriendDAOTestCase {
 	@Test
 	public void getFriendListTest() {
 		String username = "f1";
-		List<Friend> friendList = friendDAO.getFriendList(username);
+		List<UserDetail> friendList = friendDAO.getFriendList(username);
 		assertTrue("Problem getting friend list", friendList != null);
-		for (Friend friend : friendList) {
+		for (UserDetail friend : friendList) {
 			if (friend.getUsername().equals(username))
-				System.out.println(friend.getFriendUsername());
+				System.out.println(friend.getUsername());
 			else
 				System.out.println(friend.getUsername());
 		}
@@ -86,7 +86,7 @@ public class FriendDAOTestCase {
 	@Ignore
 	@Test
 	public void getFriendStatusTest() {
-		if (friendDAO.checkIfFriends("f2", "f1"))
+		if (friendDAO.checkIfFriends("f2", "f1", false))
 			System.out.println("They are friends");
 		else
 			System.out.println("They are not friends");

@@ -3,20 +3,28 @@ myApp.controller("UserController", function($scope, $http, $location,
 
 	$scope.profilePic;
 	$scope.prifilePicUrl;
+	$scope.removeProfilePicUrl;
+
 	if ($rootScope.currentUser) {
+		// setting the url of the current users profile picture
 		$scope.prifilePicUrl = "http://localhost:" + location.port
 				+ "/BlogBookMiddleware/showProfilePic/"
 				+ $rootScope.currentUser.username;
 
+		// retrieving the profile picture
 		$http.get(
 				'http://localhost:' + location.port
 						+ '/BlogBookMiddleware/getProfilePic/'
 						+ $rootScope.currentUser.username).then(
 				function(response) {
 					$scope.profilePic = response.data;
+					if ($scope.profilePic)
+						$scope.removeProfilePicUrl = "http://localhost:"
+								+ location.port
+								+ "/BlogBookMiddleware/deleteProfilePic/"
+								+ $rootScope.currentUser.username;
 				});
 	}
-	;
 
 	$scope.user = {
 		'username' : '',
@@ -72,9 +80,4 @@ myApp.controller("UserController", function($scope, $http, $location,
 		$location.path('/');
 	};
 
-	$scope.removeProfilePic = function() {
-		$http.get('http://localhost:' + location.port
-				+ '/BlogBookMiddleware/deleteProfilePic/'
-				+ $rootScope.currentUser.username);
-	};
 });

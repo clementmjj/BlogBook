@@ -27,9 +27,7 @@ public class ProfilePicController {
 	@RequestMapping(value = "/addUpdateProfilePic", method = RequestMethod.POST)
 	public ResponseEntity<?> addUpdateProfilePic(@RequestParam(value = "profilePic") CommonsMultipartFile file,
 			HttpSession session) {
-		System.out.println("ffff");
 		UserDetail userDetail = (UserDetail) session.getAttribute("userDetail");
-		System.out.println("dddd"+userDetail.getUsername()=="");
 		if (userDetail == null)
 			return new ResponseEntity<String>("Unauthorized user", HttpStatus.NOT_FOUND);
 		else {
@@ -39,14 +37,14 @@ public class ProfilePicController {
 					profilePic.setUsername(userDetail.getUsername());
 					profilePic.setImage(file.getBytes());
 					profilePicDao.addProfilePic(profilePic);
-					return new ResponseEntity<>("Profile pic added", HttpStatus.OK);
+					return new ResponseEntity<String>("Profile pic added", HttpStatus.OK);
 				} else
 					return new ResponseEntity<String>("no file selected", HttpStatus.NOT_FOUND);
 			} else {
 				ProfilePic profilePic = profilePicDao.getProfilePic(userDetail.getUsername());
 				profilePic.setImage(file.getBytes());
 				profilePicDao.updateProfilePic(profilePic);
-				return new ResponseEntity<>("Profile pic updated", HttpStatus.OK);
+				return new ResponseEntity<String>("Profile pic updated", HttpStatus.OK);
 			}
 		}
 	}
@@ -63,20 +61,24 @@ public class ProfilePicController {
 	@GetMapping(value = "/getProfilePic/{username}")
 	public String getProfilePic(@PathVariable("username") String username) {
 		ProfilePic profilePic = profilePicDao.getProfilePic(username);
+
 		if (profilePic != null) {
 			Gson gson = new Gson();
 			return gson.toJson(profilePic);
 		} else
-			return "Error getting profile picture";
+			return null;
 	}
 
-	@GetMapping(value = "/deleteProfilePic/{username}")
-	public String deleteProfilePic(@PathVariable("username") String username) {
+	@RequestMapping(value = "/deleteProfilePic/{username}", method = RequestMethod.GET)
+	// @GetMapping(value = "/deleteProfilePic/{username}")
+	public ResponseEntity<?> deleteProfilePic(@PathVariable("username") String username) {
 		ProfilePic profilePic = profilePicDao.getProfilePic(username);
 		if (profilePicDao.deleteProfilePic(username)) {
-			Gson gson = new Gson();
-			return gson.toJson("Profile picture removed");
+			// Gson gson = new Gson();
+			// return gson.toJson("Profile picture removed");
+			return new ResponseEntity<String>("Profile picture deleted", HttpStatus.OK);
 		} else
-			return "Error removing provile picture";
+			// return "Error removing provile picture";
+			return new ResponseEntity<String>("Error deleting Profile picture ", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

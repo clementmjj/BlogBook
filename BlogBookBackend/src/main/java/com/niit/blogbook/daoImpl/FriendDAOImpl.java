@@ -22,7 +22,6 @@ public class FriendDAOImpl implements FriendDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	static UserDAO userDAO;
 
 	@Override
 	public boolean sendFriendReq(Friend friend) {
@@ -72,11 +71,22 @@ public class FriendDAOImpl implements FriendDAO {
 	}
 
 	@Override
-	public List<Friend> getFriendList(String username) {
+	public List<UserDetail> getFriendList(String username) {
 		Session session = sessionFactory.openSession();
 		Query query = session.createQuery("from Friend where (username = '" + username + "' or friendUsername='"
 				+ username + "') and status = 'A'");
-		List<Friend> friendList = query.list();
+		List<Friend> list = query.list();
+		List<UserDetail> friendList = new ArrayList<UserDetail>();
+		for (Friend friend : list) {
+
+			if (friend.getUsername().equals(username)) {
+				UserDetail user = session.get(UserDetail.class, friend.getFriendUsername());
+				friendList.add(user);
+			} else {
+				UserDetail user = session.get(UserDetail.class, friend.getUsername());
+				friendList.add(user);
+			}
+		}
 		session.close();
 		return friendList;
 	}
@@ -84,8 +94,7 @@ public class FriendDAOImpl implements FriendDAO {
 	@Override
 	public List<Friend> getPendingFriends(String username) {
 		Session session = sessionFactory.openSession();
-		Query query = session.createQuery("from Friend where (username = '" + username + "' or friendUsername='"
-				+ username + "') and status = 'P'");
+		Query query = session.createQuery("from Friend where friendUsername = '" + username + "' and status = 'P'");
 		List<Friend> friendList = query.list();
 		session.close();
 		return friendList;
@@ -93,30 +102,22 @@ public class FriendDAOImpl implements FriendDAO {
 
 	@Override
 	public List<UserDetail> getSuggestedFriends(String username) {
-
 		List<UserDetail> suggestedFriendList = new ArrayList<UserDetail>();
-		List<Friend> friendList = getFriendList(username);
-
-		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-		context.scan("com.niit");
-		context.refresh();
-		userDAO = (UserDAO) context.getBean("userDAO");
-		for (Friend friend : friendList) {
-			String user = "";
-			if (friend.getUsername().equals(username))
-				user = friend.getFriendUsername();
-			else
-				user = friend.getUsername();
-			List<Friend> friendsFriendList = getFriendList(user);
-			for (Friend f : friendsFriendList) {
-				if (f.getUsername().equals(username) || f.getFriendUsername().equals(username))
+		List<UserDetail> friendList = getFriendList(username);
+		for (UserDetail user : friendList) {
+			List<UserDetail> friendsFriendList = getFriendList(user.getUsername());
+			for (UserDetail friendOfUser : friendsFriendList) {
+				if (friendOfUser.getUsername().equals(username))
 					continue;
-				if (f.getUsername().equals(user)) {
-					if (!checkIfFriends(username, f.getFriendUsername())) {
-						suggestedFriendList.add(userDAO.getUser(f.getFriendUsername()));
+				if (!checkIfFriends(username, friendOfUser.getUsername(), true)) {
+					if (suggestedFriendList.size() == 0)
+						suggestedFriendList.add(friendOfUser);
+					else {
+						for (UserDetail u : suggestedFriendList) {
+							if (!friendOfUser.getUsername().equals(u.getUsername()))
+								suggestedFriendList.add(friendOfUser);
+						}
 					}
-				} else if (!checkIfFriends(username, f.getUsername())) {
-					suggestedFriendList.add(userDAO.getUser(f.getUsername()));
 				}
 			}
 		}
@@ -124,11 +125,16 @@ public class FriendDAOImpl implements FriendDAO {
 	}
 
 	@Override
-	public boolean checkIfFriends(String username1, String username2) {
+	public boolean checkIfFriends(String username1, String username2, boolean ignoreStatus) {
 		Session session = sessionFactory.openSession();
-		Query query = session.createQuery("from Friend where ((username = '" + username1 + "' and friendUsername = '"
-				+ username2 + "') or (friendUsername = '" + username1 + "' and username = '" + username2
-				+ "')) and status = 'A'");
+		Query query;
+		if (ignoreStatus == true)
+			query = session.createQuery("from Friend where ((username = '" + username1 + "' and friendUsername = '"
+					+ username2 + "') or (friendUsername = '" + username1 + "' and username = '" + username2 + "'))");
+		else
+			query = session.createQuery("from Friend where ((username = '" + username1 + "' and friendUsername = '"
+					+ username2 + "') or (friendUsername = '" + username1 + "' and username = '" + username2
+					+ "')) and status = 'A'");
 		try {
 			query.getSingleResult();
 			return true;

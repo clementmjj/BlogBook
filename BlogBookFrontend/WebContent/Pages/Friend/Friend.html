@@ -1,0 +1,32 @@
+<div ng-controller="FriendController">
+	<div>
+		<h4>Friends ({{friendList.length}})</h4>
+		<ul ng-repeat="user in friendList">
+			<li><img
+				src="http://localhost:{{portNo}}/BlogBookMiddleware/showProfilePic/{{user.username}}"
+				width="100" height="100" />{{user.username}}</li>
+
+		</ul>
+	</div>
+	<div>
+		<h4>Friend Requests ({{pendingFriendList.length}})</h4>
+		<ul ng-repeat="friend in pendingFriendList">
+			<li><img
+				src="http://localhost:{{portNo}}/BlogBookMiddleware/showProfilePic/{{friend.username}}"
+				width="100" height="100" />{{friend.username}}<input type="button"
+				value="Accept" ng-click="acceptFriendReq(friend.friendId)" /><input
+				type="button" value="Reject"
+				ng-click="rejectFriendReq(friend.friendId)" /></li>
+
+		</ul>
+	</div>
+	<div>
+		<h4>Suggested friends ({{suggestedFriendList.length}})</h4>
+		<ul ng-repeat="user in suggestedFriendList">
+			<li><img
+				src="http://localhost:{{portNo}}/BlogBookMiddleware/showProfilePic/{{user.username}}"
+				width="100" height="100" />{{user.username}}</li>
+
+		</ul>
+	</div>
+</div>
