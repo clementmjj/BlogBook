@@ -2,6 +2,8 @@ package com.niit.blogbook.test;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -21,7 +23,7 @@ public class UserDAOTestCase {
 		userDAO = (UserDAO) context.getBean("userDAO");
 	}
 
-	//@Ignore
+	@Ignore
 	@Test
 	public void addUserTest() {
 		UserDetail user = new UserDetail();
@@ -65,11 +67,20 @@ public class UserDAOTestCase {
 		assertTrue("Problem rejecting user", userDAO.rejectUser(user));
 	}
 
-	//@Ignore
+	@Ignore
 	@Test
 	public void getUserTest() {
 		UserDetail user = userDAO.getUser("f4");
 		assertTrue("Problem retrieving user", userDAO.rejectUser(user));
 		System.out.println(user.getFirstName() + "," + user.getEmail());
+	}
+
+	@Ignore
+	@Test
+	public void getUserListTest() {
+		List<UserDetail> userList = userDAO.getUserList();
+		for (UserDetail user : userList) {
+			System.out.println(user.getUsername());
+		}
 	}
 }

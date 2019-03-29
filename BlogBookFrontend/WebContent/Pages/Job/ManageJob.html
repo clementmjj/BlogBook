@@ -1,0 +1,24 @@
+<div ng-controller="JobController" ng-init="getJobList()">
+	<table>
+		<tr>
+			<th>Job Designation</th>
+			<th>Job Profile</th>
+			<th>Requirements</th>
+			<th>Job Description</th>
+			<th>Open / Close</th>
+			<th>Delete job</th>
+		</tr>
+		<tr ng-repeat="job in jobList">
+			<td>{{job.jobDesignation}}</td>
+			<td>{{job.jobProfile}}</td>
+			<td>{{job.qualificationRequired}}</td>
+			<td>{{job.jobDescription}}</td>
+			<td><input type="button" value="Open"
+				ng-hide="job.status=='open'" ng-click="openJob(job.jobId)" /> <input
+				type="button" value="close" ng-hide="job.status=='close'"
+				ng-click="closeJob(job.jobId)" /></td>
+			<td><input type="button" value="Detete"
+				ng-click="deleteJob(job.jobId)" /></td>
+		</tr>
+	</table>
+</div>

@@ -38,11 +38,9 @@ myApp.controller("UserController", function($scope, $http, $location,
 	};
 
 	$scope.register = function() {
-		console.log('Registering user...');
 		$scope.user.role = 'Student';
 		$scope.user.status = 'A';
 		$scope.user.isOnline = 'Off';
-		console.log($scope.user);
 		$http.post(
 				'http://localhost:' + location.port
 						+ '/BlogBookMiddleware/registerUser', $scope.user)
@@ -67,6 +65,7 @@ myApp.controller("UserController", function($scope, $http, $location,
 								$cookieStore.put('userDetails',
 										$rootScope.currentUser);
 								$location.path('/');
+								location.reload();
 							});
 				});
 	};

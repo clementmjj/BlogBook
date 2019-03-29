@@ -1,13 +1,15 @@
 package com.niit.blogbook.daoImpl;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.blogbook.dao.UserDAO;
-import com.niit.blogbook.model.Blog;
 import com.niit.blogbook.model.UserDetail;
 
 @Repository("userDAO")
@@ -75,6 +77,15 @@ public class UserDAOImpl implements UserDAO {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	@Override
+	public List<UserDetail> getUserList() {
+		Session session = sessionFactory.openSession();
+		Query query = session.createQuery("from UserDetail");
+		List<UserDetail> userList = query.list();
+		session.close();
+		return userList;
 	}
 
 }

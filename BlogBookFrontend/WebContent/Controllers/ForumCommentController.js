@@ -24,7 +24,6 @@ myApp
 										+ '/BlogBookMiddleware/addForumComment',
 								$scope.forumComment).then(function(response) {
 							console.log('Forum comment added');
-							console.log(response.data);
 						});
 					}
 
@@ -37,7 +36,7 @@ myApp
 												+ forumId)
 								.then(function(response) {
 									$scope.forumCommentList = response.data;
-									console.log($scope.forumCommentList);
+									console.log("Forum comments retrieved");
 								});
 					}
 
@@ -49,9 +48,7 @@ myApp
 												+ '/BlogBookMiddleware/deleteForumComment/'
 												+ forumCommentId).then(
 										function(response) {
-											console.log("Forum comment "
-													+ forumCommentId
-													+ " deleted");
+											console.log("Forum comment deleted");
 										});
 					}
 
@@ -76,7 +73,6 @@ myApp
 											$scope.forumCommentEdit)
 									.then(
 											function(response) {
-												console.log(response.data);
 												var p_comment = document
 														.createElement("p");
 												p_comment.innerHTML = (response.data).commentMessage;

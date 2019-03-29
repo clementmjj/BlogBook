@@ -25,7 +25,6 @@ public class FriendController {
 
 	@PostMapping(value = "/sendFriendReq")
 	public String sendFriendReq(@RequestBody Friend friend) {
-		// the following line is just for testing. delete it after completing frontend
 		if (friendDAO.sendFriendReq(friend)) {
 			Notification notification = new Notification();
 			notification.setNotificationDate(new java.util.Date());

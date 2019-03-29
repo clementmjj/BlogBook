@@ -1,104 +1,104 @@
 myApp
 		.controller(
-				"BlogController",
+				"JobController",
 				function($scope, $http, $location, $rootScope, $cookieStore) {
 
-					$scope.blog = {
-						'blogTitle' : '',
-						'blogContent' : '',
+					$scope.job = {
+						'jobTitle' : '',
+						'jobContent' : '',
 						'username' : '',
 						'status' : '',
 						'likes' : 0,
 						'dislikes' : 0
 					};
-					$scope.blogDetail;
-					$scope.editBlogInfo;
-					$scope.addBlog = function() {
-						$scope.blog.username = $rootScope.currentUser.username;
-						$scope.blog.status = 'NA';
+					$scope.jobDetail;
+					$scope.editJobInfo;
+					$scope.addJob = function() {
+						$scope.job.username = $rootScope.currentUser.username;
+						$scope.job.status = 'NA';
 						$http.post(
 								'http://localhost:' + location.port
-										+ '/BlogBookMiddleware/addBlog',
-								$scope.blog).then(function(response) {
-							console.log('Blog added');
-							$location.path('/blogList');
+										+ '/JobBookMiddleware/addJob',
+								$scope.job).then(function(response) {
+							console.log('Job added');
+							$location.path('/jobList');
 						});
 					}
 
-					$scope.showEditBlog = function() {
+					$scope.showEditJob = function() {
 						var urlText = window.location.href;
-						var editBlogId = urlText
+						var editJobId = urlText
 								.substring(urlText.indexOf("=") + 1);
 						$http.get(
 								'http://localhost:' + location.port
-										+ '/BlogBookMiddleware/getBlog/'
-										+ editBlogId).then(function(response) {
-							$scope.editBlogInfo = response.data;
-							delete $scope.editBlogInfo.createdDate;
+										+ '/JobBookMiddleware/getJob/'
+										+ editJobId).then(function(response) {
+							$scope.editJobInfo = response.data;
+							delete $scope.editJobInfo.createdDate;
 						});
 					}
 
-					$scope.updateBlog = function() {
+					$scope.updateJob = function() {
 						$http.post(
 								'http://localhost:' + location.port
-										+ '/BlogBookMiddleware/updateBlog',
-								$scope.editBlogInfo).then(function(response) {
-							console.log("Blog updated.");
-							$location.path("/blogList");
+										+ '/JobBookMiddleware/updateJob',
+								$scope.editJobInfo).then(function(response) {
+							console.log("Job updated.");
+							$location.path("/jobList");
 						});
 					}
 
-					$scope.getBlogList = function() {
+					$scope.getJobList = function() {
 						$http.get(
 								'http://localhost:' + location.port
-										+ '/BlogBookMiddleware/getBlogList')
+										+ '/JobBookMiddleware/getJobList')
 								.then(function(response) {
-									$scope.blogList = response.data;
-									console.log("Blog list retrieved.");
+									$scope.jobList = response.data;
+									console.log("Job list retrieved.");
 								});
 					}
 
-					$scope.approveBlog = function(blogId) {
+					$scope.approveJob = function(jobId) {
 						$http.get(
 								'http://localhost:' + location.port
-										+ '/BlogBookMiddleware/approveBlog/'
-										+ blogId).then(function(response) {
-							console.log("Blog approved");
+										+ '/JobBookMiddleware/approveJob/'
+										+ jobId).then(function(response) {
+							console.log("Job approved");
 						});
 					}
 
-					$scope.rejectBlog = function(blogId) {
+					$scope.rejectJob = function(jobId) {
 						$http.get(
 								'http://localhost:' + location.port
-										+ '/BlogBookMiddleware/rejectBlog/'
-										+ blogId).then(function(response) {
-							console.log("Blog rejected");
+										+ '/JobBookMiddleware/rejectJob/'
+										+ jobId).then(function(response) {
+							console.log("Job rejected");
 						});
 					}
 
-					$scope.deleteBlog = function(blogId) {
+					$scope.deleteJob = function(jobId) {
 						$http.get(
 								'http://localhost:' + location.port
-										+ '/BlogBookMiddleware/deleteBlog/'
-										+ blogId).then(function(response) {
-							console.log("Blog deleted");
+										+ '/JobBookMiddleware/deleteJob/'
+										+ jobId).then(function(response) {
+							console.log("Job deleted");
 						});
 					}
 
-					$scope.showBlog = function(blogId) {
-						if (blogId == undefined)
-							blogId = $cookieStore.get("showBlogId");
-						if ($cookieStore.get("showBlogId") == undefined) {
-							$cookieStore.put("showBlogId", blogId);
-						} else if ($cookieStore.get("showBlogId") != blogId) {
-							$cookieStore.put("showBlogId", blogId);
+					$scope.showJob = function(jobId) {
+						if (jobId == undefined)
+							jobId = $cookieStore.get("showJobId");
+						if ($cookieStore.get("showJobId") == undefined) {
+							$cookieStore.put("showJobId", jobId);
+						} else if ($cookieStore.get("showJobId") != jobId) {
+							$cookieStore.put("showJobId", jobId);
 						} else {
 							$http.get(
 									'http://localhost:' + location.port
-											+ '/BlogBookMiddleware/getBlog/'
-											+ $cookieStore.get("showBlogId"))
+											+ '/JobBookMiddleware/getJob/'
+											+ $cookieStore.get("showJobId"))
 									.then(function(response) {
-										$scope.blogDetail = response.data;
+										$scope.jobDetail = response.data;
 									});
 						}
 					}
@@ -109,9 +109,9 @@ myApp
 								.get(
 										'http://localhost:'
 												+ location.port
-												+ '/BlogBookMiddleware/getBlogLike/'
+												+ '/JobBookMiddleware/getJobLike/'
 												+ $cookieStore
-														.get("showBlogId")
+														.get("showJobId")
 												+ '/'
 												+ $rootScope.currentUser.username)
 								.then(
@@ -119,33 +119,33 @@ myApp
 											var existingLike = response.data;
 											if (!existingLike) {
 												// add new like
-												var blogLike = {
-													'blogId' : $cookieStore
-															.get("showBlogId"),
+												var jobLike = {
+													'jobId' : $cookieStore
+															.get("showJobId"),
 													'username' : $rootScope.currentUser.username
 												};
 												$http
 														.post(
 																'http://localhost:'
 																		+ location.port
-																		+ '/BlogBookMiddleware/addBlogLike',
-																blogLike);
-												// increment blog like value
+																		+ '/JobBookMiddleware/addJobLike',
+																jobLike);
+												// increment job like value
 												$http
 														.get('http://localhost:'
 																+ location.port
-																+ '/BlogBookMiddleware/incrementLike/'
+																+ '/JobBookMiddleware/incrementLike/'
 																+ $cookieStore
-																		.get("showBlogId"));
+																		.get("showJobId"));
 												// check if there is an existing
 												// dislike by user
 												$http
 														.get(
 																'http://localhost:'
 																		+ location.port
-																		+ '/BlogBookMiddleware/getBlogDislike/'
+																		+ '/JobBookMiddleware/getJobDislike/'
 																		+ $cookieStore
-																				.get("showBlogId")
+																				.get("showJobId")
 																		+ '/'
 																		+ $rootScope.currentUser.username)
 														.then(
@@ -154,23 +154,23 @@ myApp
 																	var existingDislike = response.data;
 																	if (existingDislike) {
 																		// delete
-																		// blog
+																		// job
 																		// dislike
 																		$http
 																				.get('http://localhost:'
 																						+ location.port
-																						+ '/BlogBookMiddleware/deleteBlogDislike/'
-																						+ existingDislike.blogDislikeId);
+																						+ '/JobBookMiddleware/deleteJobDislike/'
+																						+ existingDislike.jobDislikeId);
 																		// decrement
-																		// blog
+																		// job
 																		// dislikes
 																		// value
 																		$http
 																				.get('http://localhost:'
 																						+ location.port
-																						+ '/BlogBookMiddleware/decrementDislike/'
+																						+ '/JobBookMiddleware/decrementDislike/'
 																						+ $cookieStore
-																								.get("showBlogId"));
+																								.get("showJobId"));
 																	}
 																});
 											} else {
@@ -178,15 +178,15 @@ myApp
 												$http
 														.get('http://localhost:'
 																+ location.port
-																+ '/BlogBookMiddleware/deleteBlogLike/'
-																+ existingLike.blogLikeId);
-												// decrement blog like value
+																+ '/JobBookMiddleware/deleteJobLike/'
+																+ existingLike.jobLikeId);
+												// decrement job like value
 												$http
 														.get('http://localhost:'
 																+ location.port
-																+ '/BlogBookMiddleware/decrementLike/'
+																+ '/JobBookMiddleware/decrementLike/'
 																+ $cookieStore
-																		.get("showBlogId"));
+																		.get("showJobId"));
 											}
 										});
 					};
@@ -197,9 +197,9 @@ myApp
 								.get(
 										'http://localhost:'
 												+ location.port
-												+ '/BlogBookMiddleware/getBlogDislike/'
+												+ '/JobBookMiddleware/getJobDislike/'
 												+ $cookieStore
-														.get("showBlogId")
+														.get("showJobId")
 												+ '/'
 												+ $rootScope.currentUser.username)
 								.then(
@@ -207,33 +207,33 @@ myApp
 											var existingDislike = response.data;
 											if (!existingDislike) {
 												// add new dislike
-												var blogDislike = {
-													'blogId' : $cookieStore
-															.get("showBlogId"),
+												var jobDislike = {
+													'jobId' : $cookieStore
+															.get("showJobId"),
 													'username' : $rootScope.currentUser.username
 												};
 												$http
 														.post(
 																'http://localhost:'
 																		+ location.port
-																		+ '/BlogBookMiddleware/addBlogDislike',
-																blogDislike);
-												// increment blog dislike value
+																		+ '/JobBookMiddleware/addJobDislike',
+																jobDislike);
+												// increment job dislike value
 												$http
 														.get('http://localhost:'
 																+ location.port
-																+ '/BlogBookMiddleware/incrementDislike/'
+																+ '/JobBookMiddleware/incrementDislike/'
 																+ $cookieStore
-																		.get("showBlogId"));
+																		.get("showJobId"));
 												// check if there is an existing
 												// like by user
 												$http
 														.get(
 																'http://localhost:'
 																		+ location.port
-																		+ '/BlogBookMiddleware/getBlogLike/'
+																		+ '/JobBookMiddleware/getJobLike/'
 																		+ $cookieStore
-																				.get("showBlogId")
+																				.get("showJobId")
 																		+ '/'
 																		+ $rootScope.currentUser.username)
 														.then(
@@ -242,23 +242,23 @@ myApp
 																	var existingLike = response.data;
 																	if (existingLike) {
 																		// delete
-																		// blog
+																		// job
 																		// like
 																		$http
 																				.get('http://localhost:'
 																						+ location.port
-																						+ '/BlogBookMiddleware/deleteBlogLike/'
-																						+ existingLike.blogLikeId);
+																						+ '/JobBookMiddleware/deleteJobLike/'
+																						+ existingLike.jobLikeId);
 																		// decrement
-																		// blog
+																		// job
 																		// likes
 																		// value
 																		$http
 																				.get('http://localhost:'
 																						+ location.port
-																						+ '/BlogBookMiddleware/decrementLike/'
+																						+ '/JobBookMiddleware/decrementLike/'
 																						+ $cookieStore
-																								.get("showBlogId"));
+																								.get("showJobId"));
 																	}
 																});
 											} else {
@@ -266,15 +266,15 @@ myApp
 												$http
 														.get('http://localhost:'
 																+ location.port
-																+ '/BlogBookMiddleware/deleteBlogDislike/'
-																+ existingDislike.blogDislikeId);
-												// decrement blog dislike value
+																+ '/JobBookMiddleware/deleteJobDislike/'
+																+ existingDislike.jobDislikeId);
+												// decrement job dislike value
 												$http
 														.get('http://localhost:'
 																+ location.port
-																+ '/BlogBookMiddleware/decrementDislike/'
+																+ '/JobBookMiddleware/decrementDislike/'
 																+ $cookieStore
-																		.get("showBlogId"));
+																		.get("showJobId"));
 											}
 										});
 					};

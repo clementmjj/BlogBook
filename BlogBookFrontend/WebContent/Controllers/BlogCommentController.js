@@ -23,8 +23,7 @@ myApp
 								'http://localhost:' + location.port
 										+ '/BlogBookMiddleware/addBlogComment',
 								$scope.blogComment).then(function(response) {
-							console.log('Blog comment added');
-							console.log(response.data);
+							console.log('Blog comment added.');
 						});
 					}
 
@@ -37,7 +36,7 @@ myApp
 												+ blogId)
 								.then(function(response) {
 									$scope.blogCommentList = response.data;
-									console.log($scope.blogCommentList);
+									console.log("Blog comments retrieved.")
 								});
 					}
 
@@ -49,9 +48,7 @@ myApp
 												+ '/BlogBookMiddleware/deleteBlogComment/'
 												+ blogCommentId).then(
 										function(response) {
-											console.log("Blog comment "
-													+ blogCommentId
-													+ " deleted");
+											console.log("Blog comment deleted.");
 										});
 					}
 

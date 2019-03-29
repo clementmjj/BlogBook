@@ -62,4 +62,5 @@ public class JobDAOTestCase {
 			System.out.println(job.getJobStatus());
 		}
 	}
+	
 }
