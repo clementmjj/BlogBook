@@ -15,17 +15,29 @@ import com.niit.blogbook.model.Notification;
 public class NotificationController {
 	@Autowired
 	NotificationDAO notificationDAO;
-	
+
 	@GetMapping(value = "/getNotifications/{username}")
 	public String listNotifications(@PathVariable("username") String username) {
-		List<Notification> notificationList=notificationDAO.getNotificationList(username);
-		if (notificationList!=null) {
+		List<Notification> notificationList = notificationDAO.getNotificationList(username);
+		if (notificationList != null) {
 			{
 				Gson gson = new Gson();
 				return gson.toJson(notificationList);
 			}
 		} else {
 			return "Error getting notification list";
+		}
+	}
+
+	@GetMapping(value = "/deleteNotification/{notificationId}")
+	public String deleteNotification(@PathVariable("notificationId") int notificationId) {
+		if (notificationDAO.deleteNotification(notificationDAO.getNotification(notificationId))) {
+			{
+				Gson gson = new Gson();
+				return gson.toJson("Notification deleted");
+			}
+		} else {
+			return "Error deleting notification";
 		}
 	}
 }

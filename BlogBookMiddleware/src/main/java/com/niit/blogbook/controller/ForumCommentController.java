@@ -13,19 +13,34 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.niit.blogbook.dao.ForumCommentDAO;
+import com.niit.blogbook.dao.ForumDAO;
+import com.niit.blogbook.dao.NotificationDAO;
 import com.niit.blogbook.model.ForumComment;
+import com.niit.blogbook.model.Notification;
 
 @RestController
 public class ForumCommentController {
 
 	@Autowired
 	ForumCommentDAO forumCommentDAO;
+	@Autowired
+	ForumDAO forumDAO;
+	@Autowired
+	NotificationDAO notificationDAO;
 
 	@PostMapping(value = "/addForumComment")
 	public String addForumComment(@RequestBody ForumComment forumComment) {
 		// the following line is just for testing. delete it after completing frontend
 		forumComment.setCommentDate(new java.util.Date());
 		if (forumCommentDAO.addForumComment(forumComment)) {
+			Notification notification = new Notification();
+			notification.setNotificationDate(new java.util.Date());
+			notification.setStatus("UR");
+			notification.setUsername(forumDAO.getForum(forumComment.getForumId()).getUsername());
+			notification.setType("New Forum Comment");
+			notification.setMessage("Your forum " + forumDAO.getForum(forumComment.getForumId()).getForumTitle()
+					+ " has a new comment.");
+			notificationDAO.addNotification(notification);
 			Gson gson = new Gson();
 			return gson.toJson(forumComment);
 		} else {

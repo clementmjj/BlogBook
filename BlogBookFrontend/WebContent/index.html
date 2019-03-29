@@ -16,8 +16,8 @@
 			<td><a href="#/aboutus">About Us</a></td>
 			<td ng-hide="currentUser==undefined">| <a ng-click=""
 				href="#/friends">Friends</a></td>
-			<td ng-hide="currentUser==undefined">| <a ng-click=""
-				href="#/notifications">Notifications</a></td>
+			<td ng-controller="NotificationController" ng-hide="currentUser==undefined">| <a ng-click=""
+				href="#/notifications">Notifications ({{notificationList.length}})</a></td>
 			<td ng-hide="currentUser==undefined">| <a
 				ng-controller="UserController" ng-click="logout()" href="">Logout</a></td>
 		</tr>
@@ -62,7 +62,8 @@
 	<script type="text/javascript" src="Controllers/ForumController.js"></script>
 	<script type="text/javascript"
 		src="Controllers/ForumCommentController.js"></script>
-		<script type="text/javascript"
-		src="Controllers/FriendController.js"></script>
+	<script type="text/javascript" src="Controllers/FriendController.js"></script>
+	<script type="text/javascript"
+		src="Controllers/NotificationController.js"></script>
 </body>
 </html>

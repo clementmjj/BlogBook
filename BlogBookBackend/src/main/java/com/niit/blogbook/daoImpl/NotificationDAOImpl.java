@@ -21,8 +21,6 @@ public class NotificationDAOImpl implements NotificationDAO {
 	@Override
 	public boolean addNotification(Notification notification) {
 		try {
-			notification.setNotificationDate(new java.util.Date());
-			notification.setStatus("UR");
 			sessionFactory.getCurrentSession().save(notification);
 			return true;
 		} catch (Exception e) {

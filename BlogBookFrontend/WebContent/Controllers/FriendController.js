@@ -33,6 +33,20 @@ myApp.controller("FriendController", function($scope, $http, $location,
 		console.log("Suggested friend list retrieved");
 	});
 
+	$scope.sendFriendReq = function(friendUsername) {
+		var newFriendReq = {
+			"username" : $rootScope.currentUser.username,
+			"friendUsername" : friendUsername,
+			"status" : "P"
+		};
+		$http.post(
+				'http://localhost:' + location.port
+						+ '/BlogBookMiddleware/sendFriendReq/', newFriendReq)
+				.then(function(response) {
+					console.log("Friend request sent");
+				});
+	};
+
 	$scope.acceptFriendReq = function(friendReqId) {
 		$http.get(
 				'http://localhost:' + location.port
@@ -49,6 +63,16 @@ myApp.controller("FriendController", function($scope, $http, $location,
 				.then(function(response) {
 					console.log("Friend request rejected");
 				});
+	};
+
+	$scope.unfriend = function(friendUsername) {
+		$http.get(
+				'http://localhost:' + location.port
+						+ '/BlogBookMiddleware/unfriend/'
+						+ $rootScope.currentUser.username + '/'
+						+ friendUsername).then(function(response) {
+			console.log("Unfriended");
+		});
 	};
 
 });

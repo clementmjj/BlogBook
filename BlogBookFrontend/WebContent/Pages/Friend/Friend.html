@@ -4,8 +4,9 @@
 		<ul ng-repeat="user in friendList">
 			<li><img
 				src="http://localhost:{{portNo}}/BlogBookMiddleware/showProfilePic/{{user.username}}"
-				width="100" height="100" />{{user.username}}</li>
-
+				width="100" height="100" />{{user.username}}
+				<input type="button" value="Unfriend" ng-click="unfriend(user.username)"/>
+				</li>
 		</ul>
 	</div>
 	<div>
@@ -25,7 +26,8 @@
 		<ul ng-repeat="user in suggestedFriendList">
 			<li><img
 				src="http://localhost:{{portNo}}/BlogBookMiddleware/showProfilePic/{{user.username}}"
-				width="100" height="100" />{{user.username}}</li>
+				width="100" height="100" />{{user.username}} <input type="button"
+				value="Add Friend" ng-click="sendFriendReq(user.username)" /></li>
 
 		</ul>
 	</div>

@@ -59,6 +59,22 @@ public class FriendDAOImpl implements FriendDAO {
 	}
 
 	@Override
+	public boolean unfriend(String username1, String username2) {
+		try {
+			Session session = sessionFactory.openSession();
+			Query query = session.createQuery("from Friend where (username = '" + username1 + "' and friendUsername = '"
+					+ username2 + "') or (friendUsername = '" + username1 + "' and username = '" + username2 + "')");
+			Friend friend = (Friend) query.getSingleResult();
+			session.close();
+			sessionFactory.getCurrentSession().delete(friend);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+
+	}
+
+	@Override
 	public Friend getFriendDetail(int friendId) {
 		try {
 			Session session = sessionFactory.openSession();
@@ -105,18 +121,26 @@ public class FriendDAOImpl implements FriendDAO {
 		List<UserDetail> suggestedFriendList = new ArrayList<UserDetail>();
 		List<UserDetail> friendList = getFriendList(username);
 		for (UserDetail user : friendList) {
+			System.out.println(user.getUsername());
 			List<UserDetail> friendsFriendList = getFriendList(user.getUsername());
 			for (UserDetail friendOfUser : friendsFriendList) {
+
 				if (friendOfUser.getUsername().equals(username))
 					continue;
 				if (!checkIfFriends(username, friendOfUser.getUsername(), true)) {
-					if (suggestedFriendList.size() == 0)
+					if (suggestedFriendList.isEmpty())
 						suggestedFriendList.add(friendOfUser);
+
 					else {
+						boolean userExists = false;
 						for (UserDetail u : suggestedFriendList) {
-							if (!friendOfUser.getUsername().equals(u.getUsername()))
-								suggestedFriendList.add(friendOfUser);
+							if (friendOfUser.getUsername().equals(u.getUsername())) {
+								userExists = true;
+								break;
+							}
 						}
+						if (userExists == false)
+							suggestedFriendList.add(friendOfUser);
 					}
 				}
 			}

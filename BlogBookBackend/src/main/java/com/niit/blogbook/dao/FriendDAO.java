@@ -6,8 +6,8 @@ import com.niit.blogbook.model.Friend;
 import com.niit.blogbook.model.UserDetail;
 
 public interface FriendDAO {
-	//public List<Friend> getFriendList(String username);
-	public List<UserDetail> getFriendList(String username);	
+	// public List<Friend> getFriendList(String username);
+	public List<UserDetail> getFriendList(String username);
 
 	public List<Friend> getPendingFriends(String username);
 
@@ -18,7 +18,9 @@ public interface FriendDAO {
 	public boolean acceptFriendReq(int friendId);
 
 	public boolean deleteFriendReq(int friendId);
-	
+
+	public boolean unfriend(String username1, String username2);
+
 	public Friend getFriendDetail(int friendId);
 
 	boolean checkIfFriends(String username1, String username2, boolean ignoreStatus);

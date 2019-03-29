@@ -13,19 +13,36 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.niit.blogbook.dao.ForumDAO;
+import com.niit.blogbook.dao.FriendDAO;
+import com.niit.blogbook.dao.NotificationDAO;
 import com.niit.blogbook.model.Forum;
+import com.niit.blogbook.model.Notification;
+import com.niit.blogbook.model.UserDetail;
 
 @RestController
 public class ForumController {
 
 	@Autowired
 	ForumDAO forumDAO;
+	@Autowired
+	FriendDAO friendDAO;
+	@Autowired
+	NotificationDAO notificationDAO;
 
 	@PostMapping(value = "/addForum")
 	public String addForum(@RequestBody Forum forum) {
-		// the following line is just for testing. delete it after completing frontend
 		forum.setCreatedDate(new java.util.Date());
 		if (forumDAO.addForum(forum)) {
+			List<UserDetail> friendList = friendDAO.getFriendList(forum.getUsername());
+			for (UserDetail user : friendList) {
+				Notification notification = new Notification();
+				notification.setNotificationDate(new java.util.Date());
+				notification.setStatus("UR");
+				notification.setUsername(user.getUsername());
+				notification.setType("Forum Added");
+				notification.setMessage(forum.getUsername() + " has added a new forum.");
+				notificationDAO.addNotification(notification);
+			}
 			Gson gson = new Gson();
 			return gson.toJson(forum);
 		} else
@@ -44,7 +61,6 @@ public class ForumController {
 
 	@PostMapping(value = "/updateForum")
 	public String updateForum(@RequestBody Forum forum) {
-		// the following line is just for testing. delete it after completing frontend
 		forum.setCreatedDate(forumDAO.getForum(forum.getForumId()).getCreatedDate());
 
 		if (forumDAO.updateForumDetails(forum)) {
@@ -53,12 +69,19 @@ public class ForumController {
 		} else
 			return "Error updating forum";
 	}
-	
+
 	@GetMapping(value = "/approveForum/{forumId}")
 	public String approveForum(@PathVariable("forumId") int forumId) {
 		Forum forum = forumDAO.getForum(forumId);
 		if (forumDAO.approveForum(forum)) {
 			{
+				Notification notification = new Notification();
+				notification.setNotificationDate(new java.util.Date());
+				notification.setStatus("UR");
+				notification.setUsername(forum.getUsername());
+				notification.setType("Forum Approved");
+				notification.setMessage("Your forum " + forum.getForumTitle() + " has been approved.");
+				notificationDAO.addNotification(notification);
 				Gson gson = new Gson();
 				return gson.toJson(forum);
 			}
@@ -72,6 +95,13 @@ public class ForumController {
 		Forum forum = forumDAO.getForum(forumId);
 		if (forumDAO.rejectForum(forum)) {
 			{
+				Notification notification = new Notification();
+				notification.setNotificationDate(new java.util.Date());
+				notification.setStatus("UR");
+				notification.setUsername(forum.getUsername());
+				notification.setType("Forum Rejected");
+				notification.setMessage("Your forum " + forum.getForumTitle() + " has been rejected.");
+				notificationDAO.addNotification(notification);
 				Gson gson = new Gson();
 				return gson.toJson(forum);
 			}
@@ -79,7 +109,7 @@ public class ForumController {
 			return "Error rejecting forum";
 		}
 	}
-	
+
 	@GetMapping(value = "/getForumList")
 	public ResponseEntity<List<Forum>> getForumList() {
 		List<Forum> forumList = forumDAO.getForumList();

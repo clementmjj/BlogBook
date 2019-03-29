@@ -47,13 +47,12 @@ myApp.controller("UserController", function($scope, $http, $location,
 				'http://localhost:' + location.port
 						+ '/BlogBookMiddleware/registerUser', $scope.user)
 				.then(function(response) {
-					console.log('Registered');
+					console.log('User registered');
 					$location.path('/login');
 				})
 	};
 
 	$scope.loginCheck = function() {
-		console.log('Logging in user...');
 		$http.post(
 				'http://localhost:' + location.port
 						+ '/BlogBookMiddleware/checkLogin', $scope.user).then(
@@ -65,12 +64,10 @@ myApp.controller("UserController", function($scope, $http, $location,
 									+ $scope.user.username).then(
 							function(response) {
 								$rootScope.currentUser = response.data;
-								console.log($rootScope.currentUser);
 								$cookieStore.put('userDetails',
 										$rootScope.currentUser);
 								$location.path('/');
 							});
-
 				});
 	};
 
