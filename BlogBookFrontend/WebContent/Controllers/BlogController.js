@@ -13,6 +13,7 @@ myApp
 					};
 					$scope.blogDetail;
 					$scope.editBlogInfo;
+
 					$scope.addBlog = function() {
 						$scope.blog.username = $rootScope.currentUser.username;
 						$scope.blog.status = 'NA';
@@ -279,3 +280,26 @@ myApp
 										});
 					};
 				});
+
+function blogMenuSwitch(tabId) {
+	var tabPaneAllBlogs = document.getElementById("tabPane-AllBlogs");
+	var tabPaneLikedBlogs = document.getElementById("tabPane-LikedBlogs");
+	var tabPaneYourBlogs = document.getElementById("tabPane-YourBlogs");
+	switch (tabId) {
+	case "tab-AllBlogs":
+		tabPaneLikedBlogs.style.display = "none";
+		tabPaneYourBlogs.style.display = "none";
+		tabPaneAllBlogs.style.display = "";
+		break;
+	case "tab-LikedBlogs":
+		tabPaneYourBlogs.style.display = "none";
+		tabPaneAllBlogs.style.display = "none";
+		tabPaneLikedBlogs.style.display = "";
+		break;
+	case "tab-YourBlogs":
+		tabPaneLikedBlogs.style.display = "none";
+		tabPaneAllBlogs.style.display = "none";
+		tabPaneYourBlogs.style.display = "";
+		break;
+	}
+}

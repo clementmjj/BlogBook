@@ -14,8 +14,8 @@
 			<td>{{job.qualificationRequired}}</td>
 			<td>{{job.jobDescription}}</td>
 			<td><input type="button" value="Open"
-				ng-hide="job.status=='open'" ng-click="openJob(job.jobId)" /> <input
-				type="button" value="close" ng-hide="job.status=='close'"
+				ng-hide="job.jobStatus=='open'" ng-click="openJob(job.jobId)" /> <input
+				type="button" value="Closed" ng-hide="job.jobStatus=='closed'"
 				ng-click="closeJob(job.jobId)" /></td>
 			<td><input type="button" value="Detete"
 				ng-click="deleteJob(job.jobId)" /></td>

@@ -58,14 +58,35 @@ public class JobController {
 		} else
 			return "Error updating job";
 	}
+	
+	@GetMapping(value = "/openJob/{jobId}")
+	public String openJob(@PathVariable("jobId") int jobId) {
+		Job job=jobDAO.getJob(jobId);
+		if (jobDAO.openJob(job)) {
+			Gson gson = new Gson();
+			return gson.toJson(job);
+		} else
+			return "Error opening job";
+	}
+	
+	@GetMapping(value = "/closeJob/{jobId}")
+	public String closeJob(@PathVariable("jobId") int jobId) {
+		Job job=jobDAO.getJob(jobId);
+		if (jobDAO.closeJob(job)) {
+			Gson gson = new Gson();
+			return gson.toJson(job);
+		} else
+			return "Error closing job";
+	}
 
 	@GetMapping(value = "/deleteJob/{jobId}")
-	public ResponseEntity<String> deleteJob(@PathVariable("jobId") int jobId) {
+	public String deleteJob(@PathVariable("jobId") int jobId) {
 		Job job = jobDAO.getJob(jobId);
-		if (jobDAO.deleteJob(job))
-			return new ResponseEntity<String>("Successfull", HttpStatus.OK);
-		else
-			return new ResponseEntity<String>("Unsuccessfull", HttpStatus.INTERNAL_SERVER_ERROR);
+		if (jobDAO.deleteJob(job)) {
+			Gson gson = new Gson();
+			return gson.toJson(jobId);
+		} else
+			return "Error deleting job";
 	}
 
 	@GetMapping(value = "/getJob/{jobId}")

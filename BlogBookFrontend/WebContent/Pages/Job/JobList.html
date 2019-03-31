@@ -1,6 +1,6 @@
 <div ng-controller="JobController" ng-init="getJobList()">
 	<ol>
-		<li ng-repeat="job in jobList" ng-show="job.status=='open'"><a
+		<li ng-repeat="job in jobList" ng-show="job.jobStatus=='open'"><a
 			ng-click="showJob(job.jobId)" href="#/showJob">{{job.jobDesignation}}</a></li>
 	</ol>
 	<table>

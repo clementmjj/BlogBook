@@ -52,6 +52,28 @@ public class JobDAOImpl implements JobDAO {
 	}
 
 	@Override
+	public boolean openJob(Job job) {
+		try {
+			job.setJobStatus("open");
+			sessionFactory.getCurrentSession().update(job);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean closeJob(Job job) {
+		try {
+			job.setJobStatus("closed");
+			sessionFactory.getCurrentSession().update(job);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	@Override
 	public Job getJob(int jobId) {
 		Session session = sessionFactory.openSession();
 		Job job = session.get(Job.class, jobId);

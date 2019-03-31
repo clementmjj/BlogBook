@@ -1,10 +1,8 @@
 <div ng-controller="BlogController" ng-init="getBlogList()">
-
 	<ol>
 		<li ng-repeat="blog in blogList" ng-show="blog.status=='A'"><a
 			ng-click="showBlog(blog.blogId)" href="#/showBlog">{{blog.blogTitle}}</a></li>
 	</ol>
-	<h4></h4>
 	<table>
 		<tr>
 			<th>My Blogs</th>

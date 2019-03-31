@@ -2,12 +2,12 @@ myApp.controller("UserController", function($scope, $http, $location,
 		$rootScope, $cookieStore) {
 
 	$scope.profilePic;
-	$scope.prifilePicUrl;
+	$scope.profilePicUrl;
 	$scope.removeProfilePicUrl;
 
 	if ($rootScope.currentUser) {
 		// setting the url of the current users profile picture
-		$scope.prifilePicUrl = "http://localhost:" + location.port
+		$scope.profilePicUrl = "http://localhost:" + location.port
 				+ "/BlogBookMiddleware/showProfilePic/"
 				+ $rootScope.currentUser.username;
 
@@ -64,16 +64,20 @@ myApp.controller("UserController", function($scope, $http, $location,
 								$rootScope.currentUser = response.data;
 								$cookieStore.put('userDetails',
 										$rootScope.currentUser);
-								$location.path('/');
-								location.reload();
+								window.location.href = "http://localhost:"
+										+ location.port
+										+ "/BlogBookFrontend/index2.html";
 							});
 				});
 	};
 
 	$scope.logout = function() {
 		delete $rootScope.currentUser;
-		$cookieStore.remove('userDetails');
-		$location.path('/');
+		$cookieStore.remove('userDetails');		
+		console.log("logout successful.");
+		window.location.href = "http://localhost:"
+			+ location.port
+			+ "/BlogBookFrontend/";
 	};
 
 });

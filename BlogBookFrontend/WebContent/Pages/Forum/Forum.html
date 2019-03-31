@@ -1,35 +1,33 @@
-<div ng-controller="ForumController" ng-init="showForum()">
-	<h4>{{forumDetail.forumTitle}}</h4>
-	<p>{{forumDetail.forumContent}}</p>
-</div>
-
-<div ng-controller="ForumCommentController"
-	ng-init="getForumCommentList(forumId)">
+<div ng-controller="ForumController" ng-init="getForumList()">
+	<a href="#/addForum">Add Forum</a><a ng-controller="ForumController"
+		ng-show="currentUser.role=='admin'" href="#/manageForum">Manage
+		Forum</a>
+	<ol>
+		<li ng-repeat="forum in forumList" ng-show="forum.status=='A'"><a
+			ng-click="showForum(forum.forumId)" href="#/showForum">{{forum.forumTitle}}</a></li>
+	</ol>
+	<h4></h4>
 	<table>
 		<tr>
-			<th>Comments</th>
+			<th>My Forums</th>
 		</tr>
 		<tr>
-			<td>Username</td>
-			<td>Comment</td>
+			<th>Forum Title</th>
+			<th>Created on</th>
+			<th>Status</th>
+			<th>Operations</th>
 		</tr>
-		<tr ng-repeat="forumComment in forumCommentList">
-			<td>{{forumComment.username}}</td>
-			<td id="commentCell{{forumComment.commentId}}"><p
-					id="forumComment{{forumComment.commentId}}">{{forumComment.commentMessage}}</p></td>
-			<td ng-show="currentUser.username==forumComment.username"><input
-				id="editCommentBtn{{forumComment.commentId}}" type="button"
-				value="Edit" ng-click="editForumComment(forumComment.commentId)" /></td>
-			<td ng-show="currentUser.username==forumComment.username"><input
-				type="button" value="Delete"
-				ng-click="deleteForumComment(forumComment.commentId)" /></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><textarea name="commentMessage"
-					ng-model="forumComment.commentMessage"></textarea><input
-				type="button" value="Add" ng-click="addForumComment()" /></td>
-
+		<tr ng-repeat="forum in forumList"
+			ng-show="forum.username==currentUser.username">
+			<td><a ng-click="showForum(forum.forumId)" href="#/showForum">{{forum.forumTitle}}</a></td>
+			<td>{{forum.createdDate}}</td>
+			<td>
+				<p ng-show="forum.status=='A'">Approved</p>
+				<p ng-show="forum.status=='R'">Rejected</p>
+			</td>
+			<td><a href="#/editForum?id={{forum.forumId}}"><input
+					type="button" value="Edit" /></a><input type="button" value="Delete"
+				ng-click="deleteForum(forum.forumId)" /></td>
 		</tr>
 	</table>
 </div>

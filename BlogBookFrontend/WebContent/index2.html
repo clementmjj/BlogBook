@@ -1,0 +1,111 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="Resources/CSS/styles.css">
+<link rel="stylesheet" href="Resources/CSS/bootstrap.min.css">
+<link rel="stylesheet"
+	href="Resources/fontawesome-free-5.8.1-web/css/all.min.css">
+</head>
+<body ng-app="myApp">
+	<nav class="navbar navbar-expand-sm fixed-top justify-content-center"
+		ng-controller="UserController"
+		style="background-image: linear-gradient(#693131, #6b0000 50%);">
+		<a class="navbar-brand" href="#/"> <img
+			src="Resources/Images/logo.min.png" alt="Blogbook"
+			style="width: 40px;">
+		</a>
+		<div class="input-group">
+			<input type="text" class="form-control" placeholder="Search" />
+			<div class="input-group-append">
+				<button class="btn btn-primary" type="submit">Go</button>
+			</div>
+		</div>
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<div class="d-flex justify-content-between">
+					<a class="nav-link mr-1" href="#/showUser"
+						style="display: inline-table;"><img src="{{profilePicUrl}}"
+						width="30px" class="mx-2" />{{currentUser.firstName}}</a> <a
+						class="nav-link ml-1" href="#/">Home</a>
+				</div>
+			</li>
+			<li class="nav-item">
+				<div class="d-flex justify-content-between">
+					<a class="nav-link" href="#/friends"> <i
+						class="fas fa-user-friends"></i></a> <a
+						ng-controller="NotificationController"
+						style="display: inline-table;" class="nav-link"
+						href="#/notifications"><i class="fas fa-bell">({{notificationList.length}})</i></a>
+					<a class="nav-link" href="" ng-click="logout()"><i
+						class="fas fa-sign-out-alt"></i></a>
+				</div>
+			</li>
+		</ul>
+	</nav>
+
+	<div class="row text-white" style="margin-top: 80px">
+		<div class="col-2 bg-danger">
+			<nav class="navbar">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link" href="#/blog">Blogs</a></li>
+					<li class="nav-item"><a class="nav-link" href="#/forum">Forums</a></li>
+					<li class="nav-item"><a class="nav-link" href="#/job">Jobs</a></li>
+				</ul>
+			</nav>
+		</div>
+		<div class="col-7 bg-success">
+			<div ng-view></div>
+		</div>
+		<div class="col-3 bg-info" ng-controller="ChatController">
+			<p ng-repeat="message in messages|orderBy:'time'">
+				<time>{{message.time|date:'HH:MM'}}</time>
+				<span>{{message.message}}</span>
+			</p>
+			<form ng-submit="addMessage()" name="chatMsg">
+				<table>
+					<tr>
+						<td>Chat Text</td>
+						<td><input type="text" ng-model="message" /> <span
+							ng-bind="max - message.length">140</span></td>
+						<td>
+							<button ng-disabled="message.length>140 || message.length==0">Send</button>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+
+
+
+	<div class="container-fluid" style="margin-top: 80px"></div>
+
+	<script type="text/javascript" src="Resources/JS/angular1.3.1.min.js"></script>
+	<script type="text/javascript" src="Resources/JS/angular-route1.3.1.js"></script>
+	<script type="text/javascript"
+		src="Resources/JS/angular-cookies1.3.1.js"></script>
+
+	<script type="text/javascript" src="RouteConfig.js"></script>
+	<script type="text/javascript" src="Controllers/UserController.js"></script>
+	<script type="text/javascript" src="Controllers/BlogController.js"></script>
+	<script type="text/javascript"
+		src="Controllers/BlogCommentController.js"></script>
+	<script type="text/javascript" src="Controllers/ForumController.js"></script>
+	<script type="text/javascript"
+		src="Controllers/ForumCommentController.js"></script>
+	<script type="text/javascript" src="Controllers/FriendController.js"></script>
+	<script type="text/javascript"
+		src="Controllers/NotificationController.js"></script>
+	<script type="text/javascript" src="Controllers/ChatController.js"></script>
+	<script type="text/javascript" src="Controllers/JobController.js"></script>
+
+	<script type="text/javascript" src="Pages/Chat/ChatService.js"></script>
+	<script src="Resources/JS/sockjs1.1.1.js"></script>
+	<script src="Resources/JS/lodash4.16.3.js"></script>
+	<script src="Resources/JS/stomp2.3.3.js"></script>
+	<script src="Resources/JS/jquery.min.js"></script>
+	<script src="Resources/JS/popper.min.js"></script>
+	<script src="Resources/JS/bootstrap.min.js"></script>
+</body>
+</html>

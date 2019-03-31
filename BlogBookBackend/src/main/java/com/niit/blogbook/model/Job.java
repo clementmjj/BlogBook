@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table
 public class Job {
@@ -19,6 +21,7 @@ public class Job {
 	private String qualificationRequired;
 	private String jobStatus;
 	private String username;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss a")
 	private Date postedDate;
 
 	public String getJobDesignation() {

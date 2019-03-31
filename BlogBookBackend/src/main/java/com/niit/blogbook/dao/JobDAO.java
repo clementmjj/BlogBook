@@ -11,6 +11,10 @@ public interface JobDAO {
 
 	public boolean updateJobDetails(Job job);
 	
+	public boolean openJob(Job job);
+	
+	public boolean closeJob(Job job);
+	
 	public Job getJob(int jobId);
 	
 	public List<Job> getJobList();

@@ -1,0 +1,7 @@
+.fa, .fab, .fal, .far, .fas{
+	line-height: unset !important;
+}
+
+a{
+	color:white !important;
+}
