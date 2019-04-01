@@ -1,18 +1,20 @@
 <div ng-controller="BlogController" ng-init="getBlogList()">
-	<a href="#/addBlog">Add Blog</a> <a ng-controller="BlogController"
-		ng-show="currentUser.role=='admin'" href="#/manageBlog">Manage
-		Blog</a>
-	<ul class="nav nav-tabs" role="tablist">
-		<li class="nav-item"><a class="nav-link " data-toggle="tab"
-			onclick="blogMenuSwitch(this.id)" id="tab-AllBlogs" href="">All
-				Blogs</a></li>
-		<li class="nav-item"><a class="nav-link" data-toggle="tab"
-			onclick="blogMenuSwitch(this.id)" id="tab-LikedBlogs" href="">Liked
-				Blogs</a></li>
-		<li class="nav-item"><a class="nav-link active" data-toggle="tab"
-			onclick="blogMenuSwitch(this.id)" id="tab-YourBlogs" href="">Your
-				Blogs</a></li>
-	</ul>
+	<a ng-controller="BlogController" ng-show="currentUser.role=='admin'"
+		href="#/manageBlog">Manage Blog</a>
+
+	<div class="d-flex justify-content-between">
+		<ul class="nav nav-tabs" role="tablist">
+			<li class="nav-item"><a class="nav-link " data-toggle="tab"
+				onclick="blogMenuSwitch(this.id)" id="tab-AllBlogs" href="">All
+					Blogs</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="tab"
+				onclick="blogMenuSwitch(this.id)" id="tab-LikedBlogs" href="">Liked
+					Blogs</a></li>
+			<li class="nav-item"><a class="nav-link active"
+				data-toggle="tab" onclick="blogMenuSwitch(this.id)"
+				id="tab-YourBlogs" href="">Your Blogs</a></li>
+		</ul>
+	</div>
 
 	<div id="tabPane-AllBlogs" style="display: none;">
 		<h3>All Blogs</h3>

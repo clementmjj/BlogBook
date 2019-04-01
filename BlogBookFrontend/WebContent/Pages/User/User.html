@@ -1,10 +1,25 @@
 <div ng-controller="UserController">
-	<div>
-		<img ng-hide="profilePic==''" src="{{profilePicUrl}}" style="max-height: 200px;" /> <a
-			ng-show="profilePic==''" href="#/profilePic">Add Profile
-			Picture</a> <a ng-hide="profilePic==''" href="#/profilePic">Update</a>
+	<div class="row">
+		<div class="col">
+			<div class="card" style="width: 200px">
+				<img class="card-img-top" src="{{profilePicUrl}}"
+					alt="{{currentUser.username}}" style="width: 100%">
+				<div class="card-body">
+					<h5 class="card-title">{{currentUser.firstName}}
+						{{currentUser.LastName}}</h5>
+					<p class="card-text"></p>
+					<a ng-show="profilePic==''" href="#/profilePic"
+						class="btn btn-primary btn-sm form-control">Add Profile
+						Picture</a> <a ng-hide="profilePic==''" href="#/profilePic"
+						class="btn btn-primary btn-sm form-control">Update</a>
+				</div>
+			</div>
+		</div>
+		<div class="col">
+			<p>FIrst Name: {{currentUser.firstName}}</p>
+			<p>Last Name: {{currentUser.lastName}}</p>
+			<p>Email: {{currentUser.email}}</p>
+		</div>
 	</div>
-	<p>FIrst Name: {{currentUser.firstName}}</p>
-	<p>Last Name: {{currentUser.lastName}}</p>
-	<p>Email: {{currentUser.email}}</p>
+
 </div>

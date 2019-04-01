@@ -30,7 +30,7 @@
 						class="nav-link ml-1" href="#/">Home</a>
 				</div>
 			</li>
-			<li class="nav-item">
+			<li class="nav-item" ng-controller="FriendController">
 				<div class="d-flex justify-content-between">
 					<a class="nav-link" href="#/friends"> <i
 						class="fas fa-user-friends"></i></a> <a
@@ -45,7 +45,7 @@
 	</nav>
 
 	<div class="row text-white" style="margin-top: 80px">
-		<div class="col-2 bg-danger">
+		<div class="col-md-2 bg-danger">
 			<nav class="navbar">
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link" href="#/blog">Blogs</a></li>
@@ -54,10 +54,10 @@
 				</ul>
 			</nav>
 		</div>
-		<div class="col-7 bg-success">
+		<div class="col-md-7 py-3 bg-primary">
 			<div ng-view></div>
 		</div>
-		<div class="col-3 bg-info" ng-controller="ChatController">
+		<div class="col-md-3 py-3 bg-info" ng-controller="ChatController">
 			<p ng-repeat="message in messages|orderBy:'time'">
 				<time>{{message.time|date:'HH:MM'}}</time>
 				<span>{{message.message}}</span>
