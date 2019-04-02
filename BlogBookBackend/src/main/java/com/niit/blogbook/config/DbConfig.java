@@ -21,7 +21,6 @@ import com.niit.blogbook.model.Forum;
 import com.niit.blogbook.model.ForumComment;
 import com.niit.blogbook.model.Friend;
 import com.niit.blogbook.model.Job;
-import com.niit.blogbook.model.Notification;
 import com.niit.blogbook.model.ProfilePic;
 import com.niit.blogbook.model.UserDetail;
 
@@ -60,7 +59,6 @@ public class DbConfig {
 		factoryBuilder.addAnnotatedClass(BlogDislike.class);
 		factoryBuilder.addAnnotatedClass(ProfilePic.class);
 		factoryBuilder.addAnnotatedClass(Friend.class);
-		factoryBuilder.addAnnotatedClass(Notification.class);
 
 		SessionFactory sessionFactory = factoryBuilder.buildSessionFactory();
 		System.out.println("---SessionFactory created---");

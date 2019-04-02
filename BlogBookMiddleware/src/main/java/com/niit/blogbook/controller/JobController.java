@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.niit.blogbook.dao.JobDAO;
-import com.niit.blogbook.dao.NotificationDAO;
 import com.niit.blogbook.dao.UserDAO;
 import com.niit.blogbook.model.Job;
-import com.niit.blogbook.model.Notification;
 import com.niit.blogbook.model.UserDetail;
 
 @RestController
@@ -25,8 +23,6 @@ public class JobController {
 	JobDAO jobDAO;
 	@Autowired
 	UserDAO userDAO;
-	@Autowired
-	NotificationDAO notificationDAO;
 
 	@PostMapping(value = "/addJob")
 	public String addJob(@RequestBody Job job) {
@@ -35,13 +31,6 @@ public class JobController {
 			for (UserDetail user : userDAO.getUserList()) {
 				if (user.getUsername().equals(job.getUsername()))
 					continue;
-				Notification notification = new Notification();
-				notification.setNotificationDate(new java.util.Date());
-				notification.setStatus("UR");
-				notification.setUsername(user.getUsername());
-				notification.setType("New Job");
-				notification.setMessage("There is a new job opening.");
-				notificationDAO.addNotification(notification);
 			}
 			Gson gson = new Gson();
 			return gson.toJson(job);
@@ -58,20 +47,20 @@ public class JobController {
 		} else
 			return "Error updating job";
 	}
-	
+
 	@GetMapping(value = "/openJob/{jobId}")
 	public String openJob(@PathVariable("jobId") int jobId) {
-		Job job=jobDAO.getJob(jobId);
+		Job job = jobDAO.getJob(jobId);
 		if (jobDAO.openJob(job)) {
 			Gson gson = new Gson();
 			return gson.toJson(job);
 		} else
 			return "Error opening job";
 	}
-	
+
 	@GetMapping(value = "/closeJob/{jobId}")
 	public String closeJob(@PathVariable("jobId") int jobId) {
-		Job job=jobDAO.getJob(jobId);
+		Job job = jobDAO.getJob(jobId);
 		if (jobDAO.closeJob(job)) {
 			Gson gson = new Gson();
 			return gson.toJson(job);

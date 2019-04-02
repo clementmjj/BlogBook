@@ -3,6 +3,11 @@ myApp
 				"BlogController",
 				function($scope, $http, $location, $rootScope, $cookieStore) {
 
+					$scope.blogDetail;
+					$scope.editBlogInfo;
+					$scope.existingBlogLike = undefined;
+					$scope.existingBlogDislike = undefined;
+
 					$scope.blog = {
 						'blogTitle' : '',
 						'blogContent' : '',
@@ -11,8 +16,32 @@ myApp
 						'likes' : 0,
 						'dislikes' : 0
 					};
-					$scope.blogDetail;
-					$scope.editBlogInfo;
+
+					// get existing Like
+					$http.get(
+							'http://localhost:' + location.port
+									+ '/BlogBookMiddleware/getBlogLike/'
+									+ $cookieStore.get("showBlogId") + '/'
+									+ $rootScope.currentUser.username).then(
+							function(response) {
+								if (response.data) {
+									$scope.existingBlogLike = response.data;
+									console.log("Existing like retrieved.");
+								}
+							});
+
+					// get existing Dislike
+					$http.get(
+							'http://localhost:' + location.port
+									+ '/BlogBookMiddleware/getBlogDislike/'
+									+ $cookieStore.get("showBlogId") + '/'
+									+ $rootScope.currentUser.username).then(
+							function(response) {
+								if (response.data) {
+									$scope.existingBlogDislike = response.data;
+									console.log("Existing dislike retrieved.");
+								}
+							});
 
 					$scope.addBlog = function() {
 						$scope.blog.username = $rootScope.currentUser.username;
@@ -130,7 +159,15 @@ myApp
 																'http://localhost:'
 																		+ location.port
 																		+ '/BlogBookMiddleware/addBlogLike',
-																blogLike);
+																blogLike)
+														.then(
+																function() {
+																	document
+																			.getElementById("blog-like-count").innerHTML = Number(document
+																			.getElementById("blog-like-count").innerHTML) + 1;
+																	console
+																			.log("Blog Liked.");
+																});
 												// increment blog like value
 												$http
 														.get('http://localhost:'
@@ -158,10 +195,19 @@ myApp
 																		// blog
 																		// dislike
 																		$http
-																				.get('http://localhost:'
-																						+ location.port
-																						+ '/BlogBookMiddleware/deleteBlogDislike/'
-																						+ existingDislike.blogDislikeId);
+																				.get(
+																						'http://localhost:'
+																								+ location.port
+																								+ '/BlogBookMiddleware/deleteBlogDislike/'
+																								+ existingDislike.blogDislikeId)
+																				.then(
+																						function() {
+																							document
+																									.getElementById("blog-dislike-count").innerHTML = Number(document
+																									.getElementById("blog-dislike-count").innerHTML) - 1;
+																							console
+																									.log("Dislike removed.");
+																						});
 																		// decrement
 																		// blog
 																		// dislikes
@@ -177,10 +223,19 @@ myApp
 											} else {
 												// delete existing like
 												$http
-														.get('http://localhost:'
-																+ location.port
-																+ '/BlogBookMiddleware/deleteBlogLike/'
-																+ existingLike.blogLikeId);
+														.get(
+																'http://localhost:'
+																		+ location.port
+																		+ '/BlogBookMiddleware/deleteBlogLike/'
+																		+ existingLike.blogLikeId)
+														.then(
+																function() {
+																	document
+																			.getElementById("blog-like-count").innerHTML = Number(document
+																			.getElementById("blog-like-count").innerHTML) - 1;
+																	console
+																			.log("Existing like removed.");
+																});
 												// decrement blog like value
 												$http
 														.get('http://localhost:'
@@ -218,7 +273,15 @@ myApp
 																'http://localhost:'
 																		+ location.port
 																		+ '/BlogBookMiddleware/addBlogDislike',
-																blogDislike);
+																blogDislike)
+														.then(
+																function() {
+																	document
+																			.getElementById("blog-dislike-count").innerHTML = Number(document
+																			.getElementById("blog-dislike-count").innerHTML) + 1;
+																	console
+																			.log("Blog disliked.");
+																});
 												// increment blog dislike value
 												$http
 														.get('http://localhost:'
@@ -246,10 +309,19 @@ myApp
 																		// blog
 																		// like
 																		$http
-																				.get('http://localhost:'
-																						+ location.port
-																						+ '/BlogBookMiddleware/deleteBlogLike/'
-																						+ existingLike.blogLikeId);
+																				.get(
+																						'http://localhost:'
+																								+ location.port
+																								+ '/BlogBookMiddleware/deleteBlogLike/'
+																								+ existingLike.blogLikeId)
+																				.then(
+																						function() {
+																							document
+																									.getElementById("blog-like-count").innerHTML = Number(document
+																									.getElementById("blog-like-count").innerHTML) - 1;
+																							console
+																									.log("Like removed.");
+																						});
 																		// decrement
 																		// blog
 																		// likes
@@ -265,10 +337,19 @@ myApp
 											} else {
 												// delete existing dislike
 												$http
-														.get('http://localhost:'
-																+ location.port
-																+ '/BlogBookMiddleware/deleteBlogDislike/'
-																+ existingDislike.blogDislikeId);
+														.get(
+																'http://localhost:'
+																		+ location.port
+																		+ '/BlogBookMiddleware/deleteBlogDislike/'
+																		+ existingDislike.blogDislikeId)
+														.then(
+																function() {
+																	document
+																			.getElementById("blog-dislike-count").innerHTML = Number(document
+																			.getElementById("blog-dislike-count").innerHTML) - 1;
+																	console
+																			.log("Existing dislike removed.");
+																});
 												// decrement blog dislike value
 												$http
 														.get('http://localhost:'
@@ -283,21 +364,13 @@ myApp
 
 function blogMenuSwitch(tabId) {
 	var tabPaneAllBlogs = document.getElementById("tabPane-AllBlogs");
-	var tabPaneLikedBlogs = document.getElementById("tabPane-LikedBlogs");
 	var tabPaneYourBlogs = document.getElementById("tabPane-YourBlogs");
 	switch (tabId) {
 	case "tab-AllBlogs":
-		tabPaneLikedBlogs.style.display = "none";
 		tabPaneYourBlogs.style.display = "none";
 		tabPaneAllBlogs.style.display = "";
 		break;
-	case "tab-LikedBlogs":
-		tabPaneYourBlogs.style.display = "none";
-		tabPaneAllBlogs.style.display = "none";
-		tabPaneLikedBlogs.style.display = "";
-		break;
 	case "tab-YourBlogs":
-		tabPaneLikedBlogs.style.display = "none";
 		tabPaneAllBlogs.style.display = "none";
 		tabPaneYourBlogs.style.display = "";
 		break;

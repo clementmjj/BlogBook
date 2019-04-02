@@ -15,9 +15,7 @@ import com.google.gson.Gson;
 import com.niit.blogbook.dao.BlogDAO;
 import com.niit.blogbook.dao.BlogLikeDislikeDAO;
 import com.niit.blogbook.dao.FriendDAO;
-import com.niit.blogbook.dao.NotificationDAO;
 import com.niit.blogbook.model.Blog;
-import com.niit.blogbook.model.Notification;
 import com.niit.blogbook.model.UserDetail;
 
 @RestController
@@ -28,8 +26,6 @@ public class BlogController {
 	BlogLikeDislikeDAO blogLikeDislikeDAO;
 	@Autowired
 	FriendDAO friendDAO;
-	@Autowired
-	NotificationDAO notificationDAO;
 
 	@PostMapping(value = "/addBlog")
 	public String addBlog(@RequestBody Blog blog) {
@@ -38,13 +34,6 @@ public class BlogController {
 		if (blogDAO.addBlog(blog)) {
 			List<UserDetail> friendList = friendDAO.getFriendList(blog.getUsername());
 			for (UserDetail user : friendList) {
-				Notification notification = new Notification();
-				notification.setNotificationDate(new java.util.Date());
-				notification.setStatus("UR");
-				notification.setUsername(user.getUsername());
-				notification.setType("Blog Added");
-				notification.setMessage(blog.getUsername() + " has added a new blog.");
-				notificationDAO.addNotification(notification);
 			}
 			Gson gson = new Gson();
 			return gson.toJson(blog);
@@ -82,13 +71,6 @@ public class BlogController {
 		Blog blog = blogDAO.getBlog(blogId);
 		if (blogDAO.approveBlog(blog)) {
 			{
-				Notification notification = new Notification();
-				notification.setNotificationDate(new java.util.Date());
-				notification.setStatus("UR");
-				notification.setUsername(blog.getUsername());
-				notification.setType("Blog Approved");
-				notification.setMessage("Your blog " + blog.getBlogTitle() + " has been approved.");
-				notificationDAO.addNotification(notification);
 				Gson gson = new Gson();
 				return gson.toJson(blog);
 			}
@@ -102,13 +84,6 @@ public class BlogController {
 		Blog blog = blogDAO.getBlog(blogId);
 		if (blogDAO.rejectBlog(blog)) {
 			{
-				Notification notification = new Notification();
-				notification.setNotificationDate(new java.util.Date());
-				notification.setStatus("UR");
-				notification.setUsername(blog.getUsername());
-				notification.setType("Blog Rejected");
-				notification.setMessage("Your blog " + blog.getBlogTitle() + " has been rejected.");
-				notificationDAO.addNotification(notification);
 				Gson gson = new Gson();
 				return gson.toJson(blog);
 			}

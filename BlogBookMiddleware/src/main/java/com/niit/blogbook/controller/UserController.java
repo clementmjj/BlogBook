@@ -12,17 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
-import com.niit.blogbook.dao.NotificationDAO;
 import com.niit.blogbook.dao.UserDAO;
-import com.niit.blogbook.model.Notification;
 import com.niit.blogbook.model.UserDetail;
 
 @RestController
 public class UserController {
 	@Autowired
 	UserDAO userDAO;
-	@Autowired
-	NotificationDAO notificationDAO;
 
 	@PostMapping(value = "/registerUser")
 	public String registerUser(@RequestBody UserDetail user) {
@@ -47,14 +43,7 @@ public class UserController {
 	@GetMapping(value = "/approveUser/{username}")
 	public ResponseEntity<String> approveUser(@PathVariable("username") String username) {
 		UserDetail user = userDAO.getUser(username);
-		if (userDAO.approveUser(user)) {
-			Notification notification = new Notification();
-			notification.setNotificationDate(new java.util.Date());
-			notification.setStatus("UR");
-			notification.setUsername(username);
-			notification.setType("Account Approved");
-			notification.setMessage("Your account has been approved.");
-			notificationDAO.addNotification(notification);
+		if (userDAO.approveUser(user)) {			
 			return new ResponseEntity<String>("Successfull", HttpStatus.OK);
 		} else
 			return new ResponseEntity<String>("Unsuccessfull", HttpStatus.INTERNAL_SERVER_ERROR);

@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.niit.blogbook.dao.BlogDAO;
 import com.niit.blogbook.dao.BlogLikeDislikeDAO;
-import com.niit.blogbook.dao.NotificationDAO;
 import com.niit.blogbook.model.BlogDislike;
 import com.niit.blogbook.model.BlogLike;
-import com.niit.blogbook.model.Notification;
 
 @RestController
 public class BlogLikeDislikeController {
@@ -23,21 +21,11 @@ public class BlogLikeDislikeController {
 	@Autowired
 	BlogLikeDislikeDAO blogLikeDislikeDAO;
 	@Autowired
-	NotificationDAO notificationDAO;
-	@Autowired
 	BlogDAO blogDAO;
 
 	@PostMapping("/addBlogLike")
 	public String addBlogLike(@RequestBody BlogLike blogLike) {
 		if (blogLikeDislikeDAO.addBlogLike(blogLike)) {
-			Notification notification = new Notification();
-			notification.setNotificationDate(new java.util.Date());
-			notification.setStatus("UR");
-			notification.setUsername(blogDAO.getBlog(blogLike.getBlogId()).getUsername());
-			notification.setType("New Blog Like");
-			notification.setMessage(blogLike.getUsername() + " has liked your blog "
-					+ blogDAO.getBlog(blogLike.getBlogId()).getBlogTitle());
-			notificationDAO.addNotification(notification);
 			Gson gson = new Gson();
 			return gson.toJson(blogLike);
 		} else
@@ -57,14 +45,6 @@ public class BlogLikeDislikeController {
 	@PostMapping("/addBlogDislike")
 	public String addBlogDislike(@RequestBody BlogDislike blogDislike) {
 		if (blogLikeDislikeDAO.addBlogDislike(blogDislike)) {
-			Notification notification = new Notification();
-			notification.setNotificationDate(new java.util.Date());
-			notification.setStatus("UR");
-			notification.setUsername(blogDAO.getBlog(blogDislike.getBlogId()).getUsername());
-			notification.setType("New Blog Dislike");
-			notification.setMessage(blogDislike.getUsername() + " has disliked your blog "
-					+ blogDAO.getBlog(blogDislike.getBlogId()).getBlogTitle());
-			notificationDAO.addNotification(notification);
 			Gson gson = new Gson();
 			return gson.toJson(blogDislike);
 		} else

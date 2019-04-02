@@ -7,68 +7,32 @@
 <link rel="stylesheet" href="Resources/CSS/styles.css">
 </head>
 <body ng-app="myApp">
-	<div class="container-fluid" style="height: 100%;">
-		<div class="row"
-			style="background-image: linear-gradient(#693131, #6b0000 50%);">
-			<div class="container">
-				<div class="col">
-					<div class="d-flex justify-content-between">
-						<div>
-							<a href="#/"><img src="Resources/Images/logo.png"
-								style="width: 200px;" /></a>
-						</div>
-						<div>
-							<form>
-								<div class="row" ng-controller="UserController">
-									<div class="col text-white">
-										Username or Email<br> <input type="text"
-											ng-model="user.username" class="border small"
-											style="height: 25px;" />
-									</div>
-									<div class="col text-white">
-										Password<br> <input type="password"
-											ng-model="user.password" class="border small"
-											style="height: 25px;" />
-									</div>
-									<div class="col">
-										<br>
-										<input type="submit" value="Log In" ng-click="loginCheck()"
-											class="btn btn-sm border"
-											style="color: #fff; background-color: #900d0d; border-color: #350707 !important; border-radius: 0;" />
-									</div>
-
-								</div>
-							</form>
-						</div>
-					</div>
-
-					<p ng-hide=" currentUser==undefined">
-						Welcome <a ng-click="" href="#/showUser">{{currentUser.firstName}}</a>
-					</p>
-					<table>
-						<tr>
-							<td ng-hide="currentUser==undefined">| <a href="#/friends">Friends</a></td>
-							<td ng-controller="NotificationController"
-								ng-hide="currentUser==undefined">| <a
-								href="#/notifications">Notifications
-									({{notificationList.length}})</a></td>
-							<td ng-hide="currentUser==undefined">| <a href="#/chat">Chat</a></td>
-							<td ng-hide="currentUser==undefined">| <a
-								ng-controller="UserController" ng-click="logout()" href="">Logout</a></td>
-						</tr>
-					</table>
-				</div>
-			</div>
+	<nav
+		class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-between">
+		<div class="container">
+			<a class="navbar-brand" href="#/"> <img
+				src="Resources/Images/logo.png" alt="Blogbook" style="height: 50px;">
+			</a>
+			<form class="form-inline" ng-controller="UserController"
+				style="margin: auto 0;">
+				<input type="text" class="form-control-sm mx-1"
+					ng-model="user.username" placeholder="Username"> <input
+					type="password" class="form-control-sm mx-1" placeholder="Password"
+					ng-model="user.password">
+				<button type="submit" class="btn btn-primary btn-sm mx-1"
+					ng-click="loginCheck()">Login</button>
+			</form>
 		</div>
-		<div class="row"
-			style="background-image: linear-gradient(#ffffff, #693131);">
-			<div class="container">
+	</nav>
+
+
+	<div class="container-fluid"
+		style="min-height: 600px; background-image: linear-gradient(#ffffff, #295977);">
+		<div class="container">
+			<div class="row">
 				<div class="col">
 					<div class="d-flex justify-content-between">
-
 						<div></div>
-
-
 						<div ng-controller="UserController">
 							<h1 class="py-4">Create an account</h1>
 							<form>
@@ -108,51 +72,19 @@
 										</div>
 									</div>
 								</div>
-								<input class="form-control" type="submit" ng-click="register()" />
+								<button class="form-control btn-success" type="submit"
+									ng-click="register()">Sign Up</button>
 							</form>
-
 						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div ng-hide="currentUser==undefined">
-						<table>
-							<tr>
-								<th>Blog Menu</th>
-								<td><a href="#/addBlog">Add Blog | </a></td>
-								<td><a ng-controller="BlogController" href="#/blogList"
-									href="">Blog List | </a></td>
-								<td><a ng-controller="BlogController"
-									ng-show="currentUser.role=='admin'" href="#/manageBlog">Manage
-										Blog</a></td>
-							</tr>
-							<tr>
-								<th>Forum Menu</th>
-								<td><a href="#/addForum">Add Forum | </a></td>
-								<td><a ng-controller="ForumController" href="#/forumList"
-									href="">Forum List | </a></td>
-								<td><a ng-controller="ForumController"
-									ng-show="currentUser.role=='admin'" href="#/manageForum">Manage
-										Forum</a></td>
-							</tr>
-							<tr>
-								<th>Job Menu</th>
-								<td><a href="#/addJob">Add Job | </a></td>
-								<td><a ng-controller="JobController" href="#/jobList"
-									href="">Job List | </a></td>
-								<td><a ng-controller="JobController"
-									ng-show="currentUser.role=='admin'" href="#/manageJob">Manage
-										Job</a></td>
-							</tr>
-						</table>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col">
-				<a href="#/aboutus">About Us</a>
-			</div>
+	</div>
+
+	<div class="row bg-light text-dark">
+		<div class="col">
+			<a href="#/aboutus">About Us</a>
 		</div>
 	</div>
 
@@ -170,8 +102,6 @@
 	<script type="text/javascript"
 		src="Controllers/ForumCommentController.js"></script>
 	<script type="text/javascript" src="Controllers/FriendController.js"></script>
-	<script type="text/javascript"
-		src="Controllers/NotificationController.js"></script>
 	<script type="text/javascript" src="Controllers/ChatController.js"></script>
 	<script type="text/javascript" src="Controllers/JobController.js"></script>
 

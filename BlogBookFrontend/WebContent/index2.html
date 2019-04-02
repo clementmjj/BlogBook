@@ -8,79 +8,171 @@
 	href="Resources/fontawesome-free-5.8.1-web/css/all.min.css">
 </head>
 <body ng-app="myApp">
-	<nav class="navbar navbar-expand-sm fixed-top justify-content-center"
-		ng-controller="UserController"
-		style="background-image: linear-gradient(#693131, #6b0000 50%);">
-		<a class="navbar-brand" href="#/"> <img
-			src="Resources/Images/logo.min.png" alt="Blogbook"
-			style="width: 40px;">
-		</a>
-		<div class="input-group">
-			<input type="text" class="form-control" placeholder="Search" />
-			<div class="input-group-append">
-				<button class="btn btn-primary" type="submit">Go</button>
+	<nav ng-controller="UserController"
+		class="navbar navbar-expand-sm bg-dark fixed-top navbar-dark justify-content-between">
+		<div class="container">
+			<a class="navbar-brand" href="#/"> <img
+				src="Resources/Images/logo.min.png" alt="Blogbook"
+				style="width: 30px;">
+			</a>
+			<div class="row" style="width: 100%;">
+				<div class="col-sm-7" style="margin: auto 0;">
+					<div class="input-group">
+						<input type="text" class="form-control form-control-sm"
+							placeholder="Search" />
+						<div class="input-group-append">
+							<button class="btn btn-sm btn-primary" type="submit">Go</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-5">
+					<ul class="nav justify-content-end">
+						<li class="nav-item"><a class="nav-link mr-1"
+							href="#/showUser"><img src="{{profilePicUrl}}"
+								style="max-height: 30px; max-width: 30px;" class="mx-2" />{{currentUser.firstName}}</a></li>
+						<li class="nav-item"><a class="nav-link ml-1" href="#/">Home</a></li>
+						<li class="nav-item"><a class="nav-link" href="#/friends">
+								<i class="fas fa-user-friends" title="Friends"></i>
+						</a></li>
+						<li class="nav-item"><a class="nav-link" href=""
+							ng-click="logout()"><i class="fas fa-sign-out-alt"
+								title="Logout"></i></a></li>
+					</ul>
+				</div>
 			</div>
 		</div>
-		<ul class="navbar-nav">
-			<li class="nav-item">
-				<div class="d-flex justify-content-between">
-					<a class="nav-link mr-1" href="#/showUser"
-						style="display: inline-table;"><img src="{{profilePicUrl}}"
-						width="30px" class="mx-2" />{{currentUser.firstName}}</a> <a
-						class="nav-link ml-1" href="#/">Home</a>
-				</div>
-			</li>
-			<li class="nav-item" ng-controller="FriendController">
-				<div class="d-flex justify-content-between">
-					<a class="nav-link" href="#/friends"> <i
-						class="fas fa-user-friends"></i></a> <a
-						ng-controller="NotificationController"
-						style="display: inline-table;" class="nav-link"
-						href="#/notifications"><i class="fas fa-bell">({{notificationList.length}})</i></a>
-					<a class="nav-link" href="" ng-click="logout()"><i
-						class="fas fa-sign-out-alt"></i></a>
-				</div>
-			</li>
-		</ul>
 	</nav>
+	<div class="container">
+		<div class="row" style="margin-top: 65px;">
+			<div class="col-md-9">
+				<div class="row">
+					<div class="col-md-3"></div>
+					<div class="col-md-9">
+						<!-- Blog Menu -->
+						<div id="blog-menu" class="d-flex justify-content-between"
+							style="display: none !important;">
+							<ul class="nav nav-pills" role="tablist">
+								<li class="nav-item sub-nav-item"><a class="nav-link small"
+									data-toggle="pill" onclick="blogMenuSwitch(this.id)"
+									id="tab-AllBlogs" href="">All Blogs</a></li>
+								<li class="nav-item sub-nav-item"><a
+									class="nav-link small active" data-toggle="pill"
+									onclick="blogMenuSwitch(this.id)" id="tab-YourBlogs" href="">Your
+										Blogs</a></li>
+							</ul>
 
-	<div class="row text-white" style="margin-top: 80px">
-		<div class="col-md-2 bg-danger">
-			<nav class="navbar">
-				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link" href="#/blog">Blogs</a></li>
-					<li class="nav-item"><a class="nav-link" href="#/forum">Forums</a></li>
-					<li class="nav-item"><a class="nav-link" href="#/job">Jobs</a></li>
-				</ul>
-			</nav>
+							<div>
+								<a href="#/addBlog"><button class="btn btn-sm btn-success">
+										<i class="fas fa-plus mr-1"></i>Add
+									</button></a> <a ng-controller="BlogController"
+									ng-show="currentUser.role=='admin'" href="#/manageBlog"><button
+										class="btn btn-sm btn-warning">
+										<i class="fas fa-wrench mr-1"></i>Manage
+									</button></a>
+							</div>
+						</div>
+						<!-- Forum Menu -->
+						<div id="forum-menu" class="d-flex justify-content-between"
+							style="display: none !important;">
+							<ul class="nav nav-pills" role="tablist">
+								<li class="nav-item sub-nav-item"><a class="nav-link small"
+									data-toggle="pill" onclick="forumMenuSwitch(this.id)"
+									id="tab-AllForums" href="">All Forums</a></li>
+								<li class="nav-item sub-nav-item"><a
+									class="nav-link small active" data-toggle="pill"
+									onclick="forumMenuSwitch(this.id)" id="tab-YourForums" href="">Your
+										Forums</a></li>
+							</ul>
+
+							<div>
+								<a href="#/addForum"><button class="btn btn-sm btn-success">
+										<i class="fas fa-plus mr-1"></i>Add
+									</button></a> <a ng-controller="ForumController"
+									ng-show="currentUser.role=='admin'" href="#/manageForum"><button
+										class="btn btn-sm btn-warning">
+										<i class="fas fa-wrench mr-1"></i>Manage
+									</button></a>
+							</div>
+						</div>
+						<!-- Job Menu -->
+						<div id="job-menu" class="d-flex justify-content-between"
+							style="display: none !important;">
+							<ul class="nav nav-pills" role="tablist">
+								<li class="nav-item sub-nav-item"><a class="nav-link small"
+									data-toggle="pill" onclick="jobMenuSwitch(this.id)"
+									id="tab-AllJobs" href="">All Jobs</a></li>
+								<li class="nav-item sub-nav-item"><a
+									class="nav-link small active" data-toggle="pill"
+									onclick="jobMenuSwitch(this.id)" id="tab-YourJobs" href="">Jobs
+										Posted By You</a></li>
+							</ul>
+
+							<div>
+								<a href="#/addJob"><button class="btn btn-sm btn-success">
+										<i class="fas fa-plus mr-1"></i>Add
+									</button></a> <a ng-controller="JobController"
+									ng-show="currentUser.role=='admin'" href="#/manageJob"><button
+										class="btn btn-sm btn-warning">
+										<i class="fas fa-wrench mr-1"></i>Manage
+									</button></a>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3">
+						<!-- Left Navigation Bar -->
+						<ul class="nav nav-pills flex-column" role="tablist">
+							<li class="nav-item left-nav-item"><a id="tab-blogs"
+								class="nav-link py-1" onclick="leftNavMenuSwitch(this.id)"
+								href="#/blog" data-toggle="pill"> <img
+									src="Resources/Images/blog-icon.png" width="25px" class="mr-1" />Blogs
+							</a></li>
+							<li class="nav-item left-nav-item"><a id="tab-forums"
+								class="nav-link py-1" onclick="leftNavMenuSwitch(this.id)"
+								href="#/forum" data-toggle="pill"> <img
+									src="Resources/Images/forum-icon.ico" width="25px" class="mr-1" />Forums
+							</a></li>
+							<li class="nav-item left-nav-item"><a id="tab-jobs"
+								class="nav-link py-1" onclick="leftNavMenuSwitch(this.id)"
+								href="#/job" data-toggle="pill"> <img
+									src="Resources/Images/job-icon.png" width="25px" class="mr-1" />Jobs
+							</a></li>
+						</ul>
+					</div>
+					<div class="col-md-9">
+						<div ng-view></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 bg-info" ng-controller="ChatController">
+				<p ng-repeat="message in messages|orderBy:'time'">
+					<time>{{message.time|date:'HH:MM'}}</time>
+					<span>{{message.message}}</span>
+				</p>
+				<form ng-submit="addMessage()" name="chatMsg">
+					<table>
+						<tr>
+							<td>Chat Text</td>
+							<td><input type="text" ng-model="message" /> <span
+								ng-bind="max - message.length">140</span></td>
+							<td>
+								<button ng-disabled="message.length>140 || message.length==0">Send</button>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
 		</div>
-		<div class="col-md-7 py-3 bg-primary">
-			<div ng-view></div>
-		</div>
-		<div class="col-md-3 py-3 bg-info" ng-controller="ChatController">
-			<p ng-repeat="message in messages|orderBy:'time'">
-				<time>{{message.time|date:'HH:MM'}}</time>
-				<span>{{message.message}}</span>
-			</p>
-			<form ng-submit="addMessage()" name="chatMsg">
-				<table>
-					<tr>
-						<td>Chat Text</td>
-						<td><input type="text" ng-model="message" /> <span
-							ng-bind="max - message.length">140</span></td>
-						<td>
-							<button ng-disabled="message.length>140 || message.length==0">Send</button>
-						</td>
-					</tr>
-				</table>
-			</form>
+		<div class="row bg-light text-dark">
+			<div class="col">
+				<a href="#/aboutus">About Us</a>
+			</div>
 		</div>
 	</div>
 
-
-
-	<div class="container-fluid" style="margin-top: 80px"></div>
-
+	<script src="Resources/JS/jquery.min.js"></script>
 	<script type="text/javascript" src="Resources/JS/angular1.3.1.min.js"></script>
 	<script type="text/javascript" src="Resources/JS/angular-route1.3.1.js"></script>
 	<script type="text/javascript"
@@ -95,16 +187,15 @@
 	<script type="text/javascript"
 		src="Controllers/ForumCommentController.js"></script>
 	<script type="text/javascript" src="Controllers/FriendController.js"></script>
-	<script type="text/javascript"
-		src="Controllers/NotificationController.js"></script>
 	<script type="text/javascript" src="Controllers/ChatController.js"></script>
 	<script type="text/javascript" src="Controllers/JobController.js"></script>
+	<script type="text/javascript" src="Resources/JS/scripts.js"></script>
 
 	<script type="text/javascript" src="Pages/Chat/ChatService.js"></script>
 	<script src="Resources/JS/sockjs1.1.1.js"></script>
 	<script src="Resources/JS/lodash4.16.3.js"></script>
 	<script src="Resources/JS/stomp2.3.3.js"></script>
-	<script src="Resources/JS/jquery.min.js"></script>
+
 	<script src="Resources/JS/popper.min.js"></script>
 	<script src="Resources/JS/bootstrap.min.js"></script>
 </body>

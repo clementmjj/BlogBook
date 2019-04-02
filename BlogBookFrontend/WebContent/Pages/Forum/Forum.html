@@ -1,33 +1,34 @@
 <div ng-controller="ForumController" ng-init="getForumList()">
-	<a href="#/addForum">Add Forum</a><a ng-controller="ForumController"
-		ng-show="currentUser.role=='admin'" href="#/manageForum">Manage
-		Forum</a>
-	<ol>
-		<li ng-repeat="forum in forumList" ng-show="forum.status=='A'"><a
-			ng-click="showForum(forum.forumId)" href="#/showForum">{{forum.forumTitle}}</a></li>
-	</ol>
-	<h4></h4>
-	<table>
-		<tr>
-			<th>My Forums</th>
-		</tr>
-		<tr>
-			<th>Forum Title</th>
-			<th>Created on</th>
-			<th>Status</th>
-			<th>Operations</th>
-		</tr>
-		<tr ng-repeat="forum in forumList"
-			ng-show="forum.username==currentUser.username">
-			<td><a ng-click="showForum(forum.forumId)" href="#/showForum">{{forum.forumTitle}}</a></td>
-			<td>{{forum.createdDate}}</td>
-			<td>
-				<p ng-show="forum.status=='A'">Approved</p>
-				<p ng-show="forum.status=='R'">Rejected</p>
-			</td>
-			<td><a href="#/editForum?id={{forum.forumId}}"><input
-					type="button" value="Edit" /></a><input type="button" value="Delete"
-				ng-click="deleteForum(forum.forumId)" /></td>
-		</tr>
-	</table>
+	<div id="tabPane-AllForums" class="bg-block rounded"
+		style="display: none;">
+		<ol>
+			<li ng-repeat="forum in forumList" ng-show="forum.status=='A'"><a
+				ng-click="showForum(forum.forumId)" href="#/showForum">{{forum.forumTitle}}</a></li>
+		</ol>
+	</div>
+
+	<div id="tabPane-YourForums" class="bg-block rounded">
+		<div class="table-responsive">
+			<table class="table" style="margin-bottom: unset;">
+				<tr>
+					<th>Forum Title</th>
+					<th>Created on</th>
+					<th>Status</th>
+					<th></th>
+				</tr>
+				<tr ng-repeat="forum in forumList"
+					ng-show="forum.username==currentUser.username">
+					<td><a ng-click="showForum(forum.forumId)" href="#/showForum">{{forum.forumTitle}}</a></td>
+					<td>{{forum.createdDate}}</td>
+					<td><span ng-show="forum.status=='A'">Approved</span> <span
+						ng-show="forum.status=='R'">Rejected</span></td>
+					<td><a href="#/editForum?id={{forum.forumId}}"><i
+							class="fas fa-edit mr-1" title="Edit" style="color: #343a40;"></i></a><a
+						href="" ng-click="deleteForum(forum.forumId)"><i
+							class="fas fa-trash-alt mr-1" title="Delete"
+							style="color: #343a40;"></i></a></td>
+				</tr>
+			</table>
+		</div>
+	</div>
 </div>

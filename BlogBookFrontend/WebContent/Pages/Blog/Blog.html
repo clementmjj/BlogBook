@@ -1,50 +1,64 @@
 <div ng-controller="BlogController" ng-init="getBlogList()">
-	<a ng-controller="BlogController" ng-show="currentUser.role=='admin'"
-		href="#/manageBlog">Manage Blog</a>
-
-	<div class="d-flex justify-content-between">
-		<ul class="nav nav-tabs" role="tablist">
-			<li class="nav-item"><a class="nav-link " data-toggle="tab"
-				onclick="blogMenuSwitch(this.id)" id="tab-AllBlogs" href="">All
-					Blogs</a></li>
-			<li class="nav-item"><a class="nav-link" data-toggle="tab"
-				onclick="blogMenuSwitch(this.id)" id="tab-LikedBlogs" href="">Liked
-					Blogs</a></li>
-			<li class="nav-item"><a class="nav-link active"
-				data-toggle="tab" onclick="blogMenuSwitch(this.id)"
-				id="tab-YourBlogs" href="">Your Blogs</a></li>
-		</ul>
-	</div>
-
 	<div id="tabPane-AllBlogs" style="display: none;">
-		<h3>All Blogs</h3>
-		<ol>
-			<li ng-repeat="blog in blogList" ng-show="blog.status=='A'"><a
-				ng-click="showBlog(blog.blogId)" href="#/showBlog">{{blog.blogTitle}}</a></li>
-		</ol>
+		<div id="accordion">
+			<div class="bg-block rounded" ng-repeat="blog in blogList"
+				ng-show="blog.status=='A'">
+				<div class="card">
+					<div class="card-header">
+						<a class="card-link" data-toggle="collapse"
+							data-target="#collapse{{$index+1}}">{{blog.blogTitle}}</a>
+					</div>
+					<div id="collapse{{$index+1}}" class="collapse"
+						data-parent="#accordion">
+						<div class="card-body">
+							{{blog.blogContent}}
+							<div class="d-flex justify-content-end">
+								<a ng-click="showBlog(blog.blogId)" href="#/showBlog"
+									class="small">Open Blog</a>
+							</div>
+						</div>
+						<div class="card-footer small" style="color: #8e8e8e;">
+							<div class="d-flex justify-content-between">
+								<span> Created by {{blog.username}} on
+									{{blog.createdDate}}</span> <span
+									ng-controller="BlogCommentController"
+									ng-init="getBlogCommentList(blog.blogId)">{{blog.likes}}
+									Likes | {{blogCommentList.length}} Comments</span>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div id="tabPane-LikedBlogs" style="display: none;">
-		<h3>Liked Blogs</h3>
-	</div>
-	<div id="tabPane-YourBlogs">
-		<h3>Your Blogs</h3>
-		<table>
-			<tr>
-				<th>Blog Title</th>
-				<th>Created on</th>
-				<th>Status</th>
-				<th>Operations</th>
-			</tr>
-			<tr ng-repeat="blog in blogList"
-				ng-show="blog.username==currentUser.username">
-				<td><a ng-click="showBlog(blog.blogId)" href="#/showBlog">{{blog.blogTitle}}</a></td>
-				<td>{{blog.createdDate}}</td>
-				<td><span ng-show="blog.status=='A'">Approved</span> <span
-					ng-show="blog.status=='R'">Rejected</span></td>
-				<td><a href="#/editBlog?id={{blog.blogId}}"><input
-						type="button" value="Edit" /></a><input type="button" value="Delete"
-					ng-click="deleteBlog(blog.blogId)" /></td>
-			</tr>
-		</table>
+
+	<div id="tabPane-YourBlogs" class="bg-block rounded">
+		<div class="table-responsive">
+			<table class="table" style="margin-bottom: unset;">
+				<thead>
+					<tr>
+						<th>Blog Title</th>
+						<th>Created on</th>
+						<th>Status</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="blog in blogList"
+						ng-show="blog.username==currentUser.username">
+						<td><a ng-click="showBlog(blog.blogId)" href="#/showBlog">{{blog.blogTitle}}</a></td>
+						<td>{{blog.createdDate}}</td>
+						<td><span ng-show="blog.status=='A'">Approved</span> <span
+							ng-show="blog.status=='R'">Rejected</span></td>
+						<td><a href="#/editBlog?id={{blog.blogId}}"><i
+								class="fas fa-edit mr-1" title="Edit" style="color: #343a40;"></i></a><a
+							href="" ng-click="deleteBlog(blog.blogId)"><i
+								class="fas fa-trash-alt mr-1" title="Delete"
+								style="color: #343a40;"></i></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>

@@ -5,6 +5,7 @@ myApp
 						$compile) {
 
 					$scope.blogId = $cookieStore.get("showBlogId");
+					$scope.blogCommentList = [];
 
 					$scope.blogComment = {
 						'blogId' : $scope.blogId,
@@ -46,10 +47,10 @@ myApp
 										'http://localhost:'
 												+ location.port
 												+ '/BlogBookMiddleware/deleteBlogComment/'
-												+ blogCommentId).then(
-										function(response) {
-											console.log("Blog comment deleted.");
-										});
+												+ blogCommentId)
+								.then(function(response) {
+									console.log("Blog comment deleted.");
+								});
 					}
 
 					$scope.editBlogComment = function(blogCommentId) {
@@ -100,7 +101,10 @@ myApp
 								item.click();
 							});
 							var txtArea_editComment = document
-									.createElement("textarea");
+									.createElement("input");
+							txtArea_editComment.setAttribute("type", "text");
+							txtArea_editComment.setAttribute("class",
+									"form-control")
 							txtArea_editComment.setAttribute("name",
 									"editCommentMessage");
 							txtArea_editComment.setAttribute("ng-model",
@@ -110,10 +114,13 @@ myApp
 									existingComment);
 							txtArea_editComment.setAttribute("id",
 									"blogComment" + blogCommentId);
-							btn_closeEdit = document.createElement("button");
+							btn_closeEdit = document.createElement("i");
+							btn_closeEdit.setAttribute("class",
+									"far fa-window-close input-group-append");
 							btn_closeEdit.setAttribute("id",
 									"btn_closeEditComment" + blogCommentId);
-							btn_closeEdit.innerHTML = "x";
+							btn_closeEdit.setAttribute("style","cursor:pointer;")
+							btn_closeEdit.setAttribute("title","Undo");
 							btn_closeEdit
 									.addEventListener(
 											"click",

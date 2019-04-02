@@ -99,3 +99,18 @@ myApp.controller("ForumController", function($scope, $http, $location,
 		}
 	}
 });
+
+function forumMenuSwitch(tabId) {
+	var tabPaneAllForums = document.getElementById("tabPane-AllForums");
+	var tabPaneYourForums = document.getElementById("tabPane-YourForums");
+	switch (tabId) {
+	case "tab-AllForums":
+		tabPaneYourForums.style.display = "none";
+		tabPaneAllForums.style.display = "";
+		break;
+	case "tab-YourForums":
+		tabPaneAllForums.style.display = "none";
+		tabPaneYourForums.style.display = "";
+		break;
+	}
+}

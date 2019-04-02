@@ -14,17 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.niit.blogbook.dao.BlogCommentDAO;
 import com.niit.blogbook.dao.BlogDAO;
-import com.niit.blogbook.dao.NotificationDAO;
 import com.niit.blogbook.model.BlogComment;
-import com.niit.blogbook.model.Notification;
 
 @RestController
 public class BlogCommentController {
 
 	@Autowired
 	BlogCommentDAO blogCommentDAO;
-	@Autowired
-	NotificationDAO notificationDAO;
 	@Autowired
 	BlogDAO blogDAO;
 
@@ -33,14 +29,6 @@ public class BlogCommentController {
 		// the following line is just for testing. delete it after completing frontend
 		blogComment.setCommentDate(new java.util.Date());
 		if (blogCommentDAO.addBlogComment(blogComment)) {
-			Notification notification = new Notification();
-			notification.setNotificationDate(new java.util.Date());
-			notification.setStatus("UR");
-			notification.setUsername(blogDAO.getBlog(blogComment.getBlogId()).getUsername());
-			notification.setType("New Blog Comment");
-			notification.setMessage(
-					"Your blog " + blogDAO.getBlog(blogComment.getBlogId()).getBlogTitle() + " has a new comment.");
-			notificationDAO.addNotification(notification);
 			Gson gson = new Gson();
 			return gson.toJson(blogComment);
 		} else {

@@ -1,40 +1,60 @@
 <div ng-controller="BlogController" ng-init="showBlog()">
-	<h4>{{blogDetail.blogTitle}}</h4>
-	<p>{{blogDetail.blogContent}}</p>
-	<p>Created by {{blogDetail.username}} on {{blogDetail.createdDate}}</p>
-	<input type="button" value="Like {{blogDetail.likes}}"
-		ng-click="likeClick()" /> <input type="button"
-		value="Dislike {{blogDetail.dislikes}}"
-		ng-click="dislikeClick()" />
-</div>
+	<div class="card">
+		<div class="card-header">{{blogDetail.blogTitle}}</div>
+		<div class="card-body">
+			{{blogDetail.blogContent}}
+			<div class="d-flex justify-content-between small mt-3"
+				style="font-style: italic;">
+				<span>Created by {{blogDetail.username}} on
+					{{blogDetail.createdDate}}</span><span> <a
+					id="btn-like-{{blogDetail.blogId}}" class="btn-like" title="Like"
+					ng-click="likeClick()" href=""> <i
+						ng-show="existingBlogLike==undefined"
+						class="far fa-thumbs-up mx-1"></i> <i
+						ng-hide="existingBlogLike==undefined"
+						class="far fa-thumbs-up mx-1"></i> <span id="blog-like-count">{{blogDetail.likes}}</span>
+				</a><a title="Dislike" class="btn-dislike" ng-click="dislikeClick()"
+					href=""> <i ng-show="existingBlogDislike==undefined"
+						class="far fa-thumbs-down mx-1"></i> <i
+						ng-hide="existingBlogDislike==undefined"
+						class="far fa-thumbs-down mx-1"></i> <span id="blog-dislike-count">{{blogDetail.dislikes}}</span>
+				</a></span>
+			</div>
+		</div>
+		<div class="card-footer" style="color: #8e8e8e;">
+			<p style="font-style: italic;">Comments</p>
+			<div ng-controller="BlogCommentController"
+				ng-init="getBlogCommentList(blogId)">
+				<div class="row mb-2" ng-repeat="blogComment in blogCommentList">
 
-<div ng-controller="BlogCommentController"
-	ng-init="getBlogCommentList(blogId)">
-	<table>
-		<tr>
-			<th>Comments</th>
-		</tr>
-		<tr>
-			<td>Username</td>
-			<td>Comment</td>
-		</tr>
-		<tr ng-repeat="blogComment in blogCommentList">
-			<td>{{blogComment.username}}</td>
-			<td id="commentCell{{blogComment.commentId}}"><p
-					id="blogComment{{blogComment.commentId}}">{{blogComment.commentMessage}}</p></td>
-			<td ng-show="currentUser.username==blogComment.username"><input
-				id="editCommentBtn{{blogComment.commentId}}" type="button"
-				value="Edit" ng-click="editBlogComment(blogComment.commentId)" /></td>
-			<td ng-show="currentUser.username==blogComment.username"><input
-				type="button" value="Delete"
-				ng-click="deleteBlogComment(blogComment.commentId)" /></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><textarea name="commentMessage"
-					ng-model="blogComment.commentMessage"></textarea><input
-				type="button" value="Add" ng-click="addBlogComment()" /></td>
+					<div class="col-sm-2">{{blogComment.username}}</div>
 
-		</tr>
-	</table>
+					<div id="commentCell{{blogComment.commentId}}" class="col-sm-8 input-group">
+						<span id="blogComment{{blogComment.commentId}}">{{blogComment.commentMessage}}</span>
+					</div>
+
+					<div class="col-sm-2"
+						ng-show="currentUser.username==blogComment.username">
+						<a href=""><i id="editCommentBtn{{blogComment.commentId}}"
+							ng-click="editBlogComment(blogComment.commentId)"
+							class="fas fa-edit mr-1" title="Edit" style="color: #343a40;"></i></a>
+						<a href=""><i class="fas fa-trash-alt mr-1" title="Delete"
+							ng-click="deleteBlogComment(blogComment.commentId)"
+							style="color: #343a40;"></i></a>
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="col-sm-2">{{currentUser.username}}</div>
+					<div class="col-sm-8">
+						<input type="text" name="commentMessage" class="form-control form-control-sm"
+							ng-model="blogComment.commentMessage" />
+					</div>
+					<div class="col-sm-2">
+						<button class="btn btn-sm btn-primary" ng-click="addBlogComment()">Add</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

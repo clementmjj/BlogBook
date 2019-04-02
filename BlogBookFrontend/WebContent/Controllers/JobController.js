@@ -91,7 +91,7 @@ myApp.controller("JobController", function($scope, $http, $location,
 					console.log("Job opened");
 				});
 	};
-	
+
 	$scope.closeJob = function(jobId) {
 		$http.get(
 				'http://localhost:' + location.port
@@ -102,3 +102,18 @@ myApp.controller("JobController", function($scope, $http, $location,
 	};
 
 });
+
+function jobMenuSwitch(tabId) {
+	var tabPaneAllJobs = document.getElementById("tabPane-AllJobs");
+	var tabPaneYourJobs = document.getElementById("tabPane-YourJobs");
+	switch (tabId) {
+	case "tab-AllJobs":
+		tabPaneYourJobs.style.display = "none";
+		tabPaneAllJobs.style.display = "";
+		break;
+	case "tab-YourJobs":
+		tabPaneAllJobs.style.display = "none";
+		tabPaneYourJobs.style.display = "";
+		break;
+	}
+}

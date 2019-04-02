@@ -11,28 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.niit.blogbook.dao.FriendDAO;
-import com.niit.blogbook.dao.NotificationDAO;
 import com.niit.blogbook.model.Friend;
-import com.niit.blogbook.model.Notification;
 import com.niit.blogbook.model.UserDetail;
 
 @RestController
 public class FriendController {
 	@Autowired
 	FriendDAO friendDAO;
-	@Autowired
-	NotificationDAO notificationDAO;
 
 	@PostMapping(value = "/sendFriendReq")
 	public String sendFriendReq(@RequestBody Friend friend) {
 		if (friendDAO.sendFriendReq(friend)) {
-			Notification notification = new Notification();
-			notification.setNotificationDate(new java.util.Date());
-			notification.setStatus("UR");
-			notification.setUsername(friend.getFriendUsername());
-			notification.setType("New Friend Request");
-			notification.setMessage(friend.getUsername() + " has sent you a friend request.");
-			notificationDAO.addNotification(notification);
 			Gson gson = new Gson();
 			return gson.toJson(friend);
 		} else {
@@ -43,14 +32,6 @@ public class FriendController {
 	@GetMapping(value = "/acceptFriendReq/{friendReqId}")
 	public String acceptFriendReq(@PathVariable("friendReqId") int friendId) {
 		if (friendDAO.acceptFriendReq(friendId)) {
-			Notification notification = new Notification();
-			notification.setNotificationDate(new java.util.Date());
-			notification.setStatus("UR");
-			notification.setUsername(friendDAO.getFriendDetail(friendId).getUsername());
-			notification.setType("Friend Request Accepted");
-			notification.setMessage(
-					friendDAO.getFriendDetail(friendId).getFriendUsername() + " has accepted your friend request.");
-			notificationDAO.addNotification(notification);
 			Gson gson = new Gson();
 			return gson.toJson(friendDAO.getFriendDetail(friendId));
 		} else {
