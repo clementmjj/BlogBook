@@ -1,0 +1,8 @@
+"USERNAME","EMAIL","FIRSTNAME","ISONLINE","LASTNAME","PASSWORD","ROLE","STATUS"
+"1","1@gmail.com","1","Off","1","1","admin","A"
+"john","john@gmail.com","John","Off","Doe","1","admin","A"
+"sumanthl","sumanth@hotmail.com","Sumanth","Off","Lazarus","1","student","A"
+"michellec","michelle@yahoo.com","Michelle","Off","C","1","student","A"
+"michaelj","michael@gmail.com","Michael","Off","Joseph","1","admin","A"
+"maryj","mary@yahoo.co.in","Mary","Off","Jane","1","student","A"
+"rose","rose@gmail.com","Rose","Off","Jacob","1","student","A"

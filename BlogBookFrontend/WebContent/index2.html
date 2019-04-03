@@ -47,96 +47,22 @@
 			<div class="col-md-9">
 				<div class="row">
 					<div class="col-md-3"></div>
-					<div class="col-md-9">
-						<!-- Blog Menu -->
-						<div id="blog-menu" class="d-flex justify-content-between"
-							style="display: none !important;">
-							<ul class="nav nav-pills" role="tablist">
-								<li class="nav-item sub-nav-item"><a class="nav-link small"
-									data-toggle="pill" onclick="blogMenuSwitch(this.id)"
-									id="tab-AllBlogs" href="">All Blogs</a></li>
-								<li class="nav-item sub-nav-item"><a
-									class="nav-link small active" data-toggle="pill"
-									onclick="blogMenuSwitch(this.id)" id="tab-YourBlogs" href="">Your
-										Blogs</a></li>
-							</ul>
-
-							<div>
-								<a href="#/addBlog"><button class="btn btn-sm btn-success">
-										<i class="fas fa-plus mr-1"></i>Add
-									</button></a> <a ng-controller="BlogController"
-									ng-show="currentUser.role=='admin'" href="#/manageBlog"><button
-										class="btn btn-sm btn-warning">
-										<i class="fas fa-wrench mr-1"></i>Manage
-									</button></a>
-							</div>
-						</div>
-						<!-- Forum Menu -->
-						<div id="forum-menu" class="d-flex justify-content-between"
-							style="display: none !important;">
-							<ul class="nav nav-pills" role="tablist">
-								<li class="nav-item sub-nav-item"><a class="nav-link small"
-									data-toggle="pill" onclick="forumMenuSwitch(this.id)"
-									id="tab-AllForums" href="">All Forums</a></li>
-								<li class="nav-item sub-nav-item"><a
-									class="nav-link small active" data-toggle="pill"
-									onclick="forumMenuSwitch(this.id)" id="tab-YourForums" href="">Your
-										Forums</a></li>
-							</ul>
-
-							<div>
-								<a href="#/addForum"><button class="btn btn-sm btn-success">
-										<i class="fas fa-plus mr-1"></i>Add
-									</button></a> <a ng-controller="ForumController"
-									ng-show="currentUser.role=='admin'" href="#/manageForum"><button
-										class="btn btn-sm btn-warning">
-										<i class="fas fa-wrench mr-1"></i>Manage
-									</button></a>
-							</div>
-						</div>
-						<!-- Job Menu -->
-						<div id="job-menu" class="d-flex justify-content-between"
-							style="display: none !important;">
-							<ul class="nav nav-pills" role="tablist">
-								<li class="nav-item sub-nav-item"><a class="nav-link small"
-									data-toggle="pill" onclick="jobMenuSwitch(this.id)"
-									id="tab-AllJobs" href="">All Jobs</a></li>
-								<li class="nav-item sub-nav-item"><a
-									class="nav-link small active" data-toggle="pill"
-									onclick="jobMenuSwitch(this.id)" id="tab-YourJobs" href="">Jobs
-										Posted By You</a></li>
-							</ul>
-
-							<div>
-								<a href="#/addJob"><button class="btn btn-sm btn-success">
-										<i class="fas fa-plus mr-1"></i>Add
-									</button></a> <a ng-controller="JobController"
-									ng-show="currentUser.role=='admin'" href="#/manageJob"><button
-										class="btn btn-sm btn-warning">
-										<i class="fas fa-wrench mr-1"></i>Manage
-									</button></a>
-							</div>
-						</div>
-
-					</div>
+					<div class="col-md-9"></div>
 				</div>
 				<div class="row">
 					<div class="col-md-3">
 						<!-- Left Navigation Bar -->
 						<ul class="nav nav-pills flex-column" role="tablist">
 							<li class="nav-item left-nav-item"><a id="tab-blogs"
-								class="nav-link py-1" onclick="leftNavMenuSwitch(this.id)"
-								href="#/blog" data-toggle="pill"> <img
+								class="nav-link py-1" href="#/blog" data-toggle="pill"> <img
 									src="Resources/Images/blog-icon.png" width="25px" class="mr-1" />Blogs
 							</a></li>
 							<li class="nav-item left-nav-item"><a id="tab-forums"
-								class="nav-link py-1" onclick="leftNavMenuSwitch(this.id)"
-								href="#/forum" data-toggle="pill"> <img
+								class="nav-link py-1" href="#/forum" data-toggle="pill"> <img
 									src="Resources/Images/forum-icon.ico" width="25px" class="mr-1" />Forums
 							</a></li>
 							<li class="nav-item left-nav-item"><a id="tab-jobs"
-								class="nav-link py-1" onclick="leftNavMenuSwitch(this.id)"
-								href="#/job" data-toggle="pill"> <img
+								class="nav-link py-1" href="#/job" data-toggle="pill"> <img
 									src="Resources/Images/job-icon.png" width="25px" class="mr-1" />Jobs
 							</a></li>
 						</ul>

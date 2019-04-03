@@ -1,4 +1,26 @@
 <div ng-controller="BlogController" ng-init="getBlogList()">
+	<div id="blog-menu" class="d-flex justify-content-between">
+		<ul class="nav nav-pills" role="tablist">
+			<li class="nav-item sub-nav-item"><a class="nav-link small"
+				data-toggle="pill" onclick="blogMenuSwitch(this.id)"
+				id="tab-AllBlogs" href="">All Blogs</a></li>
+			<li class="nav-item sub-nav-item"><a
+				class="nav-link small active" data-toggle="pill"
+				onclick="blogMenuSwitch(this.id)" id="tab-YourBlogs" href="">Your
+					Blogs</a></li>
+		</ul>
+
+		<div>
+			<a href="#/addBlog"><button class="btn btn-sm btn-success">
+					<i class="fas fa-plus mr-1"></i>Add
+				</button></a> <a ng-controller="BlogController"
+				ng-show="currentUser.role=='admin'" href="#/manageBlog"><button
+					class="btn btn-sm btn-warning">
+					<i class="fas fa-wrench mr-1"></i>Manage
+				</button></a>
+		</div>
+	</div>
+
 	<div id="tabPane-AllBlogs" style="display: none;">
 		<div id="accordion">
 			<div class="bg-block rounded" ng-repeat="blog in blogList"
@@ -11,7 +33,7 @@
 					<div id="collapse{{$index+1}}" class="collapse"
 						data-parent="#accordion">
 						<div class="card-body">
-							{{blog.blogContent}}
+							{{blog.blogContent.substring(0,200)+'...'}}
 							<div class="d-flex justify-content-end">
 								<a ng-click="showBlog(blog.blogId)" href="#/showBlog"
 									class="small">Open Blog</a>

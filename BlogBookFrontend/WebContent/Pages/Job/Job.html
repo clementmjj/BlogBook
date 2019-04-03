@@ -1,4 +1,25 @@
 <div ng-controller="JobController" ng-init="getJobList()">
+	<div id="job-menu" class="d-flex justify-content-between">
+		<ul class="nav nav-pills" role="tablist">
+			<li class="nav-item sub-nav-item"><a class="nav-link small"
+				data-toggle="pill" onclick="jobMenuSwitch(this.id)" id="tab-AllJobs"
+				href="">All Jobs</a></li>
+			<li class="nav-item sub-nav-item"><a
+				class="nav-link small active" data-toggle="pill"
+				onclick="jobMenuSwitch(this.id)" id="tab-YourJobs" href="">Jobs
+					Posted By You</a></li>
+		</ul>
+
+		<div>
+			<a href="#/addJob"><button class="btn btn-sm btn-success">
+					<i class="fas fa-plus mr-1"></i>Add
+				</button></a> <a ng-controller="JobController"
+				ng-show="currentUser.role=='admin'" href="#/manageJob"><button
+					class="btn btn-sm btn-warning">
+					<i class="fas fa-wrench mr-1"></i>Manage
+				</button></a>
+		</div>
+	</div>
 	<div id="tabPane-AllJobs" class="bg-block rounded"
 		style="display: none;">
 		<ol>
@@ -26,7 +47,7 @@
 					<td>{{job.jobDescription}}</td>
 					<td>
 						<p ng-show="job.jobStatus=='open'">Open</p>
-						<p ng-show="job.jobStatus=='closed'">Closed</p>
+						<p ng-show="job.jobStatus=='closed'">Close</p>
 					</td>
 					<td><a href="#/editJob?id={{job.jobId}}"><i
 							class="fas fa-edit mr-1" title="Edit" style="color: #343a40;"></i></a><a

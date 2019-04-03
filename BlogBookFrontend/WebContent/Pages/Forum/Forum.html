@@ -1,4 +1,25 @@
 <div ng-controller="ForumController" ng-init="getForumList()">
+	<div id="forum-menu" class="d-flex justify-content-between">
+		<ul class="nav nav-pills" role="tablist">
+			<li class="nav-item sub-nav-item"><a class="nav-link small"
+				data-toggle="pill" onclick="forumMenuSwitch(this.id)"
+				id="tab-AllForums" href="">All Forums</a></li>
+			<li class="nav-item sub-nav-item"><a
+				class="nav-link small active" data-toggle="pill"
+				onclick="forumMenuSwitch(this.id)" id="tab-YourForums" href="">Your
+					Forums</a></li>
+		</ul>
+
+		<div>
+			<a href="#/addForum"><button class="btn btn-sm btn-success">
+					<i class="fas fa-plus mr-1"></i>Add
+				</button></a> <a ng-controller="ForumController"
+				ng-show="currentUser.role=='admin'" href="#/manageForum"><button
+					class="btn btn-sm btn-warning">
+					<i class="fas fa-wrench mr-1"></i>Manage
+				</button></a>
+		</div>
+	</div>
 	<div id="tabPane-AllForums" class="bg-block rounded"
 		style="display: none;">
 		<ol>
