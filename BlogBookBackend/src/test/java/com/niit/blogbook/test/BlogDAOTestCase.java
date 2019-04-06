@@ -48,7 +48,7 @@ public class BlogDAOTestCase {
 		assertTrue("Problem deleting blog", blogDAO.deleteBlog(blog));
 	}
 
-	//@Ignore
+	@Ignore
 	@Test
 	public void updateBlogTest() {
 		Blog blog = blogDAO.getBlog(41);
@@ -109,11 +109,22 @@ public class BlogDAOTestCase {
 		}
 	}
 	
-	//@Ignore
+	@Ignore
+	@Test
+	public void getLimitedBlogListTest() {
+		List<Blog> blogList = blogDAO.getLimitedBlogList("michaelj",0, 2);
+		for (Blog blog : blogList) {
+			System.out.print(blog.getBlogTitle() + "\t");
+			System.out.println(blog.getCreatedDate() + "\n");
+		}
+	}
+	
+	@Ignore
 	@Test
 	public void getBlogTest() {
-		Blog blog=blogDAO.getBlog(72);
+		Blog blog=blogDAO.getBlog(501);
 		System.out.println(blog.getBlogId());
 		System.out.println(blog.getCreatedDate().toString());
+		System.out.println(blog.getCreatedDate());
 	}
 }

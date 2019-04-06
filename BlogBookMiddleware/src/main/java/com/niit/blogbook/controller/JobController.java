@@ -78,15 +78,55 @@ public class JobController {
 			return "Error deleting job";
 	}
 
-	@GetMapping(value = "/getJob/{jobId}")
-	public ResponseEntity<Job> getJob(@PathVariable("jobId") int jobId) {
+	@GetMapping(value = "/incrementApplications/{jobId}")
+	public String incrementApplications(@PathVariable("jobId") int jobId) {
 		Job job = jobDAO.getJob(jobId);
-		return new ResponseEntity<Job>(job, HttpStatus.OK);
+		if (jobDAO.incrementApplications(job)) {
+			Gson gson = new Gson();
+			return gson.toJson(jobId);
+		} else
+			return "Error incrementing job apllications";
+	}
+
+	@GetMapping(value = "/decrementApplications/{jobId}")
+	public String decrementApplications(@PathVariable("jobId") int jobId) {
+		Job job = jobDAO.getJob(jobId);
+		if (jobDAO.decrementApplications(job)) {
+			Gson gson = new Gson();
+			return gson.toJson(jobId);
+		} else
+			return "Error decrementing job apllications";
+	}
+
+	@GetMapping(value = "/getJob/{jobId}")
+	public String getJob(@PathVariable("jobId") int jobId) {
+		Job job = jobDAO.getJob(jobId);
+		if (job != null) {
+			Gson gson = new Gson();
+			return gson.toJson(job);
+		} else
+			return "Error getting job or it does not exist";
 	}
 
 	@GetMapping(value = "/getJobList")
-	public ResponseEntity<List<Job>> getJobList() {
+	public String getJobList() {
 		List<Job> jobList = jobDAO.getJobList();
-		return new ResponseEntity<List<Job>>(jobList, HttpStatus.OK);
+		if (jobList != null) {
+			Gson gson = new Gson();
+			return gson.toJson(jobList);
+		} else
+			return "Error getting job list.";
+	}
+
+	@GetMapping(value = "/getLimitedJobList/{username}/{startRowNum}/{endRowNum}")
+	public String getLimitedJobList(@PathVariable("username") String username,
+			@PathVariable("startRowNum") int startRowNum, @PathVariable("endRowNum") int endRowNum) {
+		List<Job> jobList = jobDAO.getLimitedJobList(username, startRowNum, endRowNum);
+		if (jobList != null) {
+			Gson gson = new Gson();
+			return gson.toJson(jobList);
+		} else {
+			return "Error getting limited job list.";
+		}
 	}
 }

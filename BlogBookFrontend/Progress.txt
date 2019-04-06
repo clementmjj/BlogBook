@@ -1,1 +1,2 @@
-https://github.com/harshapericherla
+problem in getting blog and forum comments properly.
+line 68 and 84 of UserHomeComntroller.js

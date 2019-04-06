@@ -14,7 +14,7 @@ myApp.controller("JobController", function($scope, $http, $location,
 
 	$scope.addJob = function() {
 		$scope.job.username = $rootScope.currentUser.username;
-		$scope.job.jobStatus = 'open';
+		$scope.job.jobStatus = 'closed';
 		$http.post(
 				'http://localhost:' + location.port
 						+ '/BlogBookMiddleware/addJob', $scope.job).then(

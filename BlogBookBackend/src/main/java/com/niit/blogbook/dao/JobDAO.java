@@ -10,12 +10,18 @@ public interface JobDAO {
 	public boolean deleteJob(Job job);
 
 	public boolean updateJobDetails(Job job);
-	
+
 	public boolean openJob(Job job);
-	
+
 	public boolean closeJob(Job job);
-	
+
+	public boolean incrementApplications(Job job);
+
+	public boolean decrementApplications(Job job);
+
 	public Job getJob(int jobId);
-	
+
 	public List<Job> getJobList();
+
+	public List<Job> getLimitedJobList(String username, int startRowNum, int endRowNum);
 }

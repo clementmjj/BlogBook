@@ -34,6 +34,8 @@ myApp.config(function($routeProvider) {
 		templateUrl : "Pages/User/ProfilePic.html",
 	}).when("/showUser", {
 		templateUrl : "Pages/User/User.html",
+	}).when("/userHome", {
+		templateUrl : "Pages/User/UserHome.html",
 	}).when("/notifications", {
 		templateUrl : "Pages/User/Notifications.html",
 	}).when("/friends", {
@@ -58,6 +60,7 @@ myApp.config(function($routeProvider) {
 });
 
 myApp.run(function($rootScope, $cookieStore) {
+	$rootScope.portNo=location.port;
 	if ($rootScope.currentUser == undefined) {
 		$rootScope.currentUser = $cookieStore.get('userDetails');
 	}

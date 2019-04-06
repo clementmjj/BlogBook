@@ -3,6 +3,8 @@ myApp
 				"BlogController",
 				function($scope, $http, $location, $rootScope, $cookieStore) {
 
+					$scope.blogList = [];
+					$scope.userBlogList = [];
 					$scope.blogDetail;
 					$scope.editBlogInfo;
 					$scope.existingBlogLike = undefined;
@@ -45,13 +47,15 @@ myApp
 
 					$scope.addBlog = function() {
 						$scope.blog.username = $rootScope.currentUser.username;
-						$scope.blog.status = 'NA';
+						$scope.blog.status = 'P';
 						$http.post(
 								'http://localhost:' + location.port
 										+ '/BlogBookMiddleware/addBlog',
 								$scope.blog).then(function(response) {
+							$("#addBlogModal").modal("hide");
+							$("#addBlogSuccessfulModal").modal("show");
+							
 							console.log('Blog added');
-							$location.path('/blogList');
 						});
 					}
 
@@ -78,15 +82,39 @@ myApp
 						});
 					}
 
-					$scope.getBlogList = function() {
-						$http.get(
-								'http://localhost:' + location.port
-										+ '/BlogBookMiddleware/getBlogList')
-								.then(function(response) {
-									$scope.blogList = response.data;
-									console.log("Blog list retrieved.");
-								});
-					}
+					$scope.getBlogs = function() {
+						// get all approved blogs
+						$http
+								.get(
+										'http://localhost:'
+												+ location.port
+												+ '/BlogBookMiddleware/getBlogList')
+								.then(
+										function(response) {
+											(response.data)
+													.forEach(function(item) {
+														if (item.status == 'A') {
+															$scope.blogList
+																	.push(item);
+														}
+													})
+											console.log("Blog list retrieved.");
+										});
+						// get all blogs created by current user
+						$http
+								.get(
+										'http://localhost:'
+												+ location.port
+												+ '/BlogBookMiddleware/getUserBlogList/'
+												+ $rootScope.currentUser.username)
+								.then(
+										function(response) {
+											$scope.userBlogList = response.data;
+											console
+													.log($rootScope.currentUser.username
+															+ "'s blog list retrieved.");
+										});
+					};
 
 					$scope.approveBlog = function(blogId) {
 						$http.get(

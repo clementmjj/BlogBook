@@ -2,6 +2,8 @@ package com.niit.blogbook.controller;
 
 import java.util.List;
 
+import javax.persistence.OrderBy;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -93,12 +95,37 @@ public class BlogController {
 	}
 
 	@GetMapping(value = "/getBlogList")
-	public ResponseEntity<List<Blog>> getBlogList() {
+	public String getBlogList() {
 		List<Blog> blogList = blogDAO.getBlogList();
 		if (blogList != null) {
-			return new ResponseEntity<List<Blog>>(blogList, HttpStatus.OK);
+			Gson gson = new Gson();
+			return gson.toJson(blogList);
 		} else {
-			return new ResponseEntity<List<Blog>>(blogList, HttpStatus.INTERNAL_SERVER_ERROR);
+			return "Error getting blog list.";
+		}
+
+	}
+
+	@GetMapping(value = "/getUserBlogList/{username}")
+	public String getUserBlogList(@PathVariable("username") String username) {
+		List<Blog> blogList = blogDAO.getUserBlogList(username);
+		if (blogList != null) {
+			Gson gson = new Gson();
+			return gson.toJson(blogList);
+		} else {
+			return "Error getting blog list of " + username + ".";
+		}
+	}
+
+	@GetMapping(value = "/getLimitedBlogList/{username}/{startRowNum}/{endRowNum}")
+	public String getLimitedBlogList(@PathVariable("username") String username,
+			@PathVariable("startRowNum") int startRowNum, @PathVariable("endRowNum") int endRowNum) {
+		List<Blog> blogList = blogDAO.getLimitedBlogList(username, startRowNum, endRowNum);
+		if (blogList != null) {
+			Gson gson = new Gson();
+			return gson.toJson(blogList);
+		} else {
+			return "Error getting limited blog list.";
 		}
 	}
 

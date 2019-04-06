@@ -20,6 +20,7 @@ public class Job {
 	private String jobDesignation;
 	private String qualificationRequired;
 	private String jobStatus;
+	private int applications;
 	private String username;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss a")
 	private Date postedDate;
@@ -88,4 +89,13 @@ public class Job {
 		this.username = username;
 	}
 
+	public int getApplications() {
+		return applications;
+	}
+
+	public void setApplications(int applications) {
+		this.applications = applications;
+	}
+	
+	
 }

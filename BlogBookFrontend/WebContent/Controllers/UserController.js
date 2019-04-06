@@ -1,29 +1,18 @@
-myApp.controller("UserController", function($scope, $http, $location,
-		$rootScope, $cookieStore) {
+myApp.controller("UserController", function($scope, $http, $location, $rootScope, $cookieStore) {
 
 	$scope.profilePic;
-	$scope.profilePicUrl;
 	$scope.removeProfilePicUrl;
 
 	if ($rootScope.currentUser) {
 		// setting the url of the current users profile picture
-		$scope.profilePicUrl = "http://localhost:" + location.port
-				+ "/BlogBookMiddleware/showProfilePic/"
-				+ $rootScope.currentUser.username;
+		$scope.profilePicUrl = "http://localhost:" + location.port + "/BlogBookMiddleware/showProfilePic/" + $rootScope.currentUser.username;
 
 		// retrieving the profile picture
-		$http.get(
-				'http://localhost:' + location.port
-						+ '/BlogBookMiddleware/getProfilePic/'
-						+ $rootScope.currentUser.username).then(
-				function(response) {
-					$scope.profilePic = response.data;
-					if ($scope.profilePic)
-						$scope.removeProfilePicUrl = "http://localhost:"
-								+ location.port
-								+ "/BlogBookMiddleware/deleteProfilePic/"
-								+ $rootScope.currentUser.username;
-				});
+		$http.get('http://localhost:' + location.port + '/BlogBookMiddleware/getProfilePic/' + $rootScope.currentUser.username).then(function(response) {
+			$scope.profilePic = response.data;
+			if ($scope.profilePic)
+				$scope.removeProfilePicUrl = "http://localhost:" + location.port + "/BlogBookMiddleware/deleteProfilePic/" + $rootScope.currentUser.username;
+		});
 	}
 
 	$scope.user = {
@@ -41,43 +30,28 @@ myApp.controller("UserController", function($scope, $http, $location,
 		$scope.user.role = 'Student';
 		$scope.user.status = 'A';
 		$scope.user.isOnline = 'Off';
-		$http.post(
-				'http://localhost:' + location.port
-						+ '/BlogBookMiddleware/registerUser', $scope.user)
-				.then(function(response) {
-					console.log('User registered');
-					$location.path('/login');
-				})
+		$http.post('http://localhost:' + location.port + '/BlogBookMiddleware/registerUser', $scope.user).then(function(response) {
+			console.log('User registered');
+			$location.path('/login');
+		})
 	};
 
 	$scope.loginCheck = function() {
-		$http.post(
-				'http://localhost:' + location.port
-						+ '/BlogBookMiddleware/checkLogin', $scope.user).then(
-				function(response) {
-					console.log('login successfull');
-					$http.get(
-							'http://localhost:' + location.port
-									+ '/BlogBookMiddleware/getUser/'
-									+ $scope.user.username).then(
-							function(response) {
-								$rootScope.currentUser = response.data;
-								$cookieStore.put('userDetails',
-										$rootScope.currentUser);
-								window.location.href = "http://localhost:"
-										+ location.port
-										+ "/BlogBookFrontend/index2.html";
-							});
-				});
+		$http.post('http://localhost:' + location.port + '/BlogBookMiddleware/checkLogin', $scope.user).then(function(response) {
+			console.log('login successfull');
+			$http.get('http://localhost:' + location.port + '/BlogBookMiddleware/getUser/' + $scope.user.username).then(function(response) {
+				$rootScope.currentUser = response.data;
+				$cookieStore.put('userDetails', $rootScope.currentUser);
+				window.location.href = "http://localhost:" + location.port + "/BlogBookFrontend/index2.html#/userHome";
+			});
+		});
 	};
 
 	$scope.logout = function() {
 		delete $rootScope.currentUser;
-		$cookieStore.remove('userDetails');		
+		$cookieStore.remove('userDetails');
 		console.log("logout successful.");
-		window.location.href = "http://localhost:"
-			+ location.port
-			+ "/BlogBookFrontend/";
+		window.location.href = "http://localhost:" + location.port + "/BlogBookFrontend/";
 	};
 
 });

@@ -43,7 +43,7 @@ public class UserController {
 	@GetMapping(value = "/approveUser/{username}")
 	public ResponseEntity<String> approveUser(@PathVariable("username") String username) {
 		UserDetail user = userDAO.getUser(username);
-		if (userDAO.approveUser(user)) {			
+		if (userDAO.approveUser(user)) {
 			return new ResponseEntity<String>("Successfull", HttpStatus.OK);
 		} else
 			return new ResponseEntity<String>("Unsuccessfull", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -82,11 +82,12 @@ public class UserController {
 	}
 
 	@GetMapping(value = "/getUser/{username}")
-	public ResponseEntity<UserDetail> getUser(@PathVariable("username") String username) {
+	public String getUser(@PathVariable("username") String username) {
 		UserDetail user = userDAO.getUser(username);
-		if (user != null)
-			return new ResponseEntity<UserDetail>(user, HttpStatus.OK);
-		else
-			return new ResponseEntity<UserDetail>(user, HttpStatus.INTERNAL_SERVER_ERROR);
+		if (user != null) {
+			Gson gson = new Gson();
+			return gson.toJson(user);
+		} else
+			return "Error getting user or user does not exist.";
 	}
 }

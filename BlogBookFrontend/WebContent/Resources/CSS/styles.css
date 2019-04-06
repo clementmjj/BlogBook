@@ -50,3 +50,15 @@ a.card-link {
 .btn-like:hover, .btn-dislike:hover{
 	text-decoration: none;
 }
+
+.feed{
+	
+}
+
+.comment-striped{
+	background-color: #e2e9ec;
+}
+
+.comment-striped-alt{
+	background-color: #b7c8cc;
+}

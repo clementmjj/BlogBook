@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.niit.blogbook.dao.ForumDAO;
 import com.niit.blogbook.dao.FriendDAO;
+import com.niit.blogbook.model.Blog;
 import com.niit.blogbook.model.Forum;
 import com.niit.blogbook.model.UserDetail;
 
@@ -83,12 +84,14 @@ public class ForumController {
 	}
 
 	@GetMapping(value = "/getForumList")
-	public ResponseEntity<List<Forum>> getForumList() {
+	public String getForumList() {
 		List<Forum> forumList = forumDAO.getForumList();
-		if (forumList != null)
-			return new ResponseEntity<List<Forum>>(forumList, HttpStatus.OK);
-		else
-			return new ResponseEntity<List<Forum>>(forumList, HttpStatus.INTERNAL_SERVER_ERROR);
+		if (forumList != null) {
+			Gson gson = new Gson();
+			return gson.toJson(forumList);
+		} else {
+			return "Error rejecting forum";
+		}
 	}
 
 	@GetMapping(value = "/getForum/{forumId}")
@@ -99,5 +102,17 @@ public class ForumController {
 			return gson.toJson(forum);
 		} else
 			return "Error retrieving forum";
+	}
+
+	@GetMapping(value = "/getLimitedForumList/{username}/{startRowNum}/{endRowNum}")
+	public String getLimitedForumList(@PathVariable("username") String username,
+			@PathVariable("startRowNum") int startRowNum, @PathVariable("endRowNum") int endRowNum) {
+		List<Forum> forumList = forumDAO.getLimitedForumList(username, startRowNum, endRowNum);
+		if (forumList != null) {
+			Gson gson = new Gson();
+			return gson.toJson(forumList);
+		} else {
+			return "Error getting limited forum list.";
+		}
 	}
 }

@@ -61,12 +61,14 @@ public class ForumCommentController {
 	}
 
 	@GetMapping(value = "/getForumComment/{forumCommentId}")
-	public ResponseEntity<ForumComment> getForumComment(@PathVariable("forumCommentId") int forumCommentId) {
+	public String getForumComment(@PathVariable("forumCommentId") int forumCommentId) {
 		ForumComment forumComment = forumCommentDAO.getForumComment(forumCommentId);
-		if (forumComment != null)
-			return new ResponseEntity<ForumComment>(forumComment, HttpStatus.OK);
-		else
-			return new ResponseEntity<ForumComment>(forumComment, HttpStatus.INTERNAL_SERVER_ERROR);
+		if (forumComment != null) {
+			Gson gson = new Gson();
+			return gson.toJson(forumComment);
+		} else {
+			return "Error getting forum comment or it does not exist";
+		}
 	}
 
 	@GetMapping(value = "/getForumCommentList/{forumId}")

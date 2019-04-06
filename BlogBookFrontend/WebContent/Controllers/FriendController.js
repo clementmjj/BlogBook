@@ -1,7 +1,5 @@
 myApp.controller("FriendController", function($scope, $http, $location,
 		$rootScope) {
-
-	$scope.portNo = location.port;
 	$scope.friendList;
 	$scope.pendingFriendList;
 	$scope.suggestedFriendList;

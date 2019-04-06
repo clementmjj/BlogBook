@@ -10,7 +10,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.blogbook.dao.ForumDAO;
+import com.niit.blogbook.model.Blog;
 import com.niit.blogbook.model.Forum;
+import com.niit.blogbook.model.Friend;
 
 @Repository("forumDAO")
 @Transactional
@@ -86,6 +88,30 @@ public class ForumDAOImpl implements ForumDAO {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	@Override
+	public List<Forum> getLimitedForumList(String username, int startRowNum, int endRowNum) {
+		Session session = sessionFactory.openSession();
+		Query query = session.createQuery("from Friend where (username = '" + username + "' or friendUsername='"
+				+ username + "') and status = 'A'");
+		List<Friend> friendList = query.list();
+		String usernameList = "''";
+		if (friendList.size() > 0) {
+			for (Friend friend : friendList) {
+				usernameList += "'" + (friend.getFriendUsername().equals(username) ? friend.getUsername()
+						: friend.getFriendUsername()) + "',";
+			}
+			usernameList = usernameList.substring(2, usernameList.length() - 1);
+		}
+		query = session
+				.createSQLQuery("select * from ( select a.*, ROWNUM rnum from ( select * from forum where (username IN ("
+						+ usernameList + ") AND status = 'A') order by createddate DESC) a where ROWNUM <= " + endRowNum
+						+ ") where rnum >= " + startRowNum)
+				.addEntity(Forum.class);
+		List<Forum> forumList = query.list();
+		session.close();
+		return forumList;
 	}
 
 }

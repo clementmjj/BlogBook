@@ -7,11 +7,11 @@
 <link rel="stylesheet"
 	href="Resources/fontawesome-free-5.8.1-web/css/all.min.css">
 </head>
-<body ng-app="myApp">
+<body ng-app="myApp" style="background-color: #F2F3F5;">
 	<nav ng-controller="UserController"
-		class="navbar navbar-expand-sm bg-dark fixed-top navbar-dark justify-content-between">
+		class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-between">
 		<div class="container">
-			<a class="navbar-brand" href="#/"> <img
+			<a class="navbar-brand" href="#/userHome"> <img title="BlogBook"
 				src="Resources/Images/logo.min.png" alt="Blogbook"
 				style="width: 30px;">
 			</a>
@@ -21,56 +21,53 @@
 						<input type="text" class="form-control form-control-sm"
 							placeholder="Search" />
 						<div class="input-group-append">
-							<button class="btn btn-sm btn-primary" type="submit">Go</button>
+							<button class="btn btn-sm btn-primary" type="submit">
+								<i class="fas fa-search"></i>
+							</button>
 						</div>
 					</div>
 				</div>
 				<div class="col-sm-5">
 					<ul class="nav justify-content-end">
 						<li class="nav-item"><a class="nav-link mr-1"
-							href="#/showUser"><img src="{{profilePicUrl}}"
+							href="#/showUser"><img
+								src="http://localhost:{{portNo}}/BlogBookMiddleware/showProfilePic/{{currentUser.username}}"
 								style="max-height: 30px; max-width: 30px;" class="mx-2" />{{currentUser.firstName}}</a></li>
-						<li class="nav-item"><a class="nav-link ml-1" href="#/">Home</a></li>
-						<li class="nav-item"><a class="nav-link" href="#/friends">
-								<i class="fas fa-user-friends" title="Friends"></i>
+						<li class="nav-item"><a class="nav-link ml-1"
+							href="#/userHome">Home</a></li>
+						<li class="nav-item"><a class="nav-link" href="#/friends"
+							title="Friends"> <i class="fas fa-user-friends"></i>
 						</a></li>
 						<li class="nav-item"><a class="nav-link" href=""
-							ng-click="logout()"><i class="fas fa-sign-out-alt"
-								title="Logout"></i></a></li>
+							title="Logout" ng-click="logout()"><i
+								class="fas fa-sign-out-alt"></i></a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
 	</nav>
 	<div class="container">
-		<div class="row" style="margin-top: 65px;">
-			<div class="col-md-9">
-				<div class="row">
-					<div class="col-md-3"></div>
-					<div class="col-md-9"></div>
-				</div>
-				<div class="row">
-					<div class="col-md-3">
-						<!-- Left Navigation Bar -->
-						<ul class="nav nav-pills flex-column" role="tablist">
-							<li class="nav-item left-nav-item"><a id="tab-blogs"
-								class="nav-link py-1" href="#/blog" data-toggle="pill"> <img
-									src="Resources/Images/blog-icon.png" width="25px" class="mr-1" />Blogs
-							</a></li>
-							<li class="nav-item left-nav-item"><a id="tab-forums"
-								class="nav-link py-1" href="#/forum" data-toggle="pill"> <img
-									src="Resources/Images/forum-icon.ico" width="25px" class="mr-1" />Forums
-							</a></li>
-							<li class="nav-item left-nav-item"><a id="tab-jobs"
-								class="nav-link py-1" href="#/job" data-toggle="pill"> <img
-									src="Resources/Images/job-icon.png" width="25px" class="mr-1" />Jobs
-							</a></li>
-						</ul>
-					</div>
-					<div class="col-md-9">
-						<div ng-view></div>
-					</div>
-				</div>
+		<div class="row">
+			<div class="col-md-2">
+				<!-- Left Navigation Bar -->
+				<ul class="nav nav-pills flex-column" role="tablist">
+					<li class="nav-item left-nav-item"><a id="tab-blogs"
+						class="nav-link py-1" href="#/blog" data-toggle="pill"> <img
+							src="Resources/Images/blog-icon.png" width="25px" class="mr-1" />Blogs
+					</a></li>
+					<li class="nav-item left-nav-item"><a id="tab-forums"
+						class="nav-link py-1" href="#/forum" data-toggle="pill"> <img
+							src="Resources/Images/forum-icon.ico" width="25px" class="mr-1" />Forums
+					</a></li>
+					<li class="nav-item left-nav-item"><a id="tab-jobs"
+						class="nav-link py-1" href="#/job" data-toggle="pill"> <img
+							src="Resources/Images/job-icon.png" width="25px" class="mr-1" />Jobs
+					</a></li>
+				</ul>
+			</div>
+
+			<div class="col-md-7">
+				<div ng-view></div>
 			</div>
 			<div class="col-md-3 bg-info" ng-controller="ChatController">
 				<p ng-repeat="message in messages|orderBy:'time'">
@@ -115,6 +112,7 @@
 	<script type="text/javascript" src="Controllers/FriendController.js"></script>
 	<script type="text/javascript" src="Controllers/ChatController.js"></script>
 	<script type="text/javascript" src="Controllers/JobController.js"></script>
+	<script type="text/javascript" src="Controllers/UserHomeController.js"></script>
 	<script type="text/javascript" src="Resources/JS/scripts.js"></script>
 
 	<script type="text/javascript" src="Pages/Chat/ChatService.js"></script>

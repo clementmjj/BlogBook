@@ -1,4 +1,4 @@
-<div ng-controller="BlogController" ng-init="getBlogList()">
+<div ng-controller="BlogController" ng-init="getBlogs()">
 	<div id="blog-menu" class="d-flex justify-content-between">
 		<ul class="nav nav-pills" role="tablist">
 			<li class="nav-item sub-nav-item"><a class="nav-link small"
@@ -11,20 +11,76 @@
 		</ul>
 
 		<div>
-			<a href="#/addBlog"><button class="btn btn-sm btn-success">
-					<i class="fas fa-plus mr-1"></i>Add
-				</button></a> <a ng-controller="BlogController"
-				ng-show="currentUser.role=='admin'" href="#/manageBlog"><button
-					class="btn btn-sm btn-warning">
+			<button class="btn btn-sm btn-success" data-toggle="modal"
+				data-target="#addBlogModal"
+				onclick="document.getElementById('addBlogForm').reset()">
+				<i class="fas fa-plus mr-1"></i>Add
+			</button>
+			<!-- Add Blog Modal -->
+			<div class="modal fade" id="addBlogModal">
+				<div class="modal-dialog modal-lg modal-dialog-centered"">
+					<div class="modal-content">
+
+						<!-- Add Blog Modal Header -->
+						<div class="modal-header">
+							<h4 class="modal-title">Create A New Blog</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+
+						<!-- Add Blog Modal body -->
+						<div class="modal-body">
+							<form id="addBlogForm">
+								<div class="form-group">
+									<label>Title:</label> <input type="text" name="blogTitle"
+										ng-model="blog.blogTitle" class="form-control">
+								</div>
+								<div class="form-group">
+									<label>Content:</label>
+									<textarea name="blogContent" ng-model="blog.blogContent"
+										class="form-control"></textarea>
+								</div>
+								<button ng-click="addBlog()" type="submit"
+									class="btn btn-primary">Create</button>
+							</form>
+						</div>
+
+						<!-- Add Blog Modal footer -->
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">Close</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade" id="addBlogSuccessfulModal">
+				<div class="modal-dialog modal modal-dialog-centered"">
+					<div class="modal-content alert alert-success"
+						style="background-color: #d4edda;">
+
+						<!-- Add Blog Modal body -->
+						<div class="modal-body">
+							<span><i class="far fa-check-circle"></i> Your blog was
+								created successfully.</span>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<a ng-controller="BlogController" ng-show="currentUser.role=='admin'"
+				href="#/manageBlog"><button class="btn btn-sm btn-warning">
 					<i class="fas fa-wrench mr-1"></i>Manage
 				</button></a>
 		</div>
 	</div>
 
 	<div id="tabPane-AllBlogs" style="display: none;">
-		<div id="accordion">
-			<div class="bg-block rounded" ng-repeat="blog in blogList"
-				ng-show="blog.status=='A'">
+		<div ng-hide="blogList.length > 0" class="bg-block rounded">No
+			blogs have been created yet.</div>
+		<div id="accordion" ng-show="blogList.length > 0">
+			<div class="bg-block rounded" ng-repeat="blog in blogList">
 				<div class="card">
 					<div class="card-header">
 						<a class="card-link" data-toggle="collapse"
@@ -55,24 +111,27 @@
 		</div>
 	</div>
 
-	<div id="tabPane-YourBlogs" class="bg-block rounded">
-		<div class="table-responsive">
+	<div id="tabPane-YourBlogs">
+		<div ng-hide="userBlogList.length>0" class="bg-block rounded">You
+			have not created any blog.</div>
+		<div class="table-responsive" ng-show="userBlogList.length>0">
 			<table class="table" style="margin-bottom: unset;">
 				<thead>
 					<tr>
-						<th>Blog Title</th>
-						<th>Created on</th>
+						<th>Title</th>
+						<th>Date / Time</th>
 						<th>Status</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="blog in blogList"
+					<tr ng-repeat="blog in userBlogList"
 						ng-show="blog.username==currentUser.username">
 						<td><a ng-click="showBlog(blog.blogId)" href="#/showBlog">{{blog.blogTitle}}</a></td>
 						<td>{{blog.createdDate}}</td>
 						<td><span ng-show="blog.status=='A'">Approved</span> <span
-							ng-show="blog.status=='R'">Rejected</span></td>
+							ng-show="blog.status=='R'">Rejected</span> <span
+							ng-show="blog.status=='P'">Pending</span></td>
 						<td><a href="#/editBlog?id={{blog.blogId}}"><i
 								class="fas fa-edit mr-1" title="Edit" style="color: #343a40;"></i></a><a
 							href="" ng-click="deleteBlog(blog.blogId)"><i

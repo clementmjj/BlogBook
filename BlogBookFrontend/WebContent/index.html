@@ -7,21 +7,21 @@
 <link rel="stylesheet" href="Resources/CSS/styles.css">
 </head>
 <body ng-app="myApp">
-	<nav
-		class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-between">
+	<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
 		<div class="container">
 			<a class="navbar-brand" href="#/"> <img
 				src="Resources/Images/logo.png" alt="Blogbook" style="height: 50px;">
 			</a>
-			<form class="form-inline" ng-controller="UserController"
-				style="margin: auto 0;">
-				<input type="text" class="form-control-sm mx-1"
+			<div class="form-inline" ng-controller="UserController">
+				<input type="text" class="form-control form-control-sm m-1"
 					ng-model="user.username" placeholder="Username"> <input
-					type="password" class="form-control-sm mx-1" placeholder="Password"
-					ng-model="user.password">
-				<button type="submit" class="btn btn-primary btn-sm mx-1"
+					type="password" class="form-control form-control-sm m-1"
+					placeholder="Password" ng-model="user.password">
+				<button type="submit"
+					class="form-control btn btn-primary btn-sm m-1"
 					ng-click="loginCheck()">Login</button>
-			</form>
+			</div>
+
 		</div>
 	</nav>
 

@@ -61,12 +61,13 @@ public class BlogCommentController {
 	}
 
 	@GetMapping(value = "/getBlogComment/{blogCommentId}")
-	public ResponseEntity<BlogComment> getBlogComment(@PathVariable("blogCommentId") int blogCommentId) {
+	public String getBlogComment(@PathVariable("blogCommentId") int blogCommentId) {
 		BlogComment blogComment = blogCommentDAO.getBlogComment(blogCommentId);
-		if (blogComment != null)
-			return new ResponseEntity<BlogComment>(blogComment, HttpStatus.OK);
-		else
-			return new ResponseEntity<BlogComment>(blogComment, HttpStatus.INTERNAL_SERVER_ERROR);
+		if (blogComment != null) {
+			Gson gson = new Gson();
+			return gson.toJson(blogComment);
+		} else
+			return "Error getting blog comment or blog comment not found.";
 	}
 
 	@GetMapping(value = "/getBlogCommentList/{blogId}")
