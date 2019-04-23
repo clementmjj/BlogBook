@@ -32,13 +32,16 @@ public class BlogDAOTestCase {
 	@Ignore
 	@Test
 	public void addBlogTest() {
-		Blog blog = new Blog();
-		blog.setBlogTitle("Blog 3");
-		blog.setBlogContent("This is the content of blog 3");
-		blog.setCreatedDate(new Date());
-		blog.setStatus("NA");
-		blog.setUsername("ddd");
-		assertTrue("Problem adding blog", blogDAO.addBlog(blog));
+		for (int i = 0; i < 50; i++) {
+			Blog blog = new Blog();
+			blog.setBlogTitle("Blog title " + (i + 1));
+			blog.setBlogContent("Blog content " + (i + 1));
+			blog.setCreatedDate(new Date());
+			blog.setStatus("A");
+			blog.setUsername("rose");
+			assertTrue("Problem adding blog", blogDAO.addBlog(blog));
+		}
+
 	}
 
 	@Ignore
@@ -72,6 +75,47 @@ public class BlogDAOTestCase {
 
 	@Ignore
 	@Test
+	public void getBlogListTest() {
+		List<Blog> blogList = blogDAO.getBlogList();
+		for (Blog blog : blogList) {
+			System.out.print(blog.getBlogId() + "\t");
+			System.out.print(blog.getBlogTitle() + "\t");
+			System.out.println(blog.getBlogContent() + "\n");
+		}
+	}
+
+	@Ignore
+	@Test
+	public void getUserBlogListTest() {
+		List<Blog> blogList = blogDAO.getUserBlogList("michaelj");
+		for (Blog blog : blogList) {
+			System.out.print(blog.getBlogId() + "\t");
+			System.out.print(blog.getBlogTitle() + "\t");
+			System.out.println(blog.getBlogContent() + "\n");
+		}
+	}
+
+	@Ignore
+	@Test
+	public void getLimitedBlogListTest() {
+		List<Blog> blogList = blogDAO.getLimitedBlogList("michaelj", 0, 2);
+		for (Blog blog : blogList) {
+			System.out.print(blog.getBlogTitle() + "\t");
+			System.out.println(blog.getCreatedDate() + "\n");
+		}
+	}
+
+	@Ignore
+	@Test
+	public void getBlogTest() {
+		Blog blog = blogDAO.getBlog(501);
+		System.out.println(blog.getBlogId());
+		System.out.println(blog.getCreatedDate().toString());
+		System.out.println(blog.getCreatedDate());
+	}
+
+	@Ignore
+	@Test
 	public void incrementLikesTest() {
 		Blog blog = blogDAO.getBlog(23);
 		assertTrue("Problem incrementing blog like", blogDAO.incrementLike(blog));
@@ -100,31 +144,10 @@ public class BlogDAOTestCase {
 
 	@Ignore
 	@Test
-	public void listBlogsTest() {
-		List<Blog> blogList = blogDAO.getBlogList();
+	public void blogSearchTest() {
+		List<Blog> blogList = blogDAO.blogSearch("aaa");
 		for (Blog blog : blogList) {
-			System.out.print(blog.getBlogId() + "\t");
-			System.out.print(blog.getBlogTitle() + "\t");
-			System.out.println(blog.getBlogContent() + "\n");
+			System.out.println(blog.getBlogTitle() + "\t");
 		}
-	}
-	
-	@Ignore
-	@Test
-	public void getLimitedBlogListTest() {
-		List<Blog> blogList = blogDAO.getLimitedBlogList("michaelj",0, 2);
-		for (Blog blog : blogList) {
-			System.out.print(blog.getBlogTitle() + "\t");
-			System.out.println(blog.getCreatedDate() + "\n");
-		}
-	}
-	
-	@Ignore
-	@Test
-	public void getBlogTest() {
-		Blog blog=blogDAO.getBlog(501);
-		System.out.println(blog.getBlogId());
-		System.out.println(blog.getCreatedDate().toString());
-		System.out.println(blog.getCreatedDate());
 	}
 }

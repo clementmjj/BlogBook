@@ -32,7 +32,7 @@ public class BlogCommentController {
 			Gson gson = new Gson();
 			return gson.toJson(blogComment);
 		} else {
-			return "Error adding blog comment";
+			return null;
 		}
 	}
 
@@ -43,7 +43,7 @@ public class BlogCommentController {
 			Gson gson = new Gson();
 			return gson.toJson(blogComment);
 		} else {
-			return "Error deleting blog comment";
+			return null;
 		}
 	}
 
@@ -56,7 +56,7 @@ public class BlogCommentController {
 				return gson.toJson(blogComment);
 			}
 		} else {
-			return "Error in editing blog comment";
+			return null;
 		}
 	}
 
@@ -67,7 +67,7 @@ public class BlogCommentController {
 			Gson gson = new Gson();
 			return gson.toJson(blogComment);
 		} else
-			return "Error getting blog comment or blog comment not found.";
+			return null;
 	}
 
 	@GetMapping(value = "/getBlogCommentList/{blogId}")
@@ -79,7 +79,7 @@ public class BlogCommentController {
 				return gson.toJson(blogCommentList);
 			}
 		} else {
-			return "Blog comment list is empty or error retrieving the list";
+			return null;
 		}
 	}
 }

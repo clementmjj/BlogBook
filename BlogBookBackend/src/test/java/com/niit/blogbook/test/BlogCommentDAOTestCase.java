@@ -22,7 +22,7 @@ public class BlogCommentDAOTestCase {
 		context.refresh();
 		blogCommentDAO = (BlogCommentDAO) context.getBean("blogCommentDAO");
 	}
-	
+
 	@Ignore
 	@Test
 	public void addBlogCommentTest() {
@@ -33,14 +33,14 @@ public class BlogCommentDAOTestCase {
 		blogComment.setUsername("sss");
 		assertTrue("Problem adding blog comment", blogCommentDAO.addBlogComment(blogComment));
 	}
-	
+
 	@Ignore
 	@Test
 	public void deleteBlogCommentTest() {
 		BlogComment blogComment = blogCommentDAO.getBlogComment(2);
 		assertTrue("Problem deleting blog comment", blogCommentDAO.deleteBlogComment(blogComment));
 	}
-	
+
 	@Ignore
 	@Test
 	public void editBlogCommentTest() {
@@ -48,15 +48,26 @@ public class BlogCommentDAOTestCase {
 		blogComment.setCommentMessage("Edited comment");
 		assertTrue("Problem editing blog comment", blogCommentDAO.editBlogComment(blogComment));
 	}
-	
+
 	@Ignore
 	@Test
-	public void listBlogCommentsTest() {
+	public void getBlogCommentListTest() {
 		List<BlogComment> blogCommentList = blogCommentDAO.getBlogCommentList(95);
-		for(BlogComment bc : blogCommentList)
-		{
-			System.out.print("\n"+bc.getCommentId()+"\t");
+		for (BlogComment bc : blogCommentList) {
+			System.out.print("\n" + bc.getCommentId() + "\t");
 			System.out.println(bc.getCommentMessage());
+		}
+	}
+
+	@Ignore
+	@Test
+	public void getBlogComment() {
+		BlogComment blogComment = blogCommentDAO.getBlogComment(0);
+		if (blogComment == null)
+			System.out.print("Blog comment not found.");
+		else {
+			System.out.print(blogComment.getUsername() + "\t");
+			System.out.println(blogComment.getCommentMessage());
 		}
 	}
 }

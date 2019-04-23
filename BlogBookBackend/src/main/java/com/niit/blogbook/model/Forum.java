@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -15,7 +17,11 @@ public class Forum {
 	@Id
 	@GeneratedValue
 	private int forumId;
+	@NotBlank(message = "Must not be blank.")
+	@Size(min = 10, max = 100, message = "Must contain 10 to 100 characters.")
 	private String forumTitle;
+	@NotBlank(message = "Must not be blank.")
+	@Size(min = 100, max = 3000, message = "Must contain 100 to 3000 characters.")
 	private String forumContent;
 	private String username;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss a")

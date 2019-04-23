@@ -1,34 +1,73 @@
 <div ng-controller="FriendController">
-	<div>
-		<h4>Friends ({{friendList.length}})</h4>
-		<ul ng-repeat="user in friendList">
-			<li><img
-				src="http://localhost:{{portNo}}/BlogBookMiddleware/showProfilePic/{{user.username}}"
-				width="100" height="100" />{{user.username}}
-				<input type="button" value="Unfriend" ng-click="unfriend(user.username)"/>
-				</li>
-		</ul>
-	</div>
-	<div>
-		<h4>Friend Requests ({{pendingFriendList.length}})</h4>
-		<ul ng-repeat="friend in pendingFriendList">
-			<li><img
-				src="http://localhost:{{portNo}}/BlogBookMiddleware/showProfilePic/{{friend.username}}"
-				width="100" height="100" />{{friend.username}}<input type="button"
-				value="Accept" ng-click="acceptFriendReq(friend.friendId)" /><input
-				type="button" value="Reject"
-				ng-click="rejectFriendReq(friend.friendId)" /></li>
+	<!-- Nav tabs -->
+	<ul class="nav nav-tabs nav-justified">
+		<li class="nav-item" style="cursor: pointer;"><a
+			class="nav-link active" data-toggle="tab" data-target="#friends"><strong>Friends</strong>
+				<span class="badge badge-primary" ng-show="friendList.length>0">{{friendList.length}}</span>
+		</a></li>
+		<li class="nav-item" style="cursor: pointer;"><a class="nav-link"
+			data-toggle="tab" data-target="#requests"><strong>Requests</strong>
+				<span class="badge badge-primary" ng-show="friendRequests.length>0">{{friendRequests.length}}</span>
+		</a></li>
+		<li class="nav-item" style="cursor: pointer;"><a class="nav-link"
+			data-toggle="tab" data-target="#suggestedFriends"><strong>Suggested
+					Friends</strong> <span class="badge badge-primary"
+				ng-show="suggestedFriendList.length>0">{{suggestedFriendList.length}}</span>
+		</a></li>
+	</ul>
 
-		</ul>
-	</div>
-	<div>
-		<h4>Suggested friends ({{suggestedFriendList.length}})</h4>
-		<ul ng-repeat="user in suggestedFriendList">
-			<li><img
-				src="http://localhost:{{portNo}}/BlogBookMiddleware/showProfilePic/{{user.username}}"
-				width="100" height="100" />{{user.username}} <input type="button"
-				value="Add Friend" ng-click="sendFriendReq(user.username)" /></li>
+	<!-- Tab panes -->
+	<div class="tab-content">
+		<div class="tab-pane container active" id="friends">
+			<span ng-hide="friendList.length>0">You currently do not have
+				any friends.</span>
+			<div class="d-flex flex-wrap" ng-show="friendList.length>0">
+				<div class="d-flex my-1" ng-repeat="friend in friendList"
+					style="width: 50%;">
+					<img src="{{friend.profilePicUrl}}" width="100" height="100"
+						class="mr-2" />
+					<div class="d-flex flex-column">
+						<strong>{{friend.firstName+' '+friend.lastName}}</strong>
+						<button class="btn btn-sm btn-primary" style="width: 90px;"
+							ng-click="unfriend(friend.username)">Unfriend</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane container fade" id="requests">
+			<span ng-hide="friendRequests.length>0">You currently do not
+				have any friend requests.</span>
+			<div class="d-flex flex-wrap" ng-show="friendRequests.length>0">
+				<div class="d-flex my-1" ng-repeat="friend in friendRequests"
+					style="width: 50%;">
+					<img src="{{friend.profilePicUrl}}" width="100" height="100"
+						class="mr-2" />
+					<div class="d-flex flex-column">
+						<strong>{{friend.firstName+' '+friend.lastName}}</strong>
+						<button class="btn btn-sm btn-primary" style="width: 90px;"
+							ng-click="acceptFriendReq(friend.friendId)">Accept</button>
+						<button class="btn btn-sm btn-danger" style="width: 90px;"
+							ng-click="rejectFriendReq(friend.friendId)">Reject</button>
+					</div>
+				</div>
+			</div>
 
-		</ul>
+		</div>
+		<div class="tab-pane container fade" id="suggestedFriends">
+			<span ng-hide="suggestedFriendList.length>0">Blogbook is not
+				able to find any suggested friends. Try adding more friends.</span>
+			<div class="d-flex flex-wrap" ng-show="suggestedFriendList.length>0">
+				<div class="d-flex my-1" ng-repeat="friend in suggestedFriendList"
+					style="width: 50%;">
+					<img src="{{friend.profilePicUrl}}" width="100" height="100"
+						class="mr-2" />
+					<div class="d-flex flex-column">
+						<strong>{{friend.firstName+' '+friend.lastName}}</strong>
+						<button class="btn btn-sm btn-primary" style="width: 90px;"
+							ng-click="sendFriendReq(friend.username)">Add Friend</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

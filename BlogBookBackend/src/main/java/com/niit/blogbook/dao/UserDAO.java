@@ -16,6 +16,8 @@ public interface UserDAO {
 	public boolean approveUser(UserDetail user);
 
 	public boolean rejectUser(UserDetail user);
-	
+
 	public List<UserDetail> getUserList();
+
+	public List<UserDetail> userSearch(String queryText);
 }

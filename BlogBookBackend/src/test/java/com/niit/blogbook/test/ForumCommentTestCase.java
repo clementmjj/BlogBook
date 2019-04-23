@@ -49,13 +49,25 @@ public class ForumCommentTestCase {
 		assertTrue("Problem editing forum comment", forumCommentDAO.editForumComment(forumComment));
 	}
 
-	// @Ignore
+	@Ignore
 	@Test
 	public void listForumCommentsTest() {
 		List<ForumComment> forumCommentList = forumCommentDAO.getForumCommentList(000);
 		for (ForumComment fc : forumCommentList) {
 			System.out.print("\n" + fc.getCommentId() + "\t");
 			System.out.println(fc.getCommentMessage());
+		}
+	}
+
+	@Ignore
+	@Test
+	public void getForumCommentTest() {
+		ForumComment forumComment = forumCommentDAO.getForumComment(10);
+		if (forumComment == null)
+			System.out.println("Forum Comment not found.");
+		else {
+			System.out.print("Forum comment id: " + forumComment.getCommentId());
+			System.out.println("by " + forumComment.getUsername());
 		}
 	}
 }

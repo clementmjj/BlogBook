@@ -29,7 +29,7 @@ public class BlogLikeDislikeController {
 			Gson gson = new Gson();
 			return gson.toJson(blogLike);
 		} else
-			return "Error adding blog like";
+			return null;
 	}
 
 	@GetMapping("/deleteBlogLike/{blogLikeId}")
@@ -39,7 +39,7 @@ public class BlogLikeDislikeController {
 			Gson gson = new Gson();
 			return gson.toJson(blogLike);
 		} else
-			return "Error removing blog like";
+			return null;
 	}
 
 	@PostMapping("/addBlogDislike")
@@ -48,7 +48,7 @@ public class BlogLikeDislikeController {
 			Gson gson = new Gson();
 			return gson.toJson(blogDislike);
 		} else
-			return "Error adding blog dislike";
+			return null;
 	}
 
 	@GetMapping("/deleteBlogDislike/{blogDislikeId}")
@@ -58,7 +58,7 @@ public class BlogLikeDislikeController {
 			Gson gson = new Gson();
 			return gson.toJson(blogDislike);
 		} else
-			return "Error removing blog dislike";
+			return null;
 	}
 
 	public String getBlogLikeById(int likeId) {
@@ -67,7 +67,8 @@ public class BlogLikeDislikeController {
 			Gson gson = new Gson();
 			return gson.toJson(blogLike);
 		} else
-			return "Error getting blog like";
+			return null;
+
 	}
 
 	public String getBlogDislikeById(int dislikeId) {
@@ -76,7 +77,7 @@ public class BlogLikeDislikeController {
 			Gson gson = new Gson();
 			return gson.toJson(blogDislike);
 		} else
-			return "Error getting blog dislike";
+			return null;
 	}
 
 	@GetMapping(value = "/getBlogLike/{blogId}/{username}")
@@ -99,7 +100,7 @@ public class BlogLikeDislikeController {
 			Gson gson = new Gson();
 			return gson.toJson(blogLikeList);
 		} else
-			return "Error getting blog likes list of user " + username;
+			return null;
 	}
 
 	public String getBlogDislikesList(String username) {
@@ -108,6 +109,6 @@ public class BlogLikeDislikeController {
 			Gson gson = new Gson();
 			return gson.toJson(blogDislikeList);
 		} else
-			return "Error getting blog dislikes list of user " + username;
+			return null;
 	}
 }

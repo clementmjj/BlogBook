@@ -2,15 +2,14 @@ package com.niit.blogbook.daoImpl;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.blogbook.dao.ForumDAO;
-import com.niit.blogbook.model.Blog;
 import com.niit.blogbook.model.Forum;
 import com.niit.blogbook.model.Friend;
 
@@ -34,38 +33,22 @@ public class ForumDAOImpl implements ForumDAO {
 	@Override
 	public boolean deleteForum(Forum forum) {
 		try {
-			sessionFactory.getCurrentSession().delete(forum);
+			sessionFactory.getCurrentSession().remove(forum);
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
 
 	@Override
-	public boolean updateForumDetails(Forum forum) {
+	public boolean updateForum(Forum forum) {
 		try {
 			sessionFactory.getCurrentSession().update(forum);
 			return true;
 		} catch (Exception e) {
 			return false;
 		}
-	}
-
-	@Override
-	public Forum getForum(int forumId) {
-
-		Session session = sessionFactory.openSession();
-		Forum forum = session.get(Forum.class, forumId);
-		session.close();
-		return forum;
-	}
-
-	@Override
-	public List<Forum> getForumList() {
-		Session session = sessionFactory.openSession();
-		Query query = session.createQuery("from Forum");
-		List<Forum> forumList = query.list();
-		return forumList;
 	}
 
 	@Override
@@ -88,6 +71,24 @@ public class ForumDAOImpl implements ForumDAO {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	@Override
+	public List<Forum> getForumList() {
+		Session session = sessionFactory.openSession();
+		Query query = session.createQuery("from Forum");
+		List<Forum> forumList = query.list();
+		session.close();
+		return forumList;
+	}
+
+	@Override
+	public List<Forum> getUserForumList(String username) {
+		Session session = sessionFactory.openSession();
+		Query query = session.createQuery("from Forum WHERE username = '" + username + "'");
+		List<Forum> forumList = query.list();
+		session.close();
+		return forumList;
 	}
 
 	@Override
@@ -114,4 +115,24 @@ public class ForumDAOImpl implements ForumDAO {
 		return forumList;
 	}
 
+	@Override
+	public Forum getForum(int forumId) {
+		Session session = sessionFactory.openSession();
+		Forum forum = session.get(Forum.class, forumId);
+		session.close();
+		return forum;
+	}
+
+	@Override
+	public List<Forum> forumSearch(String queryText) {
+		String queryTextLower = queryText.toLowerCase();
+		String queryTextUpper = Character.toUpperCase(queryTextLower.charAt(0)) + queryTextLower.substring(1);
+		Session session = sessionFactory.openSession();
+		Query query = session.createQuery("from Forum where forumTitle LIKE '%" + queryTextLower
+				+ "%' or forumTitle LIKE '%" + queryTextUpper + "%' or forumContent LIKE '%" + queryTextLower
+				+ "%' or forumContent LIKE '%" + queryTextUpper + "%'");
+		List<Forum> forumList = query.list();
+		session.close();
+		return forumList;
+	}
 }

@@ -88,4 +88,17 @@ public class UserDAOImpl implements UserDAO {
 		return userList;
 	}
 
+	@Override
+	public List<UserDetail> userSearch(String queryText) {
+		String queryTextLower = queryText.toLowerCase();
+		String queryTextUpper = Character.toUpperCase(queryTextLower.charAt(0)) + queryTextLower.substring(1);
+		Session session = sessionFactory.openSession();
+		Query query = session.createQuery(
+				"from UserDetail where firstName LIKE '%" + queryTextLower + "%' or firstName LIKE '%" + queryTextUpper
+						+ "%' or lastName LIKE '%" + queryTextLower + "%' or lastName LIKE '%" + queryTextUpper + "%'");
+		List<UserDetail> userList = query.list();
+		session.close();
+		return userList;
+	}
+
 }

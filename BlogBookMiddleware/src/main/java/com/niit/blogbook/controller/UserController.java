@@ -1,6 +1,9 @@
 package com.niit.blogbook.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,13 +24,13 @@ public class UserController {
 	UserDAO userDAO;
 
 	@PostMapping(value = "/registerUser")
-	public String registerUser(@RequestBody UserDetail user) {
+	public String registerUser(@Valid @RequestBody UserDetail user) {
 		if (userDAO.addUser(user)) {
 			Gson gson = new Gson();
 			return gson.toJson(user);
-		} else
-			return "Registration unscccessful";
-
+		} else {
+			return null;
+		}
 	}
 
 	@GetMapping(value = "/deleteUser/{username}")
@@ -59,11 +62,12 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/updateUser")
-	public ResponseEntity<String> updateUser(@RequestBody UserDetail user) {
+	public String updateUser(@Valid @RequestBody UserDetail user) {
 		if (userDAO.updateUser(user)) {
-			return new ResponseEntity<String>("Successfull", HttpStatus.OK);
+			Gson gson = new Gson();
+			return gson.toJson(user);
 		} else {
-			return new ResponseEntity<String>("Unsuccessfull", HttpStatus.INTERNAL_SERVER_ERROR);
+			return null;
 		}
 	}
 
@@ -73,6 +77,7 @@ public class UserController {
 		if (tempUser != null) {
 			if (tempUser.getPassword().equals(user.getPassword())) {
 				session.setAttribute("userDetail", user);
+				UserDetail u = (UserDetail) session.getAttribute("userDetail");
 				Gson gson = new Gson();
 				return gson.toJson(user);
 			}
@@ -88,6 +93,17 @@ public class UserController {
 			Gson gson = new Gson();
 			return gson.toJson(user);
 		} else
-			return "Error getting user or user does not exist.";
+			return null;
+	}
+
+	@GetMapping(value = "/userSearch/{queryText}")
+	public String userSearch(@PathVariable("queryText") String queryText) {
+		List<UserDetail> userList = userDAO.userSearch(queryText);
+		if (userList != null) {
+			Gson gson = new Gson();
+			return gson.toJson(userList);
+		} else {
+			return null;
+		}
 	}
 }

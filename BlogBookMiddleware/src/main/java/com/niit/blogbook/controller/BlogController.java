@@ -2,11 +2,9 @@ package com.niit.blogbook.controller;
 
 import java.util.List;
 
-import javax.persistence.OrderBy;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,17 +28,14 @@ public class BlogController {
 	FriendDAO friendDAO;
 
 	@PostMapping(value = "/addBlog")
-	public String addBlog(@RequestBody Blog blog) {
+	public String addBlog(@Valid @RequestBody Blog blog) {
 		blog.setCreatedDate(new java.util.Date());
 
 		if (blogDAO.addBlog(blog)) {
-			List<UserDetail> friendList = friendDAO.getFriendList(blog.getUsername());
-			for (UserDetail user : friendList) {
-			}
 			Gson gson = new Gson();
 			return gson.toJson(blog);
 		} else {
-			return "Error adding blog";
+			return null;
 		}
 	}
 
@@ -53,18 +48,18 @@ public class BlogController {
 				return gson.toJson(blog);
 			}
 		} else {
-			return "Error deleting blog";
+			return null;
 		}
 	}
 
 	@PostMapping(value = "/updateBlog")
-	public String updateBlog(@RequestBody Blog blog) {
+	public String updateBlog(@Valid @RequestBody Blog blog) {
 		blog.setCreatedDate(blogDAO.getBlog(blog.getBlogId()).getCreatedDate());
 		if (blogDAO.updateBlog(blog)) {
 			Gson gson = new Gson();
 			return gson.toJson(blog);
 		} else {
-			return "Error updating blog";
+			return null;
 		}
 	}
 
@@ -77,7 +72,7 @@ public class BlogController {
 				return gson.toJson(blog);
 			}
 		} else {
-			return "Error approving blog";
+			return null;
 		}
 	}
 
@@ -90,7 +85,7 @@ public class BlogController {
 				return gson.toJson(blog);
 			}
 		} else {
-			return "Error rejecting blog";
+			return null;
 		}
 	}
 
@@ -101,9 +96,19 @@ public class BlogController {
 			Gson gson = new Gson();
 			return gson.toJson(blogList);
 		} else {
-			return "Error getting blog list.";
+			return null;
 		}
+	}
 
+	@GetMapping(value = "/blogSearch/{queryText}")
+	public String blogSearch(@PathVariable("queryText") String queryText) {
+		List<Blog> blogList = blogDAO.blogSearch(queryText);
+		if (blogList != null) {
+			Gson gson = new Gson();
+			return gson.toJson(blogList);
+		} else {
+			return null;
+		}
 	}
 
 	@GetMapping(value = "/getUserBlogList/{username}")
@@ -113,7 +118,7 @@ public class BlogController {
 			Gson gson = new Gson();
 			return gson.toJson(blogList);
 		} else {
-			return "Error getting blog list of " + username + ".";
+			return null;
 		}
 	}
 
@@ -125,7 +130,7 @@ public class BlogController {
 			Gson gson = new Gson();
 			return gson.toJson(blogList);
 		} else {
-			return "Error getting limited blog list.";
+			return null;
 		}
 	}
 
@@ -136,7 +141,7 @@ public class BlogController {
 			Gson gson = new Gson();
 			return gson.toJson(blog);
 		} else
-			return "Error retrieving blog";
+			return null;
 	}
 
 	@GetMapping(value = "/incrementLike/{blogId}")
@@ -146,7 +151,7 @@ public class BlogController {
 			Gson gson = new Gson();
 			return gson.toJson(blog);
 		} else {
-			return "Error incrementing like";
+			return null;
 		}
 	}
 
@@ -157,7 +162,7 @@ public class BlogController {
 			Gson gson = new Gson();
 			return gson.toJson(blog);
 		} else {
-			return "Error incrementing dislike";
+			return null;
 		}
 	}
 
@@ -168,7 +173,7 @@ public class BlogController {
 			Gson gson = new Gson();
 			return gson.toJson(blog);
 		} else {
-			return "Error decrement like";
+			return null;
 		}
 	}
 
@@ -179,7 +184,7 @@ public class BlogController {
 			Gson gson = new Gson();
 			return gson.toJson(blog);
 		} else {
-			return "Error decrement dislike";
+			return null;
 		}
 	}
 

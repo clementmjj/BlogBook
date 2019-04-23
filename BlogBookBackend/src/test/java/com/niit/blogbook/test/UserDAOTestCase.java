@@ -83,4 +83,13 @@ public class UserDAOTestCase {
 			System.out.println(user.getUsername());
 		}
 	}
+
+	@Ignore
+	@Test
+	public void userSearchTest() {
+		List<UserDetail> userList = userDAO.userSearch("query");
+		for (UserDetail user : userList) {
+			System.out.println(user.getUsername());
+		}
+	}
 }

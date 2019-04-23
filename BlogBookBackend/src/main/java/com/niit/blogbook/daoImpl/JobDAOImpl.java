@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.blogbook.dao.JobDAO;
+import com.niit.blogbook.model.Blog;
 import com.niit.blogbook.model.Friend;
 import com.niit.blogbook.model.Job;
 
@@ -89,6 +90,15 @@ public class JobDAOImpl implements JobDAO {
 		session.close();
 		return jobList;
 	}
+	
+	@Override
+	public List<Job> getUserJobList(String username) {
+		Session session = sessionFactory.openSession();
+		Query query = session.createQuery("from Job WHERE username = '" + username + "'");
+		List<Job> jobList = query.list();
+		session.close();
+		return jobList;
+	}
 
 	@Override
 	public List<Job> getLimitedJobList(String username, int startRowNum, int endRowNum) {
@@ -115,25 +125,16 @@ public class JobDAOImpl implements JobDAO {
 	}
 
 	@Override
-	public boolean incrementApplications(Job job) {
-		try {
-			job.setApplications(job.getApplications() + 1);
-			sessionFactory.getCurrentSession().update(job);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean decrementApplications(Job job) {
-		try {
-			job.setApplications(job.getApplications() - 1);
-			sessionFactory.getCurrentSession().update(job);
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
-	}
-
+	public List<Job> jobSearch(String queryText) {
+		String queryTextLower = queryText.toLowerCase();
+		String queryTextUpper = Character.toUpperCase(queryTextLower.charAt(0)) + queryTextLower.substring(1);
+		Session session = sessionFactory.openSession();
+		Query query = session.createQuery("from Job where jobDesignation LIKE '%" + queryTextLower
+				+ "%' or jobDesignation LIKE '%" + queryTextUpper + "%' or jobDescription LIKE '%" + queryTextLower
+				+ "%' or jobDescription LIKE '%" + queryTextUpper + "%' or jobProfile LIKE '%" + queryTextLower
+				+ "%' or jobProfile LIKE '%" + queryTextUpper + "%'");
+		List<Job> jobList = query.list();
+		session.close();
+		return jobList;
+	}	
 }

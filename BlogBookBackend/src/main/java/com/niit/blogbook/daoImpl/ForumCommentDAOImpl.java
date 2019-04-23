@@ -30,9 +30,9 @@ public class ForumCommentDAOImpl implements ForumCommentDAO {
 	}
 
 	@Override
-	public boolean deleteForumComment(ForumComment forumComment) {
+	public boolean editForumComment(ForumComment forumComment) {
 		try {
-			sessionFactory.getCurrentSession().delete(forumComment);
+			sessionFactory.getCurrentSession().update(forumComment);
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -40,9 +40,9 @@ public class ForumCommentDAOImpl implements ForumCommentDAO {
 	}
 
 	@Override
-	public boolean editForumComment(ForumComment forumComment) {
+	public boolean deleteForumComment(ForumComment forumComment) {
 		try {
-			sessionFactory.getCurrentSession().update(forumComment);
+			sessionFactory.getCurrentSession().delete(forumComment);
 			return true;
 		} catch (Exception e) {
 			return false;

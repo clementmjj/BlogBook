@@ -25,7 +25,7 @@ public class FriendController {
 			Gson gson = new Gson();
 			return gson.toJson(friend);
 		} else {
-			return "Error sending friend req";
+			return null;
 		}
 	}
 
@@ -35,7 +35,7 @@ public class FriendController {
 			Gson gson = new Gson();
 			return gson.toJson(friendDAO.getFriendDetail(friendId));
 		} else {
-			return "Error accepting friend req";
+			return null;
 		}
 	}
 
@@ -45,7 +45,7 @@ public class FriendController {
 			Gson gson = new Gson();
 			return gson.toJson(friendDAO.deleteFriendReq(friendId));
 		} else {
-			return "Error deleting friend req";
+			return null;
 		}
 	}
 
@@ -55,7 +55,7 @@ public class FriendController {
 			Gson gson = new Gson();
 			return gson.toJson(true);
 		} else {
-			return "Error unfriending " + username1 + " and " + username2;
+			return null;
 		}
 	}
 
@@ -66,7 +66,7 @@ public class FriendController {
 			Gson gson = new Gson();
 			return gson.toJson(friendList);
 		} else {
-			return "Error getting friend list";
+			return null;
 		}
 	}
 
@@ -77,7 +77,7 @@ public class FriendController {
 			Gson gson = new Gson();
 			return gson.toJson(pendingFriendList);
 		} else {
-			return "Error getting pending friend list";
+			return null;
 		}
 	}
 
@@ -88,6 +88,17 @@ public class FriendController {
 			Gson gson = new Gson();
 			return gson.toJson(suggestedFriendList);
 		} else
-			return "Error getting suggested friends";
+			return null;
+	}
+
+	@GetMapping(value = "/checkIfFriends/{username}/{friendUsername}")
+	public String getSuggestedFriendList(@PathVariable("username") String username,
+			@PathVariable("friendUsername") String friendUsername) {
+		Friend friend = friendDAO.checkIfFriends(username, friendUsername, true);
+		if (friend != null) {
+			Gson gson = new Gson();
+			return gson.toJson(friend);
+		} else
+			return null;
 	}
 }

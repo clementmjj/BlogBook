@@ -10,12 +10,6 @@ nav a {
 	color: #343a40;
 }
 
-.left-nav-item a.active {
-	background-color: #c3c3c3 !important;
-	font-weight: bold;
-	color: #343a40 !important;
-	border-radius: 2px;
-}
 
 .sub-nav-item a {
 	
@@ -61,4 +55,16 @@ a.card-link {
 
 .comment-striped-alt{
 	background-color: #b7c8cc;
+}
+
+.user{
+	
+}
+
+.chat-message{
+	
+}
+
+.chat-text{
+	
 }

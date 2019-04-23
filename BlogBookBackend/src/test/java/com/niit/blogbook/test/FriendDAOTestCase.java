@@ -47,11 +47,23 @@ public class FriendDAOTestCase {
 	public void deleteFriendRequestTest() {
 		assertTrue("Problem deleting friend req", friendDAO.deleteFriendReq(116));
 	}
-	
-	//@Ignore
+
+	@Ignore
 	@Test
 	public void unfriendTest() {
-		assertTrue("Problem unfriending", friendDAO.unfriend("f1","f2"));
+		assertTrue("Problem unfriending", friendDAO.unfriend("f1", "f2"));
+	}
+
+	@Ignore
+	@Test
+	public void getFriendDetail() {
+		Friend friend = friendDAO.getFriendDetail(10);
+		if (friend == null)
+			System.out.println("Friend Detail not found.");
+		else {
+			System.out.println("Friend Id: " + friend.getFriendId());
+			System.out.println(friend.getUsername() + " friend of " + friend.getFriendUsername());
+		}
 	}
 
 	@Ignore
@@ -82,19 +94,32 @@ public class FriendDAOTestCase {
 	@Test
 	public void getSuggestedFriendListTest() {
 		String username = "f1";
-		List<UserDetail> suggestedFriendList = friendDAO.getSuggestedFriends(username);		
+		List<UserDetail> suggestedFriendList = friendDAO.getSuggestedFriends(username);
 		assertTrue("Problem getting suggested friend list", suggestedFriendList != null);
-		System.out.println("Suggested friends: "+suggestedFriendList.size());
-		for(UserDetail user:suggestedFriendList)
+		System.out.println("Suggested friends: " + suggestedFriendList.size());
+		for (UserDetail user : suggestedFriendList)
 			System.out.println(user.getUsername());
 	}
 
 	@Ignore
 	@Test
-	public void getFriendStatusTest() {
-		if (friendDAO.checkIfFriends("f2", "f1", false))
-			System.out.println("They are friends");
+	// Ignore status = true
+	public void checkIfFriendsTest1() {
+		Friend friend = friendDAO.checkIfFriends("aaa", "bbb", true);
+		if (friend == null)
+			System.out.println("Not friends.");
 		else
-			System.out.println("They are not friends");
+			System.out.println("They are friends");
+	}
+
+	@Ignore
+	@Test
+	// Ignore status = false
+	public void checkIfFriendsTest2() {
+		Friend friend = friendDAO.checkIfFriends("aaa", "bbb", false);
+		if (friend == null)
+			System.out.println("Not friends.");
+		else
+			System.out.println("They are friends");
 	}
 }

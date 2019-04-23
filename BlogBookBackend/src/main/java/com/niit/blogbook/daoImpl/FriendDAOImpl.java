@@ -121,26 +121,29 @@ public class FriendDAOImpl implements FriendDAO {
 		List<UserDetail> suggestedFriendList = new ArrayList<UserDetail>();
 		List<UserDetail> friendList = getFriendList(username);
 		for (UserDetail user : friendList) {
-			System.out.println(user.getUsername());
 			List<UserDetail> friendsFriendList = getFriendList(user.getUsername());
 			for (UserDetail friendOfUser : friendsFriendList) {
-
-				if (friendOfUser.getUsername().equals(username))
+				if (friendOfUser.getUsername().equals(username)) {
 					continue;
-				if (!checkIfFriends(username, friendOfUser.getUsername(), true)) {
-					if (suggestedFriendList.isEmpty())
-						suggestedFriendList.add(friendOfUser);
+				}
+				Friend friend = checkIfFriends(username, friendOfUser.getUsername(), true);
+				if (friend == null) {
+					if (suggestedFriendList.isEmpty()) {
 
-					else {
+						suggestedFriendList.add(friendOfUser);
+					} else {
 						boolean userExists = false;
 						for (UserDetail u : suggestedFriendList) {
 							if (friendOfUser.getUsername().equals(u.getUsername())) {
 								userExists = true;
+
 								break;
 							}
 						}
-						if (userExists == false)
+						if (userExists == false) {
+
 							suggestedFriendList.add(friendOfUser);
+						}
 					}
 				}
 			}
@@ -149,7 +152,8 @@ public class FriendDAOImpl implements FriendDAO {
 	}
 
 	@Override
-	public boolean checkIfFriends(String username1, String username2, boolean ignoreStatus) {
+	public Friend checkIfFriends(String username1, String username2, boolean ignoreStatus) {
+		Friend friend;
 		Session session = sessionFactory.openSession();
 		Query query;
 		if (ignoreStatus == true)
@@ -160,10 +164,10 @@ public class FriendDAOImpl implements FriendDAO {
 					+ username2 + "') or (friendUsername = '" + username1 + "' and username = '" + username2
 					+ "')) and status = 'A'");
 		try {
-			query.getSingleResult();
-			return true;
+			friend = (Friend) query.getSingleResult();
+			return friend;
 		} catch (Exception e) {
-			return false;
+			return null;
 		}
 	}
 }

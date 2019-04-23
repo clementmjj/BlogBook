@@ -32,7 +32,7 @@ public class ForumCommentController {
 			Gson gson = new Gson();
 			return gson.toJson(forumComment);
 		} else {
-			return "Error adding forum comment";
+			return null;
 		}
 	}
 
@@ -43,7 +43,7 @@ public class ForumCommentController {
 			Gson gson = new Gson();
 			return gson.toJson(forumComment);
 		} else {
-			return "Error deleting forum comment";
+			return null;
 		}
 	}
 
@@ -56,7 +56,7 @@ public class ForumCommentController {
 				return gson.toJson(forumComment);
 			}
 		} else {
-			return "Error in editing forum comment";
+			return null;
 		}
 	}
 
@@ -67,7 +67,7 @@ public class ForumCommentController {
 			Gson gson = new Gson();
 			return gson.toJson(forumComment);
 		} else {
-			return "Error getting forum comment or it does not exist";
+			return null;
 		}
 	}
 
@@ -80,7 +80,7 @@ public class ForumCommentController {
 				return gson.toJson(forumCommentList);
 			}
 		} else {
-			return "Forum comment list is empty or error retrieving the list";
+			return null;
 		}
 	}
 }

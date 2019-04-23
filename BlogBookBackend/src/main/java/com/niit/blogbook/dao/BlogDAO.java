@@ -33,4 +33,6 @@ public interface BlogDAO {
 	public List<Blog> getLimitedBlogList(String username, int startRowNum, int endRowNum);
 
 	public Blog getBlog(int blogId);
+	
+	public List<Blog> blogSearch(String queryText);
 }

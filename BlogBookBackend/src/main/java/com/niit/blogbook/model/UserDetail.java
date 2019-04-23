@@ -1,24 +1,40 @@
 package com.niit.blogbook.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table
 public class UserDetail {
 	@Id
+	@NotBlank(message = "Must not be blank.")
+	@Size(min = 5, max = 10, message = "Must contain 5 to 10 characters.")
 	private String username;
+	@NotBlank(message = "Must not be blank.")
+	@Size(min = 8, max = 12, message = "Must contain 8 to 12 characters.")
 	private String password;
+	@Transient
+	@Size(min = 8, max = 12, message = "Must contain 8 to 12 characters.")
+	@NotBlank(message = "Must not be blank.")	
+	private String confirmPassword;
+	@NotBlank(message = "Must not be blank.")
+	@Size(min = 1, max = 10, message = "Must contain 1 to 10 characters.")
 	private String firstName;
+	@NotBlank(message = "Must not be blank.")
+	@Size(min = 1, max = 10, message = "Must contain 1 to 10 characters.")
 	private String lastName;
+	@NotBlank(message = "Must not be blank.")
+	@Email(message = "Must be a well-formed email address.")
 	private String email;
 	private String role;
 	private String status;
 	private String isOnline;
-	
-	
+
 	public String getUsername() {
 		return username;
 	}
@@ -33,6 +49,14 @@ public class UserDetail {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 
 	public String getFirstName() {

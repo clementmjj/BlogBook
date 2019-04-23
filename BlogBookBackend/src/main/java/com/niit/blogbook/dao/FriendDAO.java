@@ -23,5 +23,5 @@ public interface FriendDAO {
 
 	public Friend getFriendDetail(int friendId);
 
-	boolean checkIfFriends(String username1, String username2, boolean ignoreStatus);
+	public Friend checkIfFriends(String username1, String username2, boolean ignoreStatus);
 }
