@@ -11,7 +11,8 @@
 <li>CSS</li>
 <li>JavaScript</li>
 <li>Hibernate</li>
-<li>Spring Maven</li>
+<li>Spring</li>
+<li>Maven</li>
 </ul>
 <h4>Features</h4>
 <ul>
